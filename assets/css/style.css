@@ -44,6 +44,7 @@
 
 #search-form{
     display: flex;
+    padding-top: 15px;
 }
 
 #search-form input, #search-form button{
