@@ -62,10 +62,25 @@ main{
 }
 #carousel-container{
     border: solid black 2px;
-    height: 85vh;
-    width: 100vw;
+    min-height: 85vh;
+    max-height: 85vh;
+    max-width: 100vw;
+    min-width: 100vw;
 }
 
 .carousel-slide{
-    display: none;
+    /*display: none;*/
+    position: absolute;
+    
+}
+
+#prev-button{
+    position: absolute;
+    margin: 40vh 10%;
+}
+
+#next-button{
+    position: absolute;
+    align-self: right;
+    margin: 40vh 90%;
 }
