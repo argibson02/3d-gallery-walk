@@ -2,17 +2,13 @@
     
 }
 /**
-*   TODO: fix the navbars on the left side, horizontal axis should not be scrollable
+*   TODO: fix the form on the header, change colors
 */
-nav, footer{
-    width: 100%;
-    height: 50px;
-    position: fixed;
-    line-height: 50px;
-    background-color: yellow; /*will change later*/
-    text-align: center;
-}
 
+
+.progress{
+    visibility: hidden;
+}
 #header-title{
     float: left;
     width: auto;
@@ -29,6 +25,7 @@ nav, footer{
     height: 50px;
 }
 
+
 #header-menu-links{
     margin: 0;
     display: flex;
@@ -44,22 +41,32 @@ nav, footer{
     margin-right: 40px;
 }
 
-#header-menu-links a:hover{
-    color: red;  
-}
 
 #search-form{
     display: flex;
+    padding-top: 15px;
 }
 
 #search-form input, #search-form button{
-    height: 75%;
+
     margin: auto auto;
-    margin-left: 5px;
+    margin-left: 15px;
 }
-main{
-    padding-top:50px;
+
+#dropdown-button{
+    min-width: fit-content;
+    text-align: center;
+    margin: auto 10px;
 }
+
+.dropdown-el{
+    min-width: 100%;
+    text-align: center;
+}
+.dropdown-el a{
+    text-align: center;
+} 
+
 #carousel-container{
     
     min-height: 85vh;
@@ -68,15 +75,24 @@ main{
     min-width: 100vw;
 }
 
-.carousel-slide{
-    /*display: none;*/
-    border: solid black 2px;
-    
+#artwork-info{
+    z-index: 4;
+    position: absolute;
+    top: 25%;
+    left: 75%;
 }
+
+#artwork-info li{
+    width: 300px;
+    background: rgba(128, 128, 128, .4) 
+}
+
 .carousel-slide img{
     max-height: 85vh;
-    margin: 0px auto;
-    border: solid black 2px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     
 }
 
@@ -88,5 +104,12 @@ main{
 #next-button{
     position: absolute;
     align-self: right;
-    margin: 40vh 90%;
+    margin: 40vh 88%;
+}
+footer{
+    border: 2px black solid;
+    position: absolute;
+    width: 100%;
+    bottom:0;
+    text-align: center;
 }

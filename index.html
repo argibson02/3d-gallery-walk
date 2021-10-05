@@ -4,26 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->\
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    
     <link rel = "stylesheet" href = "./assets/css/style.css">
     <title>3D Gallery Walk</title>
 </head>
 <body>
     <header>
-        <nav>
-            <div id = "header-title">
+        <nav class = "nav-wrapper">
+            <div class = "brand-logo" id = "header-title">
                 <h3>3D Art Gallery</h3>
             </div>
             <div id = "header-menu">
-                <ul id = "header-menu-links">
+                <ul id = "header-menu-links" class="right hide-on-med-and-down">
                     <li id = "search element">
                         <form id = "search-form">
-                            <div id = "dropdown-category">
-                                <select name = "category" id = "category">
-                                    <option selected = "selected" value="artist">Artist Name</option>
-                                    <option value="painting">Painting/Textile Name</option>
 
-                                </select>
-                            </div>
+                             <!-- Dropdown Trigger -->
+                            <a class='dropdown-trigger btn waves-effect waves-light' id = "dropdown-button" href='#' data-target='dropdown-menu'>Search Categories</a>
+
+                            <!-- Dropdown Structure -->
+                            <ul id='dropdown-menu' class='dropdown-content'>
+                                <li class = "dropdown-el"><a href="#!">Artist Name</a></li>
+                                <li class = "dropdown-el"><a href="#!">Artwork Title</a></li>
+                            </ul>
                             <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
                             <button type = "submit">🔍</button>
                         </form>
@@ -34,27 +41,44 @@
                 </ul>
             </div>
         </nav>
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
     </header>
     <main>
         <div id = "carousel-container">
-            <!-- <div class = "carousel-slide">
+            <!-- TEMPLATE 
+                <div class = "carousel-slide">
                 <img src = "https://cdn.vox-cdn.com/thumbor/1gWEHM0eUX_3Nv9TJ-bPdpFNTnk=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19397812/1048232144.jpg.jpg" alt = "sample img">
-            </div>
-            <div class = "carousel-slide">
-                <img src = "https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8eW9zZW1pdGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80" alt = "sample img">
-            </div>
-            <div class = "carousel-slide">
-                <img src = "https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1600&h=800&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2019%2F11%2FAlaska-Northern-Lights-ALASKALTS1017.jpg" alt = "sample img">
             </div> -->
-            <button id = "prev-button">&#10094;</button>
-            <button id = "next-button">&#10095;</button>
+            
+            <button id = "prev-button" class="waves-effect waves-light btn-small">&#10094;</button>
+            <button id = "next-button" class="waves-effect waves-light btn-small">&#10095;</button>
+            <ul id = "artwork-info" class="collapsible popout">
+                <li>
+                  <div class="collapsible-header">First</div>
+                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+                <li>
+                  <div class="collapsible-header">Second</div>
+                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+                <li>
+                  <div class="collapsible-header">Third</div>
+                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+              </ul>
         </div>
     </main>
     <footer>
-        <h3>Made by Adam, Alex, and Henry. Github repo <span><a href = "https://github.com/argibson02/3d-gallery-walk" target = "_blank">here</a></span></h3>
+        <h6>Made by Adam, Alex, and Henry. Github repo <span><a href = "https://github.com/argibson02/3d-gallery-walk" target = "_blank">here</a></span></h6>
     </footer>
 
+        <!-- Compiled and minified JavaScript -->
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src = "./assets/js/script.js"></script>
 </body>
 </html>
