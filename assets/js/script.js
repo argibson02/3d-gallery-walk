@@ -171,21 +171,28 @@ var searchUrlArray = [];
 //////////////////////////////////////////////////////////////////  Get Object ID urls on search
 function getObjectNum() {
 
-    fetch(urlSearchEx) // need to swap this out for a variable that pulls and cleans a search inputs from a search field
+    fetch(urlSearchEx) //----- need to swap this out for a variable that pulls and cleans a search inputs from a search field
         .then(function (response) { // fetches objects from search API
             return response.json();
         })
         .then(function (data) {
             objectNumIds = data.objectIDs; // puts returned object id numbers in an array
-            for (i = 0; i < objectNumIds.length; i++) {
-                var tempObjectNumIds = collectionAPIRoot + objectNumIds[i]; // for each, append the object id number to the end of a collection API root
-                //console.log(tempObjectNumIds);
-                searchUrlArray.push(tempObjectNumIds); // pushes each to an array to hold the urls
+            objectNumTotal = data.total; // number of total search results 
+            if (objectNumTotal > 0) { // checks to see if the query returned any results
+                for (i = 0; i < objectNumIds.length; i++) {
+                    var tempObjectNumIds = collectionAPIRoot + objectNumIds[i]; // for each, append the object id number to the end of a collection API root
+                    //console.log(tempObjectNumIds);
+                    searchUrlArray.push(tempObjectNumIds); // pushes each to an array to hold the urls
+                }
+                if (searchUrlArray.length > 100) { // trims off search results yielding more than 100 results to reduce process time
+                    searchUrlArray = searchUrlArray.slice(0, 100);
+                }
+                //console.log(searchUrlArray);
             }
-            if (searchUrlArray.length > 100){ // trims off search results yielding more than 100 results to reduce process time
-                searchUrlArray = searchUrlArray.slice(0, 100);
+            else {
+                //------ add no search results found function and actions here
+                return;
             }
-            console.log(searchUrlArray);
         })
 }
 getObjectNum();
