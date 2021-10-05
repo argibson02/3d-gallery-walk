@@ -2,6 +2,10 @@
 const fov = 75;
 const near = 0.1;
 const far = 1000;
+const fullRotation = 500;
+
+// Global Variables
+var moving = false;
 
 /**
  * @description Initialize a Three JS Scene, camera, and renderer. Returns the scene created. Note that the element must be sized BEFORE this is run.
@@ -35,6 +39,8 @@ function initPreview( elementId ) {
     camera.position.z = 3;
     camera.up = new THREE.Vector3( 0, 0, 1 );
     camera.lookAt( 0, 0, 0 );
+
+    renderer.domElement.scene = scene;
     
     return [scene, camera, renderer];
 }
@@ -44,6 +50,7 @@ var sceneCameraRenderer = initPreview("#preview");
 var scene = sceneCameraRenderer[0],
     camera = sceneCameraRenderer[1],
     renderer = sceneCameraRenderer[2];
+console.log(renderer);
 
 /**
  * @description Renders a new frame to the page
@@ -134,7 +141,41 @@ function applyTexture( plane, imageData, normal ) {
     // TODO
 }
 
-// Test - The carousel should contain a painting
+// Test - The carousel should contain a painting (currently just a plane)
 let painting = createPainting( "https://www.vangoghgallery.com/img/starry_night_full.jpg" );
 scene.add(painting);
 renderFrame(sceneCameraRenderer);
+
+renderer.domElement.addEventListener( "mousedown", function() {
+    moving=true;
+} );
+
+renderer.domElement.addEventListener( "mousemove" , function(event) {
+    if(moving) {
+        rotatePainting( 
+            event.movementX, 
+            event.movementY, 
+            event.target.scene );
+    }
+} );
+
+renderer.domElement.addEventListener( "mouseup", function() {
+    moving=false;
+} );
+
+renderer.domElement.addEventListener( "dblclick", function(event) {
+    event.target.scene.children[0].lookAt(0, 0, 1);
+    renderFrame(sceneCameraRenderer);
+} );
+
+function rotatePainting(movementX, movementY, scene) {
+    let painting = scene.children[0]; 
+    let xRot = (movementX/fullRotation) * Math.PI * 2;
+    let yRot = (movementY/fullRotation) * Math.PI * 2;
+
+    painting.rotateX(xRot);
+    painting.rotateY(yRot);
+
+    renderFrame(sceneCameraRenderer);
+
+}
