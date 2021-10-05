@@ -98,25 +98,89 @@ nextButton.on("click",  function(){
 
 
 
+var queryMarker = "&q="; // painting title or key word search term 
+var artistOrCultureMarker = "artistOrCulture=true"; // artist name or culture search term
+var dateBeginMarker = "dateBegin="; //
+var dateEndMarker = "&dateEnd="; //
+var departmentNum = ""; //need to hook this up the dept # list 
+var departmentMarker = "departmentId=" + departmentNum + queryMarker;
+var hasImagesMarker = "hasImages=true";
+var userInputText = " van gogh "; //tester
+var userInputBeginDt = "1850"; //tester
+var userInputEndDt = "1920"; //tester
 
-var query = ""; // painting title or key word search term 
-var artistOrCulture = ""; // artist name or culture search term 
-var dateBegin = ""; //
-var dateEnd = ""; //
+
+
 
 // API root URLs. Hard coding has images for our purposes
-var searchAPIRoot = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&";
+var searchAPIRoot = "https://collectionapi.metmuseum.org/public/collection/v1/search?";
 var collectionAPIRoot = "https://collectionapi.metmuseum.org/public/collection/v1/objects/";
 
 var urlSearchEx1 = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=Jackson%20Pollock";
-var urlSearchEx = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=Auguste%20Renoir";
-var urlSearch = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true";
+var urlSearchEx = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=van%20gogh";
+//var urlSearch = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true";
 var url = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=van_gogh";
 var urlSearchOnNumEx = "https://collectionapi.metmuseum.org/public/collection/v1/objects/437984";
 
 // initialized arrays used search fetch functions
 var searchUrlArray = [];
 var artSearchObj = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////// function for appending user input on TITLE OR GENERAL QUERY search 
+function urlAppendTitle() {
+    urlSearch = searchAPIRoot + hasImagesMarker + queryMarker + userInputText;
+    //console.log(urlSearch);
+}
+urlAppendTitle();
+
+///////////////////////////////////////////////////////////////// function for appending user input on ARTIST search 
+function urlAppendArtist() {
+    urlSearch = searchAPIRoot + artistOrCultureMarker + "&" + hasImagesMarker + queryMarker + userInputText;
+    //console.log(urlSearch);
+}
+urlAppendArtist();
+
+///////////////////////////////////////////////////////////////// function for appending user input on DATE RANGE +  TITLE OR GENERAL QUERY search 
+function urlDateRange() {
+    urlSearch = searchAPIRoot + dateBeginMarker + userInputBeginDt + dateEndMarker + userInputEndDt + "&" + hasImagesMarker + queryMarker + userInputText;
+    //console.log(urlSearch);
+}
+urlDateRange();
+
+////////////////////////////////////////////////////////////////// Cleanse user input and covert to proper url  
+function userInputCleanse() {
+    console.log(userInputText);
+    //userInputText = $("#user-input-search").val(); // get field value
+    userInputText = userInputText.trim();  //remove trailing white spaces
+    userInputText = userInputText.replace(" ", "%20")  // replaces inner white spaces with %20
+    console.log(userInputText);
+
+    if ()
+
+}  
+userInputCleanse();
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////  Get Art Objects on search
 function getObjectNum() {
@@ -162,11 +226,11 @@ function getObjectNum() {
                                 "objectEndDate": artData.objectEndDate, // i.e. 1889 ~num
                                 "medium": artData.medium, // i.e. "Oil on canvas"
                                 "objectURL": artData.objectURL, // i.e. "https://www.metmuseum.org/art/collection/search/437984"
-                                //"culture": artData.culture, // i.e. "" (often null for paintings)
+                                //"culture": artData.culture, // i.e. "" (often null for paintings, perhaps use artist nationality instead of for our "culture")
                             };
                             //console.log(tempArtObj);  // console log the data we are interested in
                             artSearchObj.push(tempArtObj); // pushes the temporary object to our main search results object.
-                            console.log(artSearchObj); // console log our completed object
+                            //console.log(artSearchObj); // console log our completed object
                             //------- likely will need a push() to populate the page with the search results
                         });
                 }
@@ -180,6 +244,9 @@ function getObjectNum() {
 getObjectNum();
 ////////////////////////////////////////////////////////////////
 
+//$("user-input-search").on("click", function ()
+//
+//)
 
 
 ////////////////////////////////////////////////////////////////////  Get Object ID urls on search - stand alone
