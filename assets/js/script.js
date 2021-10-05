@@ -97,9 +97,15 @@ function addPainting( imageURL ) {
 
     // Using threeJS loader
     let loader = new THREE.TextureLoader();
-    loader.load(imageURL, function( texture ) {
-        console.log(texture);
-        let painting = createPainting(texture);
+    let texturePromise = loader.load( imageURL );
+    let normalPromise = jimp.read( imageURL );
+    Promise.all( [
+        texturePromise,
+        normalPromise
+    ] ).then( function( data ) {
+        console.log( data );
+        let normal = generateNormal( data[1] );
+        let painting = createPainting( data[0], data[1] ); // texture, normal
         scene.add(painting);
         renderFrame(sceneCameraRenderer);
     } );
@@ -123,7 +129,7 @@ function createPainting( texture, normal ) {
     // let normal = generateNormal( imageData );
     applyTexture( plane, texture, normal );
 
-    painting.name = "painting"
+    painting.name = "painting";
 
     return painting;
 }
@@ -209,8 +215,6 @@ renderer.domElement.addEventListener( "dblclick", function(event) {
 } );
 
 renderer.domElement.addEventListener( "wheel", function (event) {
-
-    console.log(event);
     camera.zoom += zoomSpeed * -1 * Math.sign(event.deltaY);
     camera.updateProjectionMatrix(); // Must be called after changing camera parameters
     renderFrame(sceneCameraRenderer);
@@ -232,4 +236,3 @@ function rotatePainting(movementX, movementY, scene) {
 
     renderFrame(sceneCameraRenderer);
 }
-
