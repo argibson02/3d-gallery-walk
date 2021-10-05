@@ -68,6 +68,9 @@ $(document).ready(function(){
 $( function() {
     $('.collapsible' ).draggable();
 } );
+
+
+
 //when loading the api, we can change the visibility of .progress to visible using progressBarEl.css("visibility", "visible");
 
 
@@ -75,6 +78,14 @@ dropTriggerEl.dropdown();
 var dropdownmenu = M.Dropdown.getInstance(dropTriggerEl);
 styleDropdown(dropdownmenu);
 renderCarousel(curEl);
+
+
+
+//for browse
+
+$(document).ready(function(){
+    $('.tabs').tabs();
+  });
 
 
 

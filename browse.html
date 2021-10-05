@@ -10,7 +10,7 @@
 
     
     <link rel = "stylesheet" href = "./assets/css/style.css">
-    <title>3D Gallery Walk</title>
+    <title>3D Gallery Walk - Browse</title>
 </head>
 <body>
     <header>
@@ -35,7 +35,7 @@
                             <button type = "submit">🔍</button>
                         </form>
                     </li>
-                    <li><a href = "./browse.html">Browse</a></li>
+                    <li><a href = "#">Browse</a></li>
                     <li><a href = "#">History</a></li>
                     <li><a href = "#">Favorites</a></li>
                 </ul>
@@ -46,28 +46,23 @@
         </div>
     </header>
     <main>
-        <div id = "carousel-container">
-            <!-- TEMPLATE 
-                <div class = "carousel-slide">
-                <img src = "https://cdn.vox-cdn.com/thumbor/1gWEHM0eUX_3Nv9TJ-bPdpFNTnk=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19397812/1048232144.jpg.jpg" alt = "sample img">
-            </div> -->
-            
-            <button id = "prev-button" class="waves-effect waves-light btn-small">&#10094;</button>
-            <button id = "next-button" class="waves-effect waves-light btn-small">&#10095;</button>
-            <ul id = "artwork-info" class="collapsible popout">
-                <li>
-                  <div class="collapsible-header">First</div>
-                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                </li>
-                <li>
-                  <div class="collapsible-header">Second</div>
-                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                </li>
-                <li>
-                  <div class="collapsible-header">Third</div>
-                  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                </li>
-              </ul>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s4"><a class="active" href="#title-tab">Title</a></li>
+                    <li class="tab col s4"><a href="#artist-tab">Artist Name</a></li>
+                    <li class="tab col s4"><a href="#time-tab">Time Period</a></li>
+                </ul>
+            </div>
+            <div id="title-tab" class="col s12">
+                
+            </div>
+            <div id="artist-tab" class="col s12">
+
+            </div>
+            <div id="time-tab" class="col s12">
+
+            </div>
         </div>
     </main>
     <footer>
