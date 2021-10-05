@@ -30,12 +30,20 @@ function initPreview( elementId ) {
     // Set the size of the renderer and add it to the page
     renderer.setSize( containerWidth, containerHeight );
     document.querySelector( elementId ).appendChild( renderer.domElement );
+
+    // Move the camera to a good position and set Z as up
+    camera.position.z = 3;
+    camera.up = new THREE.Vector3( 0, 0, 1 );
+    camera.lookAt( 0, 0, 0 );
     
     return [scene, camera, renderer];
 }
 
 // Test - Carousel container should be black
 var sceneCameraRenderer = initPreview("#preview");
+var scene = sceneCameraRenderer[0],
+    camera = sceneCameraRenderer[1],
+    renderer = sceneCameraRenderer[2];
 
 /**
  * @description Renders a new frame to the page
@@ -84,8 +92,15 @@ function createPainting( imageURL ) {
  * @returns {Object3D}
  */
 function addImagePlane( aspectRatio ) {
-    let plane;
-    // TODO
+    let plane, geometry, defaultMaterial;
+
+    geometry = new THREE.PlaneGeometry( 1, aspectRatio * 1 );
+    defaultMaterial = new THREE.MeshBasicMaterial();
+    plane = new THREE.Mesh( geometry, defaultMaterial );
+
+    // Set the up axis as Z for proper rotation
+    plane.up = new THREE.Vector3( 0, 0, 1 );
+
     return plane;
 }
 
@@ -120,4 +135,6 @@ function applyTexture( plane, imageData, normal ) {
 }
 
 // Test - The carousel should contain a painting
-// createPainting( "https://www.vangoghgallery.com/img/starry_night_full.jpg" );
+let painting = createPainting( "https://www.vangoghgallery.com/img/starry_night_full.jpg" );
+scene.add(painting);
+renderFrame(sceneCameraRenderer);
