@@ -53,3 +53,71 @@ function renderFrame( sceneCameraRenderer ) {
 // Test - carousel container should be grey
 sceneCameraRenderer[0].background = new THREE.Color( 0xCCCCCC );
 renderFrame(sceneCameraRenderer);
+
+/**
+ * @description Returns a new 3d painting of the given image as a Three js group
+ * @param {String} imageURL
+ * @returns {Group} the created painting
+ */
+function createPainting( imageURL ) {
+    let painting, imageData;
+
+    painting = new THREE.Group();
+
+    // TODO: get image aspect ratio
+    let aspectRatio = 3/4;  // TEST
+    let plane = addImagePlane( aspectRatio );
+    painting.add(plane);
+
+    // TODO: parse image data
+    // let imageData;
+    // let normal = generateNormal( imageData );
+
+    // applyTexture( plane, imageData, normal );
+
+    return painting;
+}
+
+/**
+ * @description Returns a plane as the basis of a painting
+ * @param {Number} aspectRatio 
+ * @returns {Object3D}
+ */
+function addImagePlane( aspectRatio ) {
+    let plane;
+    // TODO
+    return plane;
+}
+
+/**
+ * @description Returns a frame of the given aspect ratio
+ * @param {Number} aspectRatio 
+ */
+function addFrame( aspectRatio ) {
+    let frame;
+    // TODO
+    return frame;
+}
+
+/**
+ * @description Creates a normal map of the given image
+ * @param {Array} imageData 
+ */
+function generateNormal( imageData ) {
+    let normal;
+    // TODO
+    return normal;
+}
+
+/**
+ * @description Applies the proper texture to the given image
+ * @param {Object3D} plane 
+ * @param {Array} imageData
+ * @param {Array} normal 
+ */
+function applyTexture( plane, imageData, normal ) {
+    // TODO
+}
+
+// Test - The carousel should contain a painting
+// createPainting( "https://www.vangoghgallery.com/img/starry_night_full.jpg" );
