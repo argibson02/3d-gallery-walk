@@ -111,8 +111,15 @@
 }
 footer{
     border: 2px black solid;
-    position: absolute;
     width: 100%;
-    bottom:0;
     text-align: center;
+}
+
+#main-footer{
+    position: absolute;
+    bottom:0;
+}
+
+.collapsible-header, #time-tab .collection-item{
+    border-bottom: dotted gray 1px;
 }

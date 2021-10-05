@@ -55,7 +55,7 @@ function styleDropdown(instance)
     instance.constrainWidth = false;
 }
 
-function renderCollapsible(){
+function renderCard(){
     //when new image is loaded call this method to generate new info
 
 }
@@ -63,7 +63,6 @@ function renderCollapsible(){
 //render collapsible
 $(document).ready(function(){
     $('.collapsible').collapsible();
-    renderCollapsible();
   });
 $( function() {
     $('.card' ).draggable();
@@ -86,6 +85,10 @@ renderCarousel(curEl);
 $(document).ready(function(){
     $('.tabs').tabs();
   });
+
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+});
 
 
 
