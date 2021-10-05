@@ -168,10 +168,10 @@ var urlSearchOnNumEx = "https://collectionapi.metmuseum.org/public/collection/v1
 var searchUrlArray = [];
 var artSearchObj = [];
 
-//////////////////////////////////////////////////////////////////  Get Object ID urls on search
+//////////////////////////////////////////////////////////////////  Get Art Objects on search
 function getObjectNum() {
 
-    fetch(urlSearchEx) //----- need to swap this out for a variable that pulls and cleans a search inputs from a search field
+    fetch(urlSearchEx) //----- need to swap this out for a variable that pulls and cleans a search inputs from a search field // fetch for object IDs that yield upon search
         .then(function (response) { // fetches objects from search API
             return response.json();
         })
@@ -184,10 +184,10 @@ function getObjectNum() {
                     //console.log(tempObjectNumIds);
                     searchUrlArray.push(tempObjectNumIds); // pushes each to an array to hold the urls
                 }
-                if (searchUrlArray.length > 80) { // trims off search results yielding more than 80 results to reduce process time. The API limits requests to 80 per second
-                    searchUrlArray = searchUrlArray.slice(0, 80);
+                if (searchUrlArray.length > 60) { // trims off search results yielding more than 60 results to reduce process time. The API limits the number of requests to 80 per second, however, I have noticed severe latency hitting around the 60 mark.
+                    searchUrlArray = searchUrlArray.slice(0, 60);
                 }
-                console.log(searchUrlArray);
+                //console.log(searchUrlArray);
 
                 for (i = 0; i < searchUrlArray.length; i++) {
                     fetch(searchUrlArray[i]) // fetches data for each object 
@@ -217,7 +217,7 @@ function getObjectNum() {
                             //console.log(tempArtObj);  // console log the data we are interested in
                             artSearchObj.push(tempArtObj); // pushes the temporary object to our main search results object.
                             console.log(artSearchObj); // console log our completed object
-                            // likely will need a push() to populate the page with the search results
+                            //------- likely will need a push() to populate the page with the search results
                         });
                 }
             }
