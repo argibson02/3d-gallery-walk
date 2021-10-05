@@ -1,8 +1,12 @@
+
+
 // Const preview variables
 const fov = 75;
 const near = 0.1;
 const far = 1000;
 const fullRotation = 500;
+const ambientIntensity = 0.6 // out of 1
+const directionalIntensity = 1.0
 
 // Global Variables
 var moving = false;
@@ -40,8 +44,16 @@ function initPreview( elementId ) {
     camera.up = new THREE.Vector3( 0, 0, 1 );
     camera.lookAt( 0, 0, 0 );
 
-    renderer.domElement.scene = scene;
+    // Add lighting to the scene
+    let ambientLight = new THREE.AmbientLight( 0xffffff, ambientIntensity );
+    scene.add( ambientLight );
+
+    let directionalLight = new THREE.DirectionalLight( 0xffffff, directionalIntensity );
+    directionalLight.position.x = -3;
+    scene.add( directionalLight );
     
+    // Return and set values for user control used later
+    renderer.domElement.scene = scene;
     return [scene, camera, renderer];
 }
 
@@ -70,31 +82,50 @@ sceneCameraRenderer[0].background = new THREE.Color( 0xCCCCCC );
 renderFrame(sceneCameraRenderer);
 
 /**
+ * @description Generates a new painting based off the url and adds it to the scene
+ * @param {String} imageURL 
+ */
+function addPainting( imageURL ) {
+    // Using Jimp loader
+    // jimp.read( imageURL ).then( imageData => {
+    //     let painting = createPainting( imageData );
+    //     scene.add(painting);
+    // } );
+
+    // Using threeJS loader
+    let loader = new THREE.TextureLoader();
+    loader.load(imageURL, function( texture ) {
+        console.log(texture);
+        let painting = createPainting(texture);
+        scene.add(painting);
+    } );
+}
+
+/**
  * @description Returns a new 3d painting of the given image as a Three js group
- * @param {String} imageURL
+ * @param {Jimp} imageData
  * @returns {Group} the created painting
  */
-function createPainting( imageURL ) {
-    let painting, imageData;
-
+function createPainting( texture, normal ) {
+    let painting;
     painting = new THREE.Group();
-
-    // TODO: get image aspect ratio
-    let aspectRatio = 3/4;  // TEST
+    
+    let aspectRatio = texture.image.height / texture.image.width;
     let plane = addImagePlane( aspectRatio );
     painting.add(plane);
 
     // TODO: parse image data
     // let imageData;
     // let normal = generateNormal( imageData );
+    applyTexture( plane, texture, normal );
 
-    // applyTexture( plane, imageData, normal );
+    painting.name = "painting"
 
     return painting;
 }
 
 /**
- * @description Returns a plane as the basis of a painting
+ * @description Returns a plane as the basis of a painting.
  * @param {Number} aspectRatio 
  * @returns {Object3D}
  */
@@ -102,7 +133,7 @@ function addImagePlane( aspectRatio ) {
     let plane, geometry, defaultMaterial;
 
     geometry = new THREE.PlaneGeometry( 1, aspectRatio * 1 );
-    defaultMaterial = new THREE.MeshBasicMaterial();
+    defaultMaterial = new THREE.MeshStandardMaterial();
     plane = new THREE.Mesh( geometry, defaultMaterial );
 
     // Set the up axis as Z for proper rotation
@@ -138,13 +169,15 @@ function generateNormal( imageData ) {
  * @param {Array} normal 
  */
 function applyTexture( plane, imageData, normal ) {
-    // TODO
+    plane.material.map = imageData;
+    plane.material.color = new THREE.Color( 0xffffff );
+    plane.material.needsUpdate = true;
 }
 
 // Test - The carousel should contain a painting (currently just a plane)
-let painting = createPainting( "https://www.vangoghgallery.com/img/starry_night_full.jpg" );
-scene.add(painting);
-renderFrame(sceneCameraRenderer);
+addPainting( "https://lh3.googleusercontent.com/AyiKhdEWJ7XmtPXQbRg_kWqKn6mCV07bsuUB01hJHjVVP-ZQFmzjTWt7JIWiQFZbb9l5tKFhVOspmco4lMwqwWImfgg=s0" );
+
+// TODO: move this into init? or somewhere where it doesn't rely on global variables
 
 renderer.domElement.addEventListener( "mousedown", function() {
     moving=true;
@@ -152,6 +185,7 @@ renderer.domElement.addEventListener( "mousedown", function() {
 
 renderer.domElement.addEventListener( "mousemove" , function(event) {
     if(moving) {
+        //console.log(event.target);
         rotatePainting( 
             event.movementX, 
             event.movementY, 
@@ -164,12 +198,18 @@ renderer.domElement.addEventListener( "mouseup", function() {
 } );
 
 renderer.domElement.addEventListener( "dblclick", function(event) {
-    event.target.scene.children[0].lookAt(0, 0, 1);
+    event.target.scene.getObjectByName("painting").lookAt(0, 0, 1);
     renderFrame(sceneCameraRenderer);
 } );
 
+/**
+ * @description Rotates the painting object based on the pixels moved by the mouse this frame
+ * @param {Number} movementX 
+ * @param {Number} movementY 
+ * @param {Object3D} scene 
+ */
 function rotatePainting(movementX, movementY, scene) {
-    let painting = scene.children[0]; 
+    let painting = scene.getObjectByName("painting"); 
     let xRot = (movementX/fullRotation) * Math.PI * 2;
     let yRot = (movementY/fullRotation) * Math.PI * 2;
 
@@ -177,5 +217,5 @@ function rotatePainting(movementX, movementY, scene) {
     painting.rotateY(yRot);
 
     renderFrame(sceneCameraRenderer);
-
 }
+
