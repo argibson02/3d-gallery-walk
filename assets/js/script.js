@@ -5,8 +5,9 @@ const fov = 75;
 const near = 0.1;
 const far = 1000;
 const fullRotation = 500;
-const ambientIntensity = 0.6 // out of 1
-const directionalIntensity = 1.0
+const ambientIntensity = 0.6; // out of 1
+const directionalIntensity = 1.0;
+const zoomSpeed = 0.1;
 
 // Global Variables
 var moving = false;
@@ -40,7 +41,7 @@ function initPreview( elementId ) {
     document.querySelector( elementId ).appendChild( renderer.domElement );
 
     // Move the camera to a good position and set Z as up
-    camera.position.z = 3;
+    camera.position.y = 3;
     camera.up = new THREE.Vector3( 0, 0, 1 );
     camera.lookAt( 0, 0, 0 );
 
@@ -49,11 +50,13 @@ function initPreview( elementId ) {
     scene.add( ambientLight );
 
     let directionalLight = new THREE.DirectionalLight( 0xffffff, directionalIntensity );
-    directionalLight.position.x = -3;
+    directionalLight.position.z = 3;
+    directionalLight.position.y = 2;
     scene.add( directionalLight );
     
     // Return and set values for user control used later
     renderer.domElement.scene = scene;
+    renderer.domElement.camera = camera;
     return [scene, camera, renderer];
 }
 
@@ -98,6 +101,7 @@ function addPainting( imageURL ) {
         console.log(texture);
         let painting = createPainting(texture);
         scene.add(painting);
+        renderFrame(sceneCameraRenderer);
     } );
 }
 
@@ -138,6 +142,8 @@ function addImagePlane( aspectRatio ) {
 
     // Set the up axis as Z for proper rotation
     plane.up = new THREE.Vector3( 0, 0, 1 );
+
+    plane.lookAt(0, 3, 0);
 
     return plane;
 }
@@ -202,6 +208,14 @@ renderer.domElement.addEventListener( "dblclick", function(event) {
     renderFrame(sceneCameraRenderer);
 } );
 
+renderer.domElement.addEventListener( "wheel", function (event) {
+
+    console.log(event);
+    camera.zoom += zoomSpeed * -1 * Math.sign(event.deltaY);
+    camera.updateProjectionMatrix(); // Must be called after changing camera parameters
+    renderFrame(sceneCameraRenderer);
+} );
+
 /**
  * @description Rotates the painting object based on the pixels moved by the mouse this frame
  * @param {Number} movementX 
@@ -210,11 +224,11 @@ renderer.domElement.addEventListener( "dblclick", function(event) {
  */
 function rotatePainting(movementX, movementY, scene) {
     let painting = scene.getObjectByName("painting"); 
-    let xRot = (movementX/fullRotation) * Math.PI * 2;
-    let yRot = (movementY/fullRotation) * Math.PI * 2;
+    let zRot = (movementX/fullRotation) * Math.PI * 2;
+    let xRot = (movementY/fullRotation) * Math.PI * 2;
 
+    painting.rotateZ(zRot);
     painting.rotateX(xRot);
-    painting.rotateY(yRot);
 
     renderFrame(sceneCameraRenderer);
 }
