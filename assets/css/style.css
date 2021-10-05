@@ -2,16 +2,9 @@
     
 }
 /**
-*   TODO: fix the navbars on the left side, horizontal axis should not be scrollable
+*   TODO: fix the form on the header, change colors
 */
-/*nav, footer{
-    width: 100%;
-    height: 50px;
-    position: fixed;
-    line-height: 50px;
-    background-color: #424242;
-    text-align: center;
-}*/
+
 
 .progress{
     visibility: hidden;
@@ -73,9 +66,6 @@
     text-align: center;
 } 
 
-main{
-    padding-top:75px;
-}
 #carousel-container{
     
     min-height: 85vh;
@@ -84,14 +74,24 @@ main{
     min-width: 100vw;
 }
 
-.carousel-slide{
-    /*display: none;*/
-    border: solid black 2px;
-    
+#artwork-info{
+    z-index: 4;
+    position: absolute;
+    top: 25%;
+    left: 75%;
 }
+
+#artwork-info li{
+    width: 300px;
+    background: rgba(128, 128, 128, .4) 
+}
+
 .carousel-slide img{
     max-height: 85vh;
-    margin: auto auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     
 }
 
@@ -103,9 +103,12 @@ main{
 #next-button{
     position: absolute;
     align-self: right;
-    margin: 40vh 90%;
+    margin: 40vh 88%;
 }
 footer{
+    border: 2px black solid;
     position: absolute;
-    bottom: 0;
+    width: 100%;
+    bottom:0;
+    text-align: center;
 }
