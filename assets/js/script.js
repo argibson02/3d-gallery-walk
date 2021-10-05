@@ -149,11 +149,12 @@
 
 
 
-var query = "";
-var artistOrCulture = "";
-var dateBegin = "";
-var dateEnd = "";
+var query = ""; // painting title or key word search term 
+var artistOrCulture = ""; // artist name or culture search term 
+var dateBegin = ""; //
+var dateEnd = ""; //
 
+// API root URLs. Hard coding has images for our purposes
 var searchAPIRoot = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&";
 var collectionAPIRoot = "https://collectionapi.metmuseum.org/public/collection/v1/objects/";
 
@@ -163,10 +164,9 @@ var urlSearch = "https://collectionapi.metmuseum.org/public/collection/v1/search
 var url = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=van_gogh";
 var urlSearchOnNumEx = "https://collectionapi.metmuseum.org/public/collection/v1/objects/437984";
 
-var objectNumArray = [];
+// initialized arrays used search fetch functions
 var searchUrlArray = [];
 var artSearchObj = [];
-
 
 //////////////////////////////////////////////////////////////////  Get Object ID urls on search
 function getObjectNum() {
@@ -201,7 +201,7 @@ function getObjectNum() {
                             {
                                 "title": artData.title,  // i.e. "La Berceuse (Woman Rocking a Cradle; Augustine-Alix Pellicot Roulin, 1851–1930)"
                                 "artistDisplayName": artData.artistDisplayName,  // i.e. "Vincent van Gogh"
-                                "artistNationality": artData.artistNationality, // i.e. "Dutch"
+                                //"artistNationality": artData.artistNationality, // i.e. "Dutch"
                                 "artistDisplayBio": artData.artistDisplayBio, // i.e. "Dutch, Zundert 1853–1890 Auvers-sur-Oise"
                                 "department": artData.department,  // i.e. "European Paintings"
                                 "primaryImage": artData.primaryImage,  // i.e. "https://images.metmuseum.org/CRDImages/ep/original/DP-19279-001.jpg"
@@ -212,10 +212,12 @@ function getObjectNum() {
                                 "objectEndDate": artData.objectEndDate, // i.e. 1889 ~num
                                 "medium": artData.medium, // i.e. "Oil on canvas"
                                 "objectURL": artData.objectURL, // i.e. "https://www.metmuseum.org/art/collection/search/437984"
-                                "culture": artData.culture, // i.e. "" (often null for paintings)
-                            }
+                                //"culture": artData.culture, // i.e. "" (often null for paintings)
+                            };
                             //console.log(tempArtObj);  // console log the data we are interested in
-                            artSearchObj.push(tempArtObj);
+                            artSearchObj.push(tempArtObj); // pushes the temporary object to our main search results object.
+                            console.log(artSearchObj); // console log our completed object
+                            // likely will need a push() to populate the page with the search results
                         });
                 }
             }
@@ -223,229 +225,45 @@ function getObjectNum() {
                 //------ add 0 search results found function and actions here
                 return;
             }
-        })
-}
-getObjectNum();
-////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-//////////////////////////////////////////////////////////////////  Get Object ID urls on search - stand alone
-function getObjectNum() {
-
-    fetch(urlSearchEx) //----- need to swap this out for a variable that pulls and cleans a search inputs from a search field
-        .then(function (response) { // fetches objects from search API
-            return response.json();
-        })
-        .then(function (data) {
-            objectNumIds = data.objectIDs; // puts returned object id numbers in an array
-            objectNumTotal = data.total; // number of total search results 
-            if (objectNumTotal > 0) { // checks to see if the query returned any results
-                for (i = 0; i < objectNumIds.length; i++) {
-                    var tempObjectNumIds = collectionAPIRoot + objectNumIds[i]; // for each, append the object id number to the end of a collection API root
-                    //console.log(tempObjectNumIds);
-                    searchUrlArray.push(tempObjectNumIds); // pushes each to an array to hold the urls
-                }
-                if (searchUrlArray.length > 80) { // trims off search results yielding more than 100 results to reduce process time. The API limits requests to 80 per second
-                    searchUrlArray = searchUrlArray.slice(0, 80);
-                }
-                //console.log(searchUrlArray);
-            }
-            else {
-                //------ add no search results found function and actions here
-                return;
-            }
-        })
-}
-getObjectNum();
-////////////////////////////////////////////////////////////////
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$("<button>").on("click", function () { 
-    console.log(artSearchObj);
-});
-
-
-
-
-
-/*
-function getObjectNum() {
-    // replace `octocat` with anyone else's GitHub username
-    //We save the full endpoint we would like to make a request to in a variable called requestUrl, replacing octocat with the username we want to search, as shown in the following example:
-    //var requestUrl = 'https://api.github.com/users/octocat/repos';
-    //We then pass the requestUrl variable as an argument to the fetch() method, like in the following code:
-    fetch(urlSearchEx)
-        //We convert the response into JSON. Lastly, we return the JSON-formatted response, as follows:
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            objectNumArray = data;
-            console.log(objectNumArray);
-            for (i = 0; i < objectNumArray.length; i++) {
-                tempSearchOnNum = urlSearchOnNum + objectNumArray[i];
-                console.log(tempSearchOnNum);
-                return fetch(tempSearchOnNum);
-            }
-        })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (artObj) {
-            for (i = 0; i < objectNumArray.length; i++) {
-                artObj[i] =
-                {
-                    "title": artObj.title,  // i.e. "La Berceuse (Woman Rocking a Cradle; Augustine-Alix Pellicot Roulin, 1851–1930)"
-                    "artistDisplayName": artObj.artistDisplayName,  // i.e. "Vincent van Gogh"
-                    "artistNationality": artObj.artistNationality, // i.e. "Dutch"
-                    "artistDisplayBio": artObj.artistDisplayBio, // i.e. "Dutch, Zundert 1853–1890 Auvers-sur-Oise"
-                    "department": artObj.department,  // i.e. "European Paintings"
-                    "primaryImage": artObj.primaryImage,  // i.e. "https://images.metmuseum.org/CRDImages/ep/original/DP-19279-001.jpg"
-                    "primaryImageSmall": artObj.primaryImageSmall,  // i.e. "https://images.metmuseum.org/CRDImages/ep/web-large/DP-19279-001.jpg"
-                    "classification": artObj.classification, // i.e. "Paintings"
-                    "objectDate": artObj.objectDate,  // i.e. "1889" ~string
-                    "objectBeginDate": artObj.objectBeginDate, // i.e. 1889 ~num
-                    "objectEndDate": artObj.objectEndDate, // i.e. 1889 ~num
-                    "medium": artObj.medium, // i.e. "Oil on canvas"
-                    "objectURL": artObj.objectURL, // i.e. "https://www.metmuseum.org/art/collection/search/437984"
-                    "culture": artObj.culture, // i.e. "" (occasionally null)
-                };
-                console.log(artObj[i]);
-            }
-
-            //writeCards();
         });
 }
 getObjectNum();
-*/
+////////////////////////////////////////////////////////////////
 
 
 
+////////////////////////////////////////////////////////////////////  Get Object ID urls on search - stand alone
+//function getObjectNum() {
+//
+//    fetch(urlSearchEx) //----- need to swap this out for a variable that pulls and cleans a search inputs from a search field
+//        .then(function (response) { // fetches objects from search API
+//            return response.json();
+//        })
+//        .then(function (data) {
+//            objectNumIds = data.objectIDs; // puts returned object id numbers in an array
+//            objectNumTotal = data.total; // number of total search results 
+//            if (objectNumTotal > 0) { // checks to see if the query returned any results
+//                for (i = 0; i < objectNumIds.length; i++) {
+//                    var tempObjectNumIds = collectionAPIRoot + objectNumIds[i]; // for each, append the object id number to the end of a collection API root
+//                    //console.log(tempObjectNumIds);
+//                    searchUrlArray.push(tempObjectNumIds); // pushes each to an array to hold the urls
+//                }
+//                if (searchUrlArray.length > 80) { // trims off search results yielding more than 100 results to reduce process time. The API limits requests to 80 per second
+//                    searchUrlArray = searchUrlArray.slice(0, 80);
+//                }
+//                //console.log(searchUrlArray);
+//            }
+//            else {
+//                //------ add no search results found function and actions here
+//                return;
+//            }
+//        })
+//}
+//getObjectNum();
+//////////////////////////////////////////////////////////////////
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-function getApi(url1) {
-    fetch(url1)
-      .then(function (response) {
-        console.log(response);
-        //  Conditional for the the response.status.
-        //We check whether the response.status does not equal 200
-        //if (response.status !== 200) {
-          // Place the response.status on the page.
-          //We assign the textContent to be equal to the response.status
-          //responseText.textContent = response.status;
-        //}
-        //We still return response.json() as fetch() will try to resolve the response most of the time
-        return response.json();
-      })
-      .then(function (data) {
-        // Make sure to look at the response in the console and read how 404 response is structured.
-        console.log(data);
-      });
-  }
-getApi();
-*/
-
-
-
-
-
-
-/*
-fetch(url)
-.then(function (response) {
-    return response.json();
-})
-.then(function (dataSearch) {
-    console.log(dataSearch);
-    //var dataGeo = "";
-    return fetch();
-})
-*/
-
-/*
-.then(function (response) {
-    return response.json();
-})
-.then(function (dataWeather) {
-    for (i = 0; i < dataWeather.length; i++) {
-        searchResultsObj[i] =
-        {
-            "date": moment.unix(dataWeather.daily[i].dt).format("dddd, MMM Do, YYYY"),
-            "weather": dataWeather.daily[i].weather[0].main,
-            "icon": dataWeather.daily[i].weather[0].icon,
-            "temp": dataWeather.daily[i].temp.day,
-            "humidity": dataWeather.daily[i].humidity,
-            "wind": dataWeather.daily[i].wind_speed,
-            "uvi": dataWeather.daily[i].uvi,
-        };
-    }
-    writeCards();
-});
-
-
-
-
-console.log();
-console.log();
-console.log();
-console.log();
-console.log();
-*/
 //API for calling name (or general query)
 //example of good query
 //https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=6&q=cat
@@ -477,21 +295,6 @@ console.log();
 //Geolocation Request
 // https://collectionapi.metmuseum.org/public/collection/v1/search?geoLocation=France&q=flowers
 //  
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
