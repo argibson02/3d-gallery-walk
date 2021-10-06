@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    
+    <link rel = "stylesheet" href = "./assets/css/style.css">
+    <title>3D Gallery Walk - Browse</title>
+</head>
+<body>
+    <header>
+        <nav class = "nav-wrapper">
+            <div class = "brand-logo" id = "header-title">
+                <h3><a href = "./index.html">3D Art Gallery</a></h3>
+            </div>
+            <div id = "header-menu">
+                <ul id = "header-menu-links" class="right hide-on-med-and-down">
+                    <li id = "search element">
+                        <form id = "search-form">
+
+                             <!-- Dropdown Trigger -->
+                            <a class='dropdown-trigger btn waves-effect waves-light' id = "dropdown-button" href='#' data-target='dropdown-menu'>Search Categories</a>
+
+                            <!-- Dropdown Structure -->
+                            <ul id='dropdown-menu' class='dropdown-content'>
+                                <li class = "dropdown-el"><a href="#!" value = "artist">Artist Name</a></li>
+                                <li class = "dropdown-el"><a href="#!" value = "painting">Artwork Title</a></li>
+                            </ul>
+                            <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
+                            <button type = "submit">🔍</button>
+                        </form>
+                    </li>
+                    <li><a href = "#">Browse</a></li>
+                    <li><a href = "./history.html">History</a></li>
+                    <li><a href = "./history.html">Favorites</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </header>
+    <main>
+        <div class="row">
+            <div class="col s9">
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#title-tab">Title</a></li>
+                    <li class="tab col s3"><a href="#artist-tab">Artist Name</a></li>
+                    <li class="tab col s4\3"><a href="#time-tab">Time Period</a></li>
+                </ul>
+            </div>
+            <div id="title-tab" class="col s9">
+                <ul class="collapsible">
+                    <li>
+                      <div class="collapsible-header">A</div>
+                      <div class="collapsible-body">
+                        <div class="collection">
+                            <a href="#!" class="collection-item a">Alvin</a>
+                            <!-- <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a> -->
+                          </div>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header b">B</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header c">C</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header d">D</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header e">E</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header f">F</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header g">G</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header h">H</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header i">I</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header j">J</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header k">K</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header l">L</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header m">M</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header n">N</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header o">O</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header p ">P</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header q">Q</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header r">R</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header s">S</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header t">T</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header u">U</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header v">V</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+
+                        <div class="collapsible-header w">W</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header x">X</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header y">Y</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header z">Z</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                  </ul>
+            </div>
+            <div id="artist-tab" class="col s9">
+                <ul class="collapsible">
+                    <li>
+                      <div class="collapsible-header">A</div>
+                      <div class="collapsible-body">
+                        <div class="collection">
+                            <a href="#!" class="collection-item a">Alvin</a>
+                            <!-- <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a> -->
+                          </div>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header b">B</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header c">C</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header d">D</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header e">E</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header f">F</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header g">G</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header h">H</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header i">I</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header j">J</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header k">K</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header l">L</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header m">M</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header n">N</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header o">O</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header p ">P</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header q">Q</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header r">R</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header s">S</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header t">T</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header u">U</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header v">V</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+
+                        <div class="collapsible-header w">W</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header x">X</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header y">Y</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header z">Z</div>
+                        <div class="collapsible-body">
+                          <div class="collection"></div>
+                        </div>
+                    </li>
+                  </ul>
+            </div>
+            <div id="time-tab" class="col s9">
+                
+                <div class="collection">
+                    <a href="#!" class="collection-item">1st Century</a>
+                    <a href="#!" class="collection-item">2nd Century</a>
+                    <a href="#!" class="collection-item">3rd Century</a>
+                    <a href="#!" class="collection-item">4th Century</a>
+                    <a href="#!" class="collection-item">5th Century</a>
+                    <a href="#!" class="collection-item">6th Century</a>
+                    <a href="#!" class="collection-item">7th Century</a>
+                    <a href="#!" class="collection-item">8th Century</a>
+                    <a href="#!" class="collection-item">9th Century</a>
+                    <a href="#!" class="collection-item">10th Century</a>
+                    <a href="#!" class="collection-item">11th Century</a>
+                    <a href="#!" class="collection-item">12th Century</a>
+                    <a href="#!" class="collection-item">13th Century</a>
+                    <a href="#!" class="collection-item">14th Century</a>
+                    <a href="#!" class="collection-item">15th Century</a>
+                    <a href="#!" class="collection-item">16th Century</a>
+                    <a href="#!" class="collection-item">17th Century</a>
+                    <a href="#!" class="collection-item">18th Century</a>
+                    <a href="#!" class="collection-item">19th Century</a>
+                    <a href="#!" class="collection-item">20th Century</a>
+                    <a href="#!" class="collection-item">21st Century</a>
+                </div>
+            </div>
+            <div id = "sticky-preview-panel" class = "col s3 card sticky-action">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="./assets/images/placeholder.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">Card Title</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <h6>Made by Adam, Alex, and Henry. Github repo <span><a href = "https://github.com/argibson02/3d-gallery-walk" target = "_blank">here</a></span></h6>
+    </footer>
+
+        <!-- Compiled and minified JavaScript -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src = "./assets/js/script.js"></script>
+</body>
+</html>

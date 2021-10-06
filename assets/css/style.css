@@ -2,17 +2,13 @@
     
 }
 /**
-*   TODO: fix the navbars on the left side, horizontal axis should not be scrollable
+*   TODO: fix the form on the header, change colors
 */
-nav, footer{
-    width: 100%;
-    height: 50px;
-    position: fixed;
-    line-height: 50px;
-    background-color: yellow; /*will change later*/
-    text-align: center;
-}
 
+
+.progress{
+    visibility: hidden;
+}
 #header-title{
     float: left;
     width: auto;
@@ -29,6 +25,7 @@ nav, footer{
     height: 50px;
 }
 
+
 #header-menu-links{
     margin: 0;
     display: flex;
@@ -44,31 +41,91 @@ nav, footer{
     margin-right: 40px;
 }
 
-#header-menu-links a:hover{
-    color: red;  
-}
 
 #search-form{
     display: flex;
+    padding-top: 15px;
 }
 
 #search-form input, #search-form button{
-    height: 75%;
+
     margin: auto auto;
-    margin-left: 5px;
-}
-main{
-    padding-top:50px;
-}
-#carousel-container{
-    border: solid black 2px;
-    height: 85vh;
-    width: 100vw;
+    margin-left: 15px;
 }
 
-.carousel-slide{
-    display: none;
+#dropdown-button{
+    min-width: fit-content;
+    text-align: center;
+    margin: auto 10px;
 }
+
+.dropdown-el{
+    min-width: 100%;
+    text-align: center;
+}
+.dropdown-el a{
+    text-align: center;
+} 
+
+#carousel-container{
+    
+    min-height: 85vh;
+    max-height: 85vh;
+    max-width: 100vw;
+    min-width: 100vw;
+    border: 2px solid black;
+}
+
+
+
+#artwork-card{
+    border-radius: 15px;
+    border: solid black 2px;
+    z-index: 4;
+    position: absolute;
+    max-width: 300px;
+    min-height: 600px;
+    top: 15%;
+    left: 80%;
+    filter: drop-shadow(16px 16px 10px black);
+     
+}
+
+.carousel-slide img{
+    max-height: 85vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+#prev-button{
+    position: absolute;
+    margin: 40vh 10%;
+}
+
+#next-button{
+    position: absolute;
+    align-self: right;
+    margin: 40vh 88%;
+}
+footer{
+    border: 2px black solid;
+    width: 100%;
+    text-align: center;
+}
+
+#main-footer{
+    position: absolute;
+    bottom:0;
+}
+
+.collapsible-header, #time-tab .collection-item{
+    border-bottom: dotted gray 1px;
+}
+
+
 
 .full-preview {
     height: 100%;
@@ -80,4 +137,3 @@ html, body {
     width: 100%;
     height: 100%;
     margin: 0;
-}
