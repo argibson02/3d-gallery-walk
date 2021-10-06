@@ -52,7 +52,11 @@ function styleDropdown(instance) {
     instance.constrainWidth = false;
 }
 
+
+
+
 function renderCard(){
+
     //when new image is loaded call this method to generate new info
 
 }
@@ -60,7 +64,9 @@ function renderCard(){
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
-  });
+
+});
+
 $( function() {
     $('.card' ).draggable();
 } );
@@ -138,8 +144,9 @@ $(document).ready(function(){
 
 
 
+var userInputText = $("#user-input-search").val();
 
-var userInputText = " Portret van een vrouw, mogelijk Maria Trip"; //tester
+var userInputText2 = " Portret van een vrouw, mogelijk Maria Trip"; //tester
 
 //========= Search API variables
 // Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
@@ -177,29 +184,22 @@ var miniArtResultsObj = [];
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
-function urlAppendTitle() {
+function urlAppendTitle(event) {
+    event.preventDefault();
     searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
+    getResults();
 }
 //urlAppendTitle();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
-function urlAppendArtist() {
-    searchUrl = searchAPIRoot + artistMarker + userInputText + defaultSortMarkers;
+function urlAppendArtist(event) {
+    event.preventDefault();
+    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
+    getResults();
 }
 //urlAppendArtist();
 
@@ -220,15 +220,23 @@ function userInputCleanse() {
     userInputText = userInputText.replace("/", "+");  // replaces with +
     //userInputText = userInputText.replace("", "+");  // replaces with +
 
+    // need if statement here to check if we have title or artist selected.
+    //if (searchFilter = "Artist") {
+    //    urlAppendArtist();
+    //}
+    //
+    // else {    
+    //  urlAppendTitle();
+    //}
     urlAppendTitle();
-    //urlAppendArtist();
+    
 }
-userInputCleanse();
+//userInputCleanse();
 
 
 
 //================================================================================ Search results fetches for both Mini and Detailed Results
-function getObjectNum() {
+function getResults() {
 
     fetch(searchUrl)
         .then(function (response) { // fetches objects from search API
@@ -247,7 +255,7 @@ function getObjectNum() {
             //console.log(miniData);
 
             if (objectNumTotal > 0) { // checks to see if the query returned any results
-                for (i = 0; i < objectNumTotal; i++) {
+                for (i = 0; i < objectCountOnPage; i++) {
 
                     // retrieving nested webImage URL
                     var tempWebImage = miniData.artObjects[i].webImage;
@@ -260,7 +268,7 @@ function getObjectNum() {
 
                     else {
                         var tempUrl = tempWebImage.url;
-                        //console.log(tempUrl);
+                        console.log(tempUrl);
 
                         var tempMiniArtObj =
                         {
@@ -272,21 +280,22 @@ function getObjectNum() {
                             //"productionPlaces": tempProduction, // Place where the art was produced
                         };
                         miniArtResultsObj.push(tempMiniArtObj); // Pushes the temporary object to our main Mini Search Results Object.
-                        //console.log(miniArtResultsObj);
+                        console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
                         var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
                         searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
+                        //console.log(tempArtObjectsUrl);
+
                     }
 
                 }
                 
 
-                /*
 
                 // detailed currently off until 500 errors are solved.
-
+/*
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
                     fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
@@ -316,10 +325,10 @@ function getObjectNum() {
                             };
                             artResultsObj.push(tempArtObj);  // Pushes the temporary object to our main Detailed Search Results Object.
                             //------- likely will need a push() to populate the page with the search results
-                            //console.log(artResultsObj);
+                            console.log(artResultsObj);
                         });
                 }
-                */
+*/
 
             }
             else {
@@ -330,9 +339,9 @@ function getObjectNum() {
 
         });
 }
-getObjectNum();
 
-
+//------ search button event listener
+$("#submit").on("click", urlAppendTitle);
 
 
 

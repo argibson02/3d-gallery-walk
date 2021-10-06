@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Compiled and minified CSS -->\
+    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -32,12 +32,14 @@
                                 <li class = "dropdown-el"><a href="#!" value = "painting">Artwork Title</a></li>
                             </ul>
                             <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
-                            <button type = "submit">🔍</button>
+                            <button type = "submit" id="submit">🔍</button>
                         </form>
                     </li>
                     <li><a href = "./browse.html">Browse</a></li>
-                    <li><a href = "#">History</a></li>
-                    <li><a href = "#">Favorites</a></li>
+
+                    <li><a href = "./history.html">History</a></li>
+                    <li><a href = "./history.html">Favorites</a></li>
+
                 </ul>
             </div>
         </nav>
@@ -47,11 +49,16 @@
     </header>
     <main>
         <div id = "carousel-container">
+
             <!-- TEMPLATE 
                 <div class = "carousel-slide">
                 <img src = "https://cdn.vox-cdn.com/thumbor/1gWEHM0eUX_3Nv9TJ-bPdpFNTnk=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19397812/1048232144.jpg.jpg" alt = "sample img">
             </div> -->
-            
+          
+          <!--  
+              <div class = "full-preview" id="preview"></div>
+        </div>-->
+  
             <button id = "prev-button" class="waves-effect waves-light btn-small">&#10094;</button>
             <button id = "next-button" class="waves-effect waves-light btn-small">&#10095;</button>
               <div class="card" id = "artwork-card">
@@ -78,10 +85,13 @@
     </footer>
 
         <!-- Compiled and minified JavaScript -->
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.16.2-canary.1045.1221.0/jimp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js" integrity="sha512-NLtnLBS9Q2w7GKK9rKxdtgL7rA7CAS85uC/0xd9im4J/yOL4F9ZVlv634NAM7run8hz3wI2GabaA6vv8vJtHiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <script src = "./assets/js/script.js"></script>
 </body>
 </html>
