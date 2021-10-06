@@ -52,7 +52,7 @@ function styleDropdown(instance) {
     instance.constrainWidth = false;
 }
 
-function renderCollapsible() {
+function renderCard(){
     //when new image is loaded call this method to generate new info
 
 }
@@ -60,11 +60,13 @@ function renderCollapsible() {
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
-    renderCollapsible();
-});
-$(function () {
-    $('.collapsible').draggable();
-});
+  });
+$( function() {
+    $('.card' ).draggable();
+} );
+
+
+
 //when loading the api, we can change the visibility of .progress to visible using progressBarEl.css("visibility", "visible");
 
 
@@ -75,6 +77,15 @@ renderCarousel(curEl);
 
 
 
+//for browse
+
+$(document).ready(function(){
+    $('.tabs').tabs();
+  });
+
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+});
 
 
 
@@ -124,6 +135,10 @@ renderCarousel(curEl);
 
 
 
+
+
+
+var userInputText2 = $("#user-input-search").val();
 
 var userInputText = " Portret van een vrouw, mogelijk Maria Trip"; //tester
 
@@ -174,17 +189,21 @@ var miniArtResultsObj = [];
 
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
-function urlAppendTitle() {
-    searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
-    //console.log(searchUrl);
+function urlAppendTitle(event) {
+    event.preventDefault();
+    searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText2 + defaultSortMarkers;
+    console.log(searchUrl);
+    getResults();
 }
 //urlAppendTitle();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
-function urlAppendArtist() {
+function urlAppendArtist(event) {
+    event.preventDefault();
     searchUrl = searchAPIRoot + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
+    getResults();
 }
 //urlAppendArtist();
 
@@ -208,12 +227,12 @@ function userInputCleanse() {
     urlAppendTitle();
     //urlAppendArtist();
 }
-userInputCleanse();
+//userInputCleanse();
 
 
 
 //================================================================================ Search results fetches for both Mini and Detailed Results
-function getObjectNum() {
+function getResults() {
 
     fetch(searchUrl)
         .then(function (response) { // fetches objects from search API
@@ -257,7 +276,7 @@ function getObjectNum() {
                             //"productionPlaces": tempProduction, // Place where the art was produced
                         };
                         miniArtResultsObj.push(tempMiniArtObj); // Pushes the temporary object to our main Mini Search Results Object.
-                        //console.log(miniArtResultsObj);
+                        console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
@@ -268,7 +287,7 @@ function getObjectNum() {
                 }
                 
 
-                /*
+
 
                 // detailed currently off until 500 errors are solved.
 
@@ -301,10 +320,10 @@ function getObjectNum() {
                             };
                             artResultsObj.push(tempArtObj);  // Pushes the temporary object to our main Detailed Search Results Object.
                             //------- likely will need a push() to populate the page with the search results
-                            //console.log(artResultsObj);
+                            console.log(artResultsObj);
                         });
                 }
-                */
+
 
             }
             else {
@@ -315,7 +334,8 @@ function getObjectNum() {
 
         });
 }
-getObjectNum();
+//getResults();
 
-
+//------ search button event listener
+$("#submit").on("click", urlAppendTitle);
 
