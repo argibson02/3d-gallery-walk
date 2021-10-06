@@ -143,9 +143,9 @@ $(document).ready(function(){
 
 
 
-var userInputText2 = $("#user-input-search").val();
+var userInputText = $("#user-input-search").val();
 
-var userInputText = " Portret van een vrouw, mogelijk Maria Trip"; //tester
+var userInputText2 = " Portret van een vrouw, mogelijk Maria Trip"; //tester
 
 //========= Search API variables
 // Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
@@ -185,8 +185,8 @@ var miniArtResultsObj = [];
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendTitle(event) {
     event.preventDefault();
-    searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText2 + defaultSortMarkers;
-    console.log(searchUrl);
+    searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
+    //console.log(searchUrl);
     getResults();
 }
 //urlAppendTitle();
@@ -195,7 +195,7 @@ function urlAppendTitle(event) {
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
 function urlAppendArtist(event) {
     event.preventDefault();
-    searchUrl = searchAPIRoot + artistMarker + userInputText + defaultSortMarkers;
+    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
     getResults();
 }
@@ -218,8 +218,16 @@ function userInputCleanse() {
     userInputText = userInputText.replace("/", "+");  // replaces with +
     //userInputText = userInputText.replace("", "+");  // replaces with +
 
+    // need if statement here to check if we have title or artist selected.
+    //if (searchFilter = "Artist") {
+    //    urlAppendArtist();
+    //}
+    //
+    // else {    
+    //  urlAppendTitle();
+    //}
     urlAppendTitle();
-    //urlAppendArtist();
+    
 }
 //userInputCleanse();
 
@@ -284,7 +292,6 @@ function getResults() {
                 
 
 
-
                 // detailed currently off until 500 errors are solved.
 /*
                 //====================================== This area fetches a more detailed version of the call above.
@@ -330,7 +337,6 @@ function getResults() {
 
         });
 }
-//getResults();
 
 //------ search button event listener
 $("#submit").on("click", urlAppendTitle);
