@@ -125,9 +125,10 @@ renderCarousel(curEl);
 
 
 
-var userInputText = " Vincent van Gogh "; //tester
+var userInputText = " Portret van een vrouw, mogelijk Maria Trip"; //tester
 
 //========= Search API variables
+// Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
 // Filter variables
 var cultureMarker = "&culture=en"; // The language to search in (and of the results) (en or nl). I haven't a difference with or with out this, but keeping on.
 var resultsPerPageMarker = "&ps=50"; // 1-100, defaults 10. Good performance with 50.
@@ -160,55 +161,65 @@ var artResultsObj = [];
 var miniArtResultsObj = [];
 
 
-///////////////////////////////////////////////////////////////// function for appending user input on TITLE OR GENERAL QUERY search 
+//================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendTitle() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
 }
 //urlAppendTitle();
 
-///////////////////////////////////////////////////////////////// function for appending user input on ARTIST search ~~~  WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
+//================================================================================ Function for appending user input on ARTIST search 
+// WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
 function urlAppendArtist() {
     searchUrl = searchAPIRoot + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
 }
 //urlAppendArtist();
 
-/////////////////////////////////////////////////////////////////// function for appending user input on CENTURY +  TITLE OR GENERAL QUERY search 
+//================================================================================ Function for appending user input on CENTURY +  TITLE OR GENERAL QUERY search 
 //function urlAppendCentury() {
 //    searchUrl = searchAPIRoot + defaultFilterMarkers + centuryMarker + queryMarker + userInputText + defaultSortMarkers;
 //    console.log(searchUrl);
 //}
 ////urlAppendCentury();
 
-////////////////////////////////////////////////////////////////// Cleanse user input and covert to proper url  
+//================================================================================ Cleanse and ready user input
 function userInputCleanse() {
     //userInputText = $("#user-input-search").val(); // get field value
 
     // Cleaning inputs
     userInputText = userInputText.trim();  //remove trailing white spaces
     userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
+    userInputText = userInputText.replace("/", "+");  // replaces with +
+    //userInputText = userInputText.replace("", "+");  // replaces with +
 
-    //urlAppendTitle();
-    urlAppendArtist();
+    urlAppendTitle();
+    //urlAppendArtist();
 }
 userInputCleanse();
 
 
 
-//////////////////////////////////////////////////////////////////  Search results fetches for both Mini and Detailed Results
+//================================================================================ Search results fetches for both Mini and Detailed Results
 function getObjectNum() {
 
     fetch(searchUrl)
         .then(function (response) { // fetches objects from search API
+            if (!response.ok) {
+                console.log("One search result could not be obtained");
+            }
+            else{
             return response.json();
+            }
         })
         .then(function (miniData) { // AKA the "Mini-Results" Fetch. 
             objectNumTotal = miniData.count; // number of total search results
             objectCountOnPage = miniData.artObjects.length; // number of results returned to us on this page. This will match var resultsPerPageMarker. Currently set at 100.
 
+            console.log(miniData);
+
             if (objectNumTotal > 0) { // checks to see if the query returned any results
-                for (i = 0; i < objectCountOnPage; i++) {
+                for (i = 0; i < objectNumTotal; i++) {
 
                     // retrieving nested webImage URL
                     var tempWebImage = miniData.artObjects[i].webImage;
@@ -222,7 +233,7 @@ function getObjectNum() {
                     else {
                         var tempUrl = tempWebImage.url;
                         console.log(tempUrl);
-                        
+
                         var tempMiniArtObj =
                         {
                             "objectNumber": miniData.artObjects[i].objectNumber, // "SK-A-1505" This is the collection reference ID number. Useful for backend data and used in detailed fetch below.
@@ -243,12 +254,18 @@ function getObjectNum() {
 
                 }
 
-
+                var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
+                
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
-                    fetch(searchUrlArray[i])
+                    fetch(searchUrlArray[i]) // <====================================================== failing here
                         .then(function (response) { // fetches objects from search API
-                            return response.json();
+                            if (!response.ok) {
+                                console.log("One search result could not be obtained");
+                            }
+                            else{
+                            return response.json(); // <====================================================== not here...
+                            }
                         })
                         .then(function (artData) {
                             var tempArtObj =
@@ -270,7 +287,7 @@ function getObjectNum() {
                             console.log(artResultsObj);
                         });
                 }
-
+                
             }
             else {
                 //------ add 0 search results found function and actions here
