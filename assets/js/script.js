@@ -52,7 +52,7 @@ function styleDropdown(instance) {
     instance.constrainWidth = false;
 }
 
-function renderCollapsible() {
+function renderCard(){
     //when new image is loaded call this method to generate new info
 
 }
@@ -60,11 +60,13 @@ function renderCollapsible() {
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
-    renderCollapsible();
-});
-$(function () {
-    $('.collapsible').draggable();
-});
+  });
+$( function() {
+    $('.card' ).draggable();
+} );
+
+
+
 //when loading the api, we can change the visibility of .progress to visible using progressBarEl.css("visibility", "visible");
 
 
@@ -72,6 +74,18 @@ dropTriggerEl.dropdown();
 var dropdownmenu = M.Dropdown.getInstance(dropTriggerEl);
 styleDropdown(dropdownmenu);
 renderCarousel(curEl);
+
+
+
+//for browse
+
+$(document).ready(function(){
+    $('.tabs').tabs();
+  });
+
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+});
 
 
 
