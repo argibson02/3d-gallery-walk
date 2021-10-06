@@ -75,16 +75,19 @@
     min-width: 100vw;
 }
 
-#artwork-info{
+
+
+#artwork-card{
+    border-radius: 15px;
+    border: solid black 2px;
     z-index: 4;
     position: absolute;
-    top: 25%;
-    left: 75%;
-}
-
-#artwork-info li{
-    width: 300px;
-    background: rgba(128, 128, 128, .4) 
+    max-width: 300px;
+    min-height: 600px;
+    top: 15%;
+    left: 80%;
+    filter: drop-shadow(16px 16px 10px black);
+     
 }
 
 .carousel-slide img{
@@ -108,8 +111,15 @@
 }
 footer{
     border: 2px black solid;
-    position: absolute;
     width: 100%;
-    bottom:0;
     text-align: center;
+}
+
+#main-footer{
+    position: absolute;
+    bottom:0;
+}
+
+.collapsible-header, #time-tab .collection-item{
+    border-bottom: dotted gray 1px;
 }
