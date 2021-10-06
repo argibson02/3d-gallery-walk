@@ -177,17 +177,6 @@ var miniArtResultsObj = [];
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendTitle(event) {
     event.preventDefault();
@@ -251,7 +240,7 @@ function getResults() {
             //console.log(miniData);
 
             if (objectNumTotal > 0) { // checks to see if the query returned any results
-                for (i = 0; i < objectNumTotal; i++) {
+                for (i = 0; i < objectCountOnPage; i++) {
 
                     // retrieving nested webImage URL
                     var tempWebImage = miniData.artObjects[i].webImage;
@@ -264,7 +253,7 @@ function getResults() {
 
                     else {
                         var tempUrl = tempWebImage.url;
-                        //console.log(tempUrl);
+                        console.log(tempUrl);
 
                         var tempMiniArtObj =
                         {
@@ -282,6 +271,8 @@ function getResults() {
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
                         var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
                         searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
+                        //console.log(tempArtObjectsUrl);
+
                     }
 
                 }
@@ -290,7 +281,7 @@ function getResults() {
 
 
                 // detailed currently off until 500 errors are solved.
-
+/*
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
                     fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
@@ -323,7 +314,7 @@ function getResults() {
                             console.log(artResultsObj);
                         });
                 }
-
+*/
 
             }
             else {
