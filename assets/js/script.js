@@ -207,6 +207,7 @@ function getObjectNum() {
         .then(function (response) { // fetches objects from search API
             if (!response.ok) {
                 console.log("One search result could not be obtained");
+                throw 'Error';
             }
             else{
             return response.json();
@@ -216,7 +217,7 @@ function getObjectNum() {
             objectNumTotal = miniData.count; // number of total search results
             objectCountOnPage = miniData.artObjects.length; // number of results returned to us on this page. This will match var resultsPerPageMarker. Currently set at 100.
 
-            console.log(miniData);
+            //console.log(miniData);
 
             if (objectNumTotal > 0) { // checks to see if the query returned any results
                 for (i = 0; i < objectNumTotal; i++) {
@@ -232,7 +233,7 @@ function getObjectNum() {
 
                     else {
                         var tempUrl = tempWebImage.url;
-                        console.log(tempUrl);
+                        //console.log(tempUrl);
 
                         var tempMiniArtObj =
                         {
@@ -244,7 +245,7 @@ function getObjectNum() {
                             //"productionPlaces": tempProduction, // Place where the art was produced
                         };
                         miniArtResultsObj.push(tempMiniArtObj); // Pushes the temporary object to our main Mini Search Results Object.
-                        console.log(miniArtResultsObj);
+                        //console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
@@ -253,19 +254,18 @@ function getObjectNum() {
                     }
 
                 }
-
-                var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
                 
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
-                    fetch(searchUrlArray[i]) // <====================================================== failing here
+                    fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
                         .then(function (response) { // fetches objects from search API
                             if (!response.ok) {
                                 console.log("One search result could not be obtained");
-                            }
-                            else{
-                            return response.json(); // <====================================================== not here...
-                            }
+                                throw 'Error';
+                              }
+                              else {
+                                return response.json();
+                              }
                         })
                         .then(function (artData) {
                             var tempArtObj =
@@ -284,16 +284,24 @@ function getObjectNum() {
                             };
                             artResultsObj.push(tempArtObj);  // Pushes the temporary object to our main Detailed Search Results Object.
                             //------- likely will need a push() to populate the page with the search results
-                            console.log(artResultsObj);
+                            //console.log(artResultsObj);
                         });
                 }
                 
             }
             else {
                 //------ add 0 search results found function and actions here
+                console.log("No search results on query found. Please try again.")
                 return;
             }
 
         });
 }
 getObjectNum();
+
+
+
+
+function addFavorite() {
+
+}
