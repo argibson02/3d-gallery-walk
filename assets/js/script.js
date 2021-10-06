@@ -340,29 +340,86 @@ getObjectNum();
 
 // Viewing current variables
 var currentIdNum = ""; // This is a holder for the current collection ID number 
-var sessionFavArray = [];
-var localFavArray = [];
+var currentTitle = "";
+var currentArtist = "";
+var currentImage = "";  //image URL
+
+// Arrays for syncing, creating, clearing storage
+var sessionUrlArray = [];
+var localUrlArray = [];
+
+var sessionTitleArray = [];
+var localTitleArray = [];
+
+var sessionArtistArray = [];
+var localArtistArray = [];
+
+var sessionImageArray = [];
+var localImageArray = [];
+
 var emptyArray = [];
+
+
 
 //========================================================= Add favorite to storage function
 function addFavorite() {
+    
+    //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
-    var tempFavRefId = $("#collectionRefId").val();
-    var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId;
-    sessionFavArray.push(tempFavUrl);
-    localStorage.setItem("favoritesArray", JSON.stringify(sessionFavArray)); // syncing javascript array and local storage, add to local storage
-    sessionFavArray = JSON.parse(localStorage.getItem("favoritesArray")); //Array is stored as string in local storage. Grabbing it as an array and re-syncing the javascript array with local
+    var tempFavRefId = $("#collectionRefId").val(); // get reference ID. or currentIdNum
+    var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
+
+    sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
+    localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage, add to local storage.
+    sessionUrlArray = JSON.parse(localStorage.getItem("favoritesUrlArray")); //Array is stored as string in local storage. Grabbing it as an array and re-syncing the javascript array with local.
 
     // will need to add or manipulate the page in this function based off the need favorite
+
+    
+    //====================================== Adding Title
+    var tempFavTitle = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionTitleArray.push(tempFavTitle); 
+    localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray)); 
+    sessionTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray")); 
+
+    //====================================== Adding Artist
+    var tempFavArtist = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionArtistArray.push(tempFavArtist); 
+    localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray)); 
+    sessionArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray")); 
+    
+    //====================================== Adding Image URL
+    var tempFavImage = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionImageArray.push(tempFavImage); 
+    localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray)); 
+    sessionImageArray = JSON.parse(localStorage.getItem("favoritesImageArray")); 
+
+
+
 
     //location.reload(); // option if we need to reload the page....
 }
 
 //========================================================= Add favorite to storage function
 function clearFavorite() {
-    sessionFavArray = emptyArray; // sets javascript session array to blank
-    localStorage.setItem("favoritesArray", JSON.stringify(sessionFavArray)); // syncing javascript array and local storage
+    //====================================== Clearing Fetch URL
+    sessionUrlArray = emptyArray; // sets javascript session array to blank
+    localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage
     
+
+    //====================================== Clearing Title
+    sessionTitleArray = emptyArray; 
+    localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray)); 
+
+    //====================================== Clearing Artist
+    sessionArtistArray = emptyArray; 
+    localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray)); 
+
+    //====================================== Clearing Image URL
+    sessionImageArray = emptyArray; 
+    localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray)); 
+
+
     // may need to clear out other things
 
 }
@@ -370,14 +427,16 @@ function clearFavorite() {
 
 //============================================================= Sync Favorites function
 function checkFavorite() {
-    if (localStorage.getItem("favoritesArray") === null) { // if the local storage array is null, we skip syncing.
+    
+    //====================================== Syncing Fetch URL 
+    if (localStorage.getItem("favoritesUrlArray") === null) { // if the local storage array is null, we skip syncing.
         return;
     }
     else {
-        localFavArray = JSON.parse(localStorage.getItem("favoritesArray")); // if not null, make it var local check.
+        localUrlArray = JSON.parse(localStorage.getItem("favoritesUrlArray")); // if not null, make it var local check.
     }
-    if (localFavArray.length > sessionFavArray.length) { // if local storage is not empty, we sync our javascript session array to local one.
-        sessionFavArray = localFavArray;
+    if (localUrlArray.length > sessionUrlArray.length) { // if local storage is not empty, we sync our javascript session array to local one.
+        sessionUrlArray = localUrlArray;
 
         //do stuff here
 
@@ -386,8 +445,45 @@ function checkFavorite() {
         //    $("#newCityBtn").children().attr("class", "row btn btn-light m-1 mb-2 w-100 cityBtn");
         //    $("#newCityBtn").children().last().attr("id", cityArray[i]);
         //}
-
     }
+
+    //====================================== Syncing Title
+    if (localStorage.getItem("favoritesTitleArray") === null) {
+        return;
+    }
+    else {
+        localTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray")); 
+    }
+    if (localTitleArray.length > sessionTitleArray.length) { 
+        sessionTitleArray = localTitleArray;
+
+
+    //====================================== Syncing Artist
+    if (localStorage.getItem("favoritesArtistArray") === null) { 
+        return;
+    }
+    else {
+        localArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray")); 
+    }
+    if (localArtistArray.length > sessionArtistArray.length) { 
+        sessionArtistArray = localArtistArray;
+
+
+    //====================================== Syncing Image URL
+    if (localStorage.getItem("favoritesImageArray") === null) { 
+        return;
+    }
+    else {
+        localImageArray = JSON.parse(localStorage.getItem("favoritesImageArray")); 
+    }
+    if (localImageArray.length > sessionImageArray.length) { 
+        sessionImageArray = localImageArray;
+
+
+
+
+
+
 }
 checkFavorite(); //--- Syncing runs immediately upon loading the page
 
