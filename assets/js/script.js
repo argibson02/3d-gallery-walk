@@ -166,6 +166,7 @@ var defaultSortMarkers = resultsPerPageMarker + sortRelevanceMarker;
 // API root URLs and key
 var searchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection?key=TnDINDEU";
 var collectionAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection/";
+var collectionDutchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection/";
 var key = "?key=TnDINDEU";
 
 
