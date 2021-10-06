@@ -73,6 +73,7 @@
     max-height: 85vh;
     max-width: 100vw;
     min-width: 100vw;
+    border: 2px solid black;
 }
 
 
@@ -123,3 +124,16 @@ footer{
 .collapsible-header, #time-tab .collection-item{
     border-bottom: dotted gray 1px;
 }
+
+
+
+.full-preview {
+    height: 100%;
+    width: 100%;
+}
+
+/* Make the body take up the whole screen on load */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
