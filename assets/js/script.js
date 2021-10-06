@@ -456,7 +456,7 @@ function checkFavorite() {
     }
     if (localTitleArray.length > sessionTitleArray.length) { 
         sessionTitleArray = localTitleArray;
-
+    }
 
     //====================================== Syncing Artist
     if (localStorage.getItem("favoritesArtistArray") === null) { 
@@ -467,7 +467,7 @@ function checkFavorite() {
     }
     if (localArtistArray.length > sessionArtistArray.length) { 
         sessionArtistArray = localArtistArray;
-
+    }
 
     //====================================== Syncing Image URL
     if (localStorage.getItem("favoritesImageArray") === null) { 
@@ -478,7 +478,7 @@ function checkFavorite() {
     }
     if (localImageArray.length > sessionImageArray.length) { 
         sessionImageArray = localImageArray;
-
+    }
 
 
 
