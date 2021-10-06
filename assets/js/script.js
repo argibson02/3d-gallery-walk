@@ -106,7 +106,9 @@ function addPainting( imageURL ) {
     ] ).then( function( data ) {
         console.log( data );
         let normal = generateNormal( data[1] );
-        let painting = createPainting( data[0], normal ); // texture, normal
+        let displacement = generateDisplacement( data[1] );
+        let painting = createPainting( data[0], normal, displacement ); // texture, normal
+        
         scene.add(painting);
         renderFrame(sceneCameraRenderer);
     } );
@@ -117,7 +119,7 @@ function addPainting( imageURL ) {
  * @param {Jimp} imageData
  * @returns {Group} the created painting
  */
-function createPainting( texture, normal ) {
+function createPainting( texture, normal, displacement ) {
     let painting;
     painting = new THREE.Group();
     let aspectRatio = texture.image.height / texture.image.width;
@@ -126,7 +128,7 @@ function createPainting( texture, normal ) {
 
     // TODO: parse image data
     // let imageData;
-    applyTexture( plane, texture, normal );
+    applyTexture( plane, texture, normal, displacement );
 
     painting.name = "painting";
 
@@ -141,7 +143,7 @@ function createPainting( texture, normal ) {
 function addImagePlane( aspectRatio ) {
     let plane, geometry, defaultMaterial;
 
-    geometry = new THREE.PlaneGeometry( 1, aspectRatio * 1 );
+    geometry = new THREE.PlaneGeometry( 1, aspectRatio * 1, 1000, Math.floor(1000 * aspectRatio) );
     defaultMaterial = new THREE.MeshStandardMaterial();
     plane = new THREE.Mesh( geometry, defaultMaterial );
 
@@ -296,13 +298,28 @@ function converPixelToGrayscale( pixel ) {
  * @param {Array} imageData
  * @param {Array} normal 
  */
-function applyTexture( plane, imageData, normal ) {
+function applyTexture( plane, imageData, normal, displacement ) {
     plane.material.map = imageData;
     plane.material.normalMap = normal;
     plane.material.normalScale.x = .3;
     plane.material.normalScale.y = .3;
+    plane.material.displacementMap = displacement;
+    plane.material.displacementScale = 0.005;
     plane.material.color = new THREE.Color( 0xffffff );
     plane.material.needsUpdate = true;
+}
+
+function generateDisplacement( imageData ) {
+    let displacement = new THREE.DataTexture( 
+        imageData.greyscale().bitmap.data, 
+        imageData.bitmap.width,
+        imageData.bitmap.height,
+        THREE.RGBAFormat,
+        THREE.UnsignedByteType,
+        THREE.UVMapping );
+    displacement.flipY = true;
+    displacement.needsUpdate = true;
+    return displacement;
 }
 
 // Test - The carousel should contain a painting (currently just a plane)
