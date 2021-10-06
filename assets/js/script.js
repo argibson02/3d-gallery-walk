@@ -319,3 +319,81 @@ getObjectNum();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==============================================================================================================//  STORAGE //================//
+//========== Storage variables
+
+// Viewing current variables
+var currentIdNum = ""; // This is a holder for the current collection ID number 
+var sessionFavArray = [];
+var localFavArray = [];
+var emptyArray = [];
+
+//========================================================= Add favorite to storage function
+function addFavorite() {
+    // Get the var currentIdNum, set equal to  
+    var tempFavRefId = $("#collectionRefId").val();
+    var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId;
+    sessionFavArray.push(tempFavUrl);
+    localStorage.setItem("favoritesArray", JSON.stringify(sessionFavArray)); // syncing javascript array and local storage, add to local storage
+    sessionFavArray = JSON.parse(localStorage.getItem("favoritesArray")); //Array is stored as string in local storage. Grabbing it as an array and re-syncing the javascript array with local
+
+    // will need to add or manipulate the page in this function based off the need favorite
+
+    //location.reload(); // option if we need to reload the page....
+}
+
+//========================================================= Add favorite to storage function
+function clearFavorite() {
+    sessionFavArray = emptyArray; // sets javascript session array to blank
+    localStorage.setItem("favoritesArray", JSON.stringify(sessionFavArray)); // syncing javascript array and local storage
+    
+    // may need to clear out other things
+
+}
+
+
+//============================================================= Sync Favorites function
+function checkFavorite() {
+    if (localStorage.getItem("favoritesArray") === null) { // if the local storage array is null, we skip syncing.
+        return;
+    }
+    else {
+        localFavArray = JSON.parse(localStorage.getItem("favoritesArray")); // if not null, make it var local check.
+    }
+    if (localFavArray.length > sessionFavArray.length) { // if local storage is not empty, we sync our javascript session array to local one.
+        sessionFavArray = localFavArray;
+
+        //do stuff here
+
+        //for (i = 0; i < cityArray.length; i++) {
+        //    $("#newCityBtn").append("<button>" + cityArray[i] + "</button>");
+        //    $("#newCityBtn").children().attr("class", "row btn btn-light m-1 mb-2 w-100 cityBtn");
+        //    $("#newCityBtn").children().last().attr("id", cityArray[i]);
+        //}
+
+    }
+}
+checkFavorite(); //--- Syncing runs immediately upon loading the page
+
+
+
+
+//-------------------------------------------------------------- BUTTON EVENT LISTENERS
+$("#favoriteButton").on('click', addFavorite);
+$("#clearButton").on('click', clearFavorite);
