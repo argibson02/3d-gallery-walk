@@ -161,6 +161,18 @@ var artResultsObj = [];
 var miniArtResultsObj = [];
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendTitle() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
@@ -255,6 +267,11 @@ function getObjectNum() {
 
                 }
                 
+
+                /*
+
+                // detailed currently off until 500 errors are solved.
+
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
                     fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
@@ -287,7 +304,8 @@ function getObjectNum() {
                             //console.log(artResultsObj);
                         });
                 }
-                
+                */
+
             }
             else {
                 //------ add 0 search results found function and actions here
@@ -301,7 +319,3 @@ getObjectNum();
 
 
 
-
-function addFavorite() {
-
-}
