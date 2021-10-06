@@ -51,6 +51,7 @@ function styleDropdown(instance) {
 
 
 
+
 function renderCard(){
 
     //when new image is loaded call this method to generate new info
@@ -60,12 +61,12 @@ function renderCard(){
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
+
 });
 
 $( function() {
     $('.card' ).draggable();
 } );
-
 
 
 
@@ -140,8 +141,9 @@ $(document).ready(function(){
 
 
 
+var userInputText = $("#user-input-search").val();
 
-var userInputText = " Portret van een vrouw, mogelijk Maria Trip"; //tester
+var userInputText2 = " Portret van een vrouw, mogelijk Maria Trip"; //tester
 
 //========= Search API variables
 // Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
@@ -168,6 +170,7 @@ var defaultSortMarkers = resultsPerPageMarker + sortRelevanceMarker;
 // API root URLs and key
 var searchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection?key=TnDINDEU";
 var collectionAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection/";
+var collectionDutchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection/";
 var key = "?key=TnDINDEU";
 
 
@@ -178,29 +181,22 @@ var miniArtResultsObj = [];
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
-function urlAppendTitle() {
+function urlAppendTitle(event) {
+    event.preventDefault();
     searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
+    getResults();
 }
 //urlAppendTitle();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
-function urlAppendArtist() {
-    searchUrl = searchAPIRoot + artistMarker + userInputText + defaultSortMarkers;
+function urlAppendArtist(event) {
+    event.preventDefault();
+    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
+    getResults();
 }
 //urlAppendArtist();
 
@@ -221,15 +217,23 @@ function userInputCleanse() {
     userInputText = userInputText.replace("/", "+");  // replaces with +
     //userInputText = userInputText.replace("", "+");  // replaces with +
 
+    // need if statement here to check if we have title or artist selected.
+    //if (searchFilter = "Artist") {
+    //    urlAppendArtist();
+    //}
+    //
+    // else {    
+    //  urlAppendTitle();
+    //}
     urlAppendTitle();
-    //urlAppendArtist();
+    
 }
-userInputCleanse();
+//userInputCleanse();
 
 
 
 //================================================================================ Search results fetches for both Mini and Detailed Results
-function getObjectNum() {
+function getResults() {
 
     fetch(searchUrl)
         .then(function (response) { // fetches objects from search API
@@ -248,7 +252,7 @@ function getObjectNum() {
             //console.log(miniData);
 
             if (objectNumTotal > 0) { // checks to see if the query returned any results
-                for (i = 0; i < objectNumTotal; i++) {
+                for (i = 0; i < objectCountOnPage; i++) {
 
                     // retrieving nested webImage URL
                     var tempWebImage = miniData.artObjects[i].webImage;
@@ -261,7 +265,7 @@ function getObjectNum() {
 
                     else {
                         var tempUrl = tempWebImage.url;
-                        //console.log(tempUrl);
+                        console.log(tempUrl);
 
                         var tempMiniArtObj =
                         {
@@ -273,21 +277,22 @@ function getObjectNum() {
                             //"productionPlaces": tempProduction, // Place where the art was produced
                         };
                         miniArtResultsObj.push(tempMiniArtObj); // Pushes the temporary object to our main Mini Search Results Object.
-                        //console.log(miniArtResultsObj);
+                        console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
                         var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
                         searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
+                        //console.log(tempArtObjectsUrl);
+
                     }
 
                 }
                 
 
-                /*
 
                 // detailed currently off until 500 errors are solved.
-
+/*
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
                     fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
@@ -317,10 +322,10 @@ function getObjectNum() {
                             };
                             artResultsObj.push(tempArtObj);  // Pushes the temporary object to our main Detailed Search Results Object.
                             //------- likely will need a push() to populate the page with the search results
-                            //console.log(artResultsObj);
+                            console.log(artResultsObj);
                         });
                 }
-                */
+*/
 
             }
             else {
@@ -331,7 +336,181 @@ function getObjectNum() {
 
         });
 }
-getObjectNum();
+
+//------ search button event listener
+$("#submit").on("click", urlAppendTitle);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==============================================================================================================//  STORAGE //================//
+//========== Storage variables
+
+// Viewing current variables
+var currentIdNum = ""; // This is a holder for the current collection ID number 
+var currentTitle = "";
+var currentArtist = "";
+var currentImage = "";  //image URL
+
+// Arrays for syncing, creating, clearing storage
+var sessionUrlArray = [];
+var localUrlArray = [];
+
+var sessionTitleArray = [];
+var localTitleArray = [];
+
+var sessionArtistArray = [];
+var localArtistArray = [];
+
+var sessionImageArray = [];
+var localImageArray = [];
+
+var emptyArray = [];
+
+
+
+//========================================================= Add favorite to storage function
+function addFavorite() {
+    
+    //====================================== Adding Fetch URL
+    // Get the var currentIdNum, set equal to  
+    var tempFavRefId = $("#collectionRefId").val(); // get reference ID. or currentIdNum
+    var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
+
+    sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
+    localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage, add to local storage.
+    sessionUrlArray = JSON.parse(localStorage.getItem("favoritesUrlArray")); //Array is stored as string in local storage. Grabbing it as an array and re-syncing the javascript array with local.
+
+    // will need to add or manipulate the page in this function based off the need favorite
+
+    
+    //====================================== Adding Title
+    var tempFavTitle = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionTitleArray.push(tempFavTitle); 
+    localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray)); 
+    sessionTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray")); 
+
+    //====================================== Adding Artist
+    var tempFavArtist = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionArtistArray.push(tempFavArtist); 
+    localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray)); 
+    sessionArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray")); 
+    
+    //====================================== Adding Image URL
+    var tempFavImage = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    sessionImageArray.push(tempFavImage); 
+    localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray)); 
+    sessionImageArray = JSON.parse(localStorage.getItem("favoritesImageArray")); 
+
+
+
+
+    //location.reload(); // option if we need to reload the page....
+}
+
+//========================================================= Add favorite to storage function
+function clearFavorite() {
+    //====================================== Clearing Fetch URL
+    sessionUrlArray = emptyArray; // sets javascript session array to blank
+    localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage
+    
+
+    //====================================== Clearing Title
+    sessionTitleArray = emptyArray; 
+    localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray)); 
+
+    //====================================== Clearing Artist
+    sessionArtistArray = emptyArray; 
+    localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray)); 
+
+    //====================================== Clearing Image URL
+    sessionImageArray = emptyArray; 
+    localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray)); 
+
+
+    // may need to clear out other things
+
+}
+
+
+//============================================================= Sync Favorites function
+function checkFavorite() {
+    
+    //====================================== Syncing Fetch URL 
+    if (localStorage.getItem("favoritesUrlArray") === null) { // if the local storage array is null, we skip syncing.
+        return;
+    }
+    else {
+        localUrlArray = JSON.parse(localStorage.getItem("favoritesUrlArray")); // if not null, make it var local check.
+    }
+    if (localUrlArray.length > sessionUrlArray.length) { // if local storage is not empty, we sync our javascript session array to local one.
+        sessionUrlArray = localUrlArray;
+
+        //do stuff here
+
+        //for (i = 0; i < cityArray.length; i++) {
+        //    $("#newCityBtn").append("<button>" + cityArray[i] + "</button>");
+        //    $("#newCityBtn").children().attr("class", "row btn btn-light m-1 mb-2 w-100 cityBtn");
+        //    $("#newCityBtn").children().last().attr("id", cityArray[i]);
+        //}
+    }
+
+    //====================================== Syncing Title
+    if (localStorage.getItem("favoritesTitleArray") === null) {
+        return;
+    }
+    else {
+        localTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray")); 
+    }
+    if (localTitleArray.length > sessionTitleArray.length) { 
+        sessionTitleArray = localTitleArray;
+    }
+
+    //====================================== Syncing Artist
+    if (localStorage.getItem("favoritesArtistArray") === null) { 
+        return;
+    }
+    else {
+        localArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray")); 
+    }
+    if (localArtistArray.length > sessionArtistArray.length) { 
+        sessionArtistArray = localArtistArray;
+    }
+
+    //====================================== Syncing Image URL
+    if (localStorage.getItem("favoritesImageArray") === null) { 
+        return;
+    }
+    else {
+        localImageArray = JSON.parse(localStorage.getItem("favoritesImageArray")); 
+    }
+    if (localImageArray.length > sessionImageArray.length) { 
+        sessionImageArray = localImageArray;
+    }
+
+
+
+
+
+}
+checkFavorite(); //--- Syncing runs immediately upon loading the page
+
+
+
+
+//-------------------------------------------------------------- BUTTON EVENT LISTENERS
+$("#favoriteButton").on('click', addFavorite);
+$("#clearButton").on('click', clearFavorite);
