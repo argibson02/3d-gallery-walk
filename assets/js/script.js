@@ -46,6 +46,8 @@ function initPreview( elementId ) {
     camera.up = new THREE.Vector3( 0, 0, 1 );
     camera.lookAt( 0, 0, 0 );
 
+    fillPaintingToCamera( camera, containerHeight/containerWidth );
+
     // Add lighting to the scene
     let ambientLight = new THREE.AmbientLight( 0xffffff, ambientIntensity );
     scene.add( ambientLight );
@@ -61,13 +63,6 @@ function initPreview( elementId ) {
     return [scene, camera, renderer];
 }
 
-// Test - Carousel container should be black
-var sceneCameraRenderer = initPreview("#preview");
-var scene = sceneCameraRenderer[0],
-    camera = sceneCameraRenderer[1],
-    renderer = sceneCameraRenderer[2];
-console.log(renderer);
-
 /**
  * @description Renders a new frame to the page
  * @param {Array} sceneCameraRenderer An array of the Three Scene, Camera, and Renderer
@@ -81,36 +76,21 @@ function renderFrame( sceneCameraRenderer ) {
     renderer.render( scene, camera );
 }
 
-// Test - carousel container should be grey
-sceneCameraRenderer[0].background = new THREE.Color( 0xCCCCCC );
-renderFrame(sceneCameraRenderer);
-
 /**
  * @description Generates a new painting based off the url and adds it to the scene
  * @param {String} imageURL 
+ * @param {Object3D} scene
  */
-function addPainting( imageURL ) {
-    // Using Jimp loader
-    // jimp.read( imageURL ).then( imageData => {
-    //     let painting = createPainting( imageData );
-    //     scene.add(painting);
-    // } );
-
-    // Using threeJS loader
-    let loader = new THREE.TextureLoader();
-    let texturePromise = loader.load( imageURL );
-    let normalPromise = jimp.read( imageURL );
-    Promise.all( [
-        texturePromise,
-        normalPromise
-    ] ).then( function( data ) {
+function addPainting( imageURL, scene ) {
+    // Loads the encoded data from the image url as an rgb array
+    jimp.read( imageURL ).then( function( data ) {
         console.log( data );
-        let normal = generateNormal( data[1] );
-        let displacement = generateDisplacement( data[1] );
-        let painting = createPainting( data[0], normal, displacement ); // texture, normal
+        let normal = generateNormal( data );
+        let displacement = generateDisplacement( data );
+        let texture = generateColorTexture( data );
+        let painting = createPainting( texture, normal, displacement ); // texture, normal
         
         scene.add(painting);
-        renderFrame(sceneCameraRenderer);
     } );
 }
 
@@ -174,10 +154,7 @@ function generateNormal( imageData ) {
 
     // Convert the RGBA array into a more workable format
     let imageDataPixelArray = RGBAtoRGBPixelArray( imageData.bitmap.data, imageData.bitmap.width );
-    console.log(imageDataPixelArray[0].length * imageDataPixelArray.length);
-    console.log(imageData.bitmap.data.length / 4);
-    console.log(imageDataPixelArray.length); // Rows
-    console.log(imageDataPixelArray[0].length); // Columns
+    
     // For each pixel besides the pixels on the edges...
     for(let row=1; row<imageDataPixelArray.length-1; row++) {
         normalData.push([])
@@ -221,7 +198,7 @@ function generateNormal( imageData ) {
     normalData.push(normalData[normalData.length-1])
 
     let normalRGB = pixelArraytoRGB(normalData);
-    console.log(normalRGB);
+    
     let normal = new THREE.DataTexture( 
         normalRGB, 
         imageData.bitmap.width,
@@ -231,8 +208,6 @@ function generateNormal( imageData ) {
         THREE.UVMapping );
     normal.needsUpdate = true;
     normal.flipY = true;
-
-    console.log(normal);
     
     return normal;
 }
@@ -293,13 +268,14 @@ function converPixelToGrayscale( pixel ) {
 }
 
 /**
- * @description Applies the proper texture to the given image
+ * @description Applies the proper texture to the given jimp image
  * @param {Object3D} plane 
- * @param {Array} imageData
+ * @param {Object} imageData
  * @param {Array} normal 
  */
-function applyTexture( plane, imageData, normal, displacement ) {
-    plane.material.map = imageData;
+function applyTexture( plane, texture, normal, displacement ) {
+    console.log(texture);
+    plane.material.map = texture;
     plane.material.normalMap = normal;
     plane.material.normalScale.x = .3;
     plane.material.normalScale.y = .3;
@@ -309,9 +285,14 @@ function applyTexture( plane, imageData, normal, displacement ) {
     plane.material.needsUpdate = true;
 }
 
+/**
+ * @description Generates a displacement map from the given jimp image
+ * @param {Object} imageData 
+ * @returns 
+ */
 function generateDisplacement( imageData ) {
     let displacement = new THREE.DataTexture( 
-        imageData.greyscale().bitmap.data, 
+        imageData.clone().greyscale().bitmap.data, 
         imageData.bitmap.width,
         imageData.bitmap.height,
         THREE.RGBAFormat,
@@ -322,53 +303,89 @@ function generateDisplacement( imageData ) {
     return displacement;
 }
 
-// Test - The carousel should contain a painting (currently just a plane)
-addPainting( "https://lh3.googleusercontent.com/AyiKhdEWJ7XmtPXQbRg_kWqKn6mCV07bsuUB01hJHjVVP-ZQFmzjTWt7JIWiQFZbb9l5tKFhVOspmco4lMwqwWImfgg=s0" );
-
-// TODO: move this into init? or somewhere where it doesn't rely on global variables
-
-renderer.domElement.addEventListener( "mousedown", function() {
-    moving=true;
-} );
-
-renderer.domElement.addEventListener( "mousemove" , function(event) {
-    if(moving) {
-        //console.log(event.target);
-        rotatePainting( 
-            event.movementX, 
-            event.movementY, 
-            event.target.scene );
-    }
-} );
-
-renderer.domElement.addEventListener( "mouseup", function() {
-    moving=false;
-} );
-
-renderer.domElement.addEventListener( "dblclick", function(event) {
-    event.target.scene.getObjectByName("painting").lookAt(0, 0, 1);
-    renderFrame(sceneCameraRenderer);
-} );
-
-renderer.domElement.addEventListener( "wheel", function (event) {
-    camera.zoom += zoomSpeed * -1 * Math.sign(event.deltaY);
-    camera.updateProjectionMatrix(); // Must be called after changing camera parameters
-    renderFrame(sceneCameraRenderer);
-} );
-
 /**
  * @description Rotates the painting object based on the pixels moved by the mouse this frame
  * @param {Number} movementX 
  * @param {Number} movementY 
  * @param {Object3D} scene 
  */
-function rotatePainting(movementX, movementY, scene) {
+function rotatePainting( movementX, movementY, scene ) {
     let painting = scene.getObjectByName("painting"); 
     let zRot = (movementX/fullRotation) * Math.PI * 2;
     let xRot = (movementY/fullRotation) * Math.PI * 2;
 
     painting.rotateZ(zRot);
     painting.rotateX(xRot);
-
-    renderFrame(sceneCameraRenderer);
 }
+
+/**
+ * @description Generates a THREE.js color map from a jimp bitmap
+ * @param {Object} imageData 
+ * @returns 
+ */
+function generateColorTexture( imageData ) {
+    let texture = new THREE.DataTexture( imageData.bitmap.data, imageData.bitmap.width, imageData.bitmap.height, THREE.RGBAFormat, THREE.UnsignedByteType, THREE.UVMapping );
+    texture.flipY = true;
+    texture.needsUpdate = true;
+    return texture;
+}
+
+function fillPaintingToCamera( camera, aspectRatio ) {
+    // fov = tan( width of painting/aspectRatio / distanceToCamera*2 ) in radians;
+    // Sets width of the painting to the whole camera
+    camera.fov = Math.atan( (1/aspectRatio)  /  (2*3) ) * ( 180 / Math.PI );
+    camera.updateProjectionMatrix();
+}
+
+function setPreview( elementId, imageURL ) {
+    let sceneCameraRenderer = initPreview(elementId);
+    addPainting(imageURL, sceneCameraRenderer[0]);
+    setTimeout(renderFrame, 2000, sceneCameraRenderer);
+    renderFrame(sceneCameraRenderer);
+
+    // =========================== Set the input controls================================
+
+    let renderer = sceneCameraRenderer[2];
+    renderer.domElement.scene = sceneCameraRenderer[0];
+    renderer.domElement.camera = sceneCameraRenderer[1];
+    renderer.domElement.sceneCameraRenderer = sceneCameraRenderer;
+
+    // Track weather the user is clicking and dragging
+    renderer.domElement.addEventListener( "mousedown", function() {
+        moving=true;
+    } );
+    
+    // rotate the painting by moving the cursor
+    renderer.domElement.addEventListener( "mousemove" , function(event) {
+        if(moving) {
+            //console.log(event.target);
+            rotatePainting( 
+                event.movementX, 
+                event.movementY, 
+                event.target.scene );
+            renderFrame(event.target.sceneCameraRenderer);
+        }
+    } );
+    
+    // Stop rotating the object on release
+    renderer.domElement.addEventListener( "mouseup", function() {
+        moving=false;
+    } );
+    
+    // Reset view on double click
+    renderer.domElement.addEventListener( "dblclick", function(event) {
+        event.target.scene.getObjectByName("painting").lookAt(0, 0, 1);
+        event.target.camera.zoom = 1;
+        event.target.camera.updateProjectionMatrix();
+        renderFrame(event.target.sceneCameraRenderer);
+    } );
+    
+    // zoom in and out with mouse wheel
+    renderer.domElement.addEventListener( "wheel", function (event) {
+        event.target.camera.zoom += zoomSpeed * -1 * Math.sign(event.deltaY);
+        event.target.camera.updateProjectionMatrix(); // Must be called after changing camera parameters
+        renderFrame(event.target.sceneCameraRenderer);
+    } );
+}
+
+setPreview("#preview", "https://lh3.googleusercontent.com/AyiKhdEWJ7XmtPXQbRg_kWqKn6mCV07bsuUB01hJHjVVP-ZQFmzjTWt7JIWiQFZbb9l5tKFhVOspmco4lMwqwWImfgg=s0");
