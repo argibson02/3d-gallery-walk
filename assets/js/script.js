@@ -37,12 +37,9 @@ imageArr.push("https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w
 
 
 prevButton.on("click", function () {
-
-    console.log("hi" + curEl);
     renderCarousel(--curEl);
 });
 nextButton.on("click", function () {
-    console.log("byew" + curEl);
     renderCarousel(++curEl);
 
 });
@@ -65,7 +62,6 @@ $(document).ready(function () {
     $('.collapsible').collapsible();
 });
 
-  });
 $( function() {
     $('.card' ).draggable();
 } );
