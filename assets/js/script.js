@@ -8,6 +8,7 @@ const fullRotation = 500;
 const ambientIntensity = 0.6; // out of 1
 const directionalIntensity = 1.0;
 const zoomSpeed = 0.1;
+const normalStrength = 1.5;
 
 // Global Variables
 var moving = false;
@@ -105,7 +106,7 @@ function addPainting( imageURL ) {
     ] ).then( function( data ) {
         console.log( data );
         let normal = generateNormal( data[1] );
-        let painting = createPainting( data[0], data[1] ); // texture, normal
+        let painting = createPainting( data[0], normal ); // texture, normal
         scene.add(painting);
         renderFrame(sceneCameraRenderer);
     } );
@@ -119,14 +120,12 @@ function addPainting( imageURL ) {
 function createPainting( texture, normal ) {
     let painting;
     painting = new THREE.Group();
-    
     let aspectRatio = texture.image.height / texture.image.width;
     let plane = addImagePlane( aspectRatio );
     painting.add(plane);
 
     // TODO: parse image data
     // let imageData;
-    // let normal = generateNormal( imageData );
     applyTexture( plane, texture, normal );
 
     painting.name = "painting";
@@ -169,9 +168,126 @@ function addFrame( aspectRatio ) {
  * @param {Array} imageData 
  */
 function generateNormal( imageData ) {
-    let normal;
-    // TODO
+    let normalData = [];
+
+    // Convert the RGBA array into a more workable format
+    let imageDataPixelArray = RGBAtoRGBPixelArray( imageData.bitmap.data, imageData.bitmap.width );
+    console.log(imageDataPixelArray[0].length * imageDataPixelArray.length);
+    console.log(imageData.bitmap.data.length / 4);
+    console.log(imageDataPixelArray.length); // Rows
+    console.log(imageDataPixelArray[0].length); // Columns
+    // For each pixel besides the pixels on the edges...
+    for(let row=1; row<imageDataPixelArray.length-1; row++) {
+        normalData.push([])
+        for(let column=1; column<imageDataPixelArray[row].length-1; column++) {
+            // Convert the image to greyscale to be used as a crude height map
+            converPixelToGrayscale( imageDataPixelArray[row][column] );
+
+            // Calculate the partial derivatives of the color change by checking against left/top adjacent pixel
+            // Uses the Sobel operator, read more at: https://en.wikipedia.org/wiki/Sobel_operator
+            let topLeft =       imageDataPixelArray[row-1][column-1][0] / 255;
+            let top =           imageDataPixelArray[row-1][column][0] / 255;
+            let topRight =      imageDataPixelArray[row-1][column+1][0] / 255;
+            let right =         imageDataPixelArray[row][column+1][0] / 255;
+            let bottomRight =   imageDataPixelArray[row+1][column+1][0] / 255;
+            let bottom =        imageDataPixelArray[row+1][column][0] / 255;
+            let bottomLeft =    imageDataPixelArray[row+1][column-1][0] / 255;
+            let left =          imageDataPixelArray[row][column-1][0] / 255;
+            
+            
+            let derivativeX = (topRight + 2*right + bottomRight) - (topLeft + 2*left + bottomLeft);
+            let derivativeY = (topLeft + 2*top + topRight) - (bottomLeft + 2*bottom + bottomRight);
+            let derivativeZ = 1.0 / normalStrength;
+
+            let normalVector = new THREE.Vector3(derivativeX, derivativeY, derivativeZ).normalize();
+
+            // Convert derivatives into RGB pixels and add them to the normal
+            normalData[row-1].push([
+                normalVector.x * 255,
+                normalVector.y * 255,
+                normalVector.z * 255
+            ]);
+        }
+    }
+
+    // Add top and left rows of pixels to maintain image size
+    for( row=0; row < normalData.length; row++ ) {
+        normalData[row].unshift(normalData[row][0]);
+        normalData[row].push(normalData[row][normalData[row].length-1]);
+    }
+    normalData.unshift(normalData[0]);
+    normalData.push(normalData[normalData.length-1])
+
+    let normalRGB = pixelArraytoRGB(normalData);
+    console.log(normalRGB);
+    let normal = new THREE.DataTexture( 
+        normalRGB, 
+        imageData.bitmap.width,
+        imageData.bitmap.height,
+        THREE.RGBAFormat,
+        THREE.UnsignedByteType,
+        THREE.UVMapping );
+    normal.needsUpdate = true;
+    normal.flipY = true;
+
+    console.log(normal);
+    
     return normal;
+}
+
+/**
+ * @description converts RGBA to a 3d array of pixels
+ * @param {Array} data 
+ * @param {Number} width 
+ * @returns {Array}
+ */
+function RGBAtoRGBPixelArray( data, width ) {
+    out = [];
+
+    for(row=0; row<data.length/width/4; row++) {
+        out.push([]);
+        for(column=0; column<width; column++) {
+            i = row * width * 4 + column * 4
+            out[row].push([
+                data[i],
+                data[i+1],
+                data[i+2]
+            ]);
+        }
+    }
+
+    return out;
+}
+
+/**
+ * @description converts a 3d pixel array to RBG format
+ * @param {Array} data 
+ * @returns {Array}
+ */
+function pixelArraytoRGB( data ) {
+    let out = new Uint8Array( data.length * data[0].length * 4);
+    for( row=0; row<data.length; row++ ) {
+        for( column=0; column<data[row].length; column++ ) {
+            let i = (row * data[0].length * 4) + (column * 4)
+            out[i] = data[row][column][0];
+            out[i+1] = data[row][column][1];
+            out[i+2] = data[row][column][2];
+            out[i+3] = 255;
+        }
+    }
+
+    return out;
+}
+
+/**
+ * @description Converts a single rgb pixel array to grayscale
+ * @param {Array} pixel 
+ */
+function converPixelToGrayscale( pixel ) {
+    let avg = (pixel[0] + pixel[1] + pixel[2]) / 3;
+    pixel[0] = avg;
+    pixel[1] = avg;
+    pixel[2] = avg;
 }
 
 /**
@@ -182,6 +298,9 @@ function generateNormal( imageData ) {
  */
 function applyTexture( plane, imageData, normal ) {
     plane.material.map = imageData;
+    plane.material.normalMap = normal;
+    plane.material.normalScale.x = .3;
+    plane.material.normalScale.y = .3;
     plane.material.color = new THREE.Color( 0xffffff );
     plane.material.needsUpdate = true;
 }
