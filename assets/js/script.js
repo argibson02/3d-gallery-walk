@@ -212,14 +212,17 @@ function getObjectNum() {
 
                     // retrieving nested webImage URL
                     var tempWebImage = miniData.artObjects[i].webImage;
-                    
-                    var tempUrl = tempWebImage.url;
-                    console.log(tempUrl);
+                    if (!tempWebImage) {
+                        return; // prevents errors by doubling checking if the image is missing   
+                    }
 
                     // retrieving nested production place - Dutch only and often null - deprecated for now
                     //var tempProduction = miniData.artObjects[i].productionPlaces[0];
 
-                    if (tempUrl) {  // doubles checks that we have a URL.
+                    else {
+                        var tempUrl = tempWebImage.url;
+                        console.log(tempUrl);
+                        
                         var tempMiniArtObj =
                         {
                             "objectNumber": miniData.artObjects[i].objectNumber, // "SK-A-1505" This is the collection reference ID number. Useful for backend data and used in detailed fetch below.
@@ -237,9 +240,7 @@ function getObjectNum() {
                         var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
                         searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
                     }
-                    else {
-                        return;
-                    }
+
                 }
 
 
