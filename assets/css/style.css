@@ -87,6 +87,7 @@
     left: 80%;
     filter: drop-shadow(16px 16px 10px black);
     text-align: center;
+    max-width: 400px;
      
 }
 
@@ -113,6 +114,12 @@
     align-self: right;
     margin: -20% 88%;
 }
+#menu{
+    float: right;
+}
+#menu-title{
+    text-align: center;
+}
 footer{
     border: 2px black solid;
     width: 100%;
@@ -122,6 +129,13 @@ footer{
 #main-footer{
     position: absolute;
     bottom:0;
+}
+
+
+.toasts {
+    background: palevioletred;
+    color: white;
+    font-weight: bold;
 }
 
 .collapsible-header, #time-tab .collection-item{
