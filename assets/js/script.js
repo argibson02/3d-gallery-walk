@@ -286,11 +286,12 @@ function checkFavorite() {
         $("#collectionA").children().last().attr("img-value", sessionImageArray[i]);
         $("#collectionA").children().last().attr("title-value", sessionTitleArray[i]);*/
         $("#fav-collection").append("<a>" + sessionLongTitleArray[i] + "</a>");
-        $("#fav-collection").children().attr("class", "collection-item a favorite-item");
+        $("#fav-collection").children().attr("class", "collection-item a favorite-itme");
         $("#fav-collection").children().last().attr("id", sessionLongTitleArray[i]);
         $("#fav-collection").children().last().attr("fetch-value", sessionUrlArray[i]);
         $("#fav-collection").children().last().attr("img-value", sessionImageArray[i]);
         $("#fav-collection").children().last().attr("title-value", sessionTitleArray[i]);
+        $("#fav-collection").children().last().attr( "href", "./index.html?title=" + userInputValidation( sessionTitleArray[i] ) );
     }
 
 

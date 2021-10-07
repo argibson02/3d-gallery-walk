@@ -19,7 +19,7 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
 function populateFeatured( data ) {
     for(let i=0; i<data.artObjects.length; i++) {
         let li = $("<li>");
-        li.addClass(); // TODO: add css classes
+        li.addClass("collection-item a"); // TODO: add css classes
         let link = $("<a>");
         link.attr("href", "./index.html?title=" + userInputValidation( data.artObjects[i].title ) );
         link.text(data.artObjects[i].title);
