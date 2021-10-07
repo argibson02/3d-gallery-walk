@@ -37,7 +37,18 @@ $(".curated").on("click", function () {
 
 // Populates the artists tab
 function populateArtists() {
-    // TODO
-}
+    let collaps = $(".collapsible")
 
+    for (i = 0; i < artistList.length; i++) {
+        let curName = artistList[i];
+        let artName = $("<a>");
+        artName.attr("class", "collection-item");
+        artName.attr("href", "#"); //add link
+        artName.text(curName);
+        let ch = curName.charCodeAt(0);
+        let ind = ch-65;
+        collaps.children().eq(ind).children().eq(1).children().append(artName);
+    }
+}
+populateArtists();
 getResults(urlTop20(), populateFeatured);
