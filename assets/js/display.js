@@ -142,7 +142,16 @@ function loadPageContentFromURL() {
     }
 
     else if( parameters.artistName ) {
-        getResults(urlAppendArtist( parameters.artistName), setImageAndCards);
+        console.log(parameters.artistName);
+        getResults( urlAppendArtist( swapLastNameFirstName( parameters.artistName ) ), setImageAndCards );
+    } 
+
+    function swapLastNameFirstName( name ) {
+        let names = name.split(",");
+        let lastName = names[0];
+        let firstName = names[1].substring(1); // getting rid of the initial space
+
+        return firstName + " " + lastName;
     }
 }
 
