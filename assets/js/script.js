@@ -1,3 +1,7 @@
+
+var searchUrlArray = [];
+var artResultsObj = [];
+var miniArtResultsObj = [];
 var imageArr = []; //array of images used to display in the carousel
 var curEl = 0; //the image that is initially displayed on the carousel, keeps track of which index in imagearr
 
@@ -6,6 +10,8 @@ var nextButton = $("#next-button"); //next button for carousel
 var prevButton = $("#prev-button"); //prev button for carousel
 var dropTriggerEl = $('.dropdown-trigger'); //dropdown on top search bar
 var progressBarEl = $(".progress"); //the loading bar
+var artwordCardEl = $("#artwork-card");
+
 
 
 //list of artists https://www.rijksmuseum.nl/en/rijksstudio/artists
@@ -24,9 +30,19 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
          "Vanmour, Jean Baptiste","Velde, Willem van de", "Velde, Willem van de (II)", "Venne, Adriaen Pietersz. van de", "Vermeer, Johannes", "Verspronck, Johannes Cornelisz.", 
          "Vianen, Paulus Willemsz. van", "Visscher, Claes Jansz.", "Voogd, Hendrik"];
 
-/**
- * 
- */
+    function renderCard(index) {
+        var txt = (miniArtResultsObj[index].longTitle).split(",");
+        year = txt[txt.length-1];
+        $("#artwork-card-title").text(miniArtResultsObj[index].title);
+        $("#artwork-card-artist").text("artist: " + miniArtResultsObj[index].principalOrFirstMaker);
+        $("#artwork-card-year").text("year: " + year);
+        $("#artwork-card-link").attr("href", "https://www.rijksmuseum.nl/en/collection/"+ miniArtResultsObj[index].objectNumber);
+
+        storeTitle = miniArtResultsObj[index].title;  //  variable needed for storage function 
+        storeArtist = miniArtResultsObj[index].principalOrFirstMaker;  //  variable needed for storage function 
+        storeFetchUrl = miniArtResultsObj[index].objectNumber;  //  variable needed for storage function 
+
+    }
 function clearCarousel() {
     $(".carousel-slide").remove();
 }
@@ -34,17 +50,17 @@ function clearCarousel() {
 function renderCarousel(index) {
 
     if (index < 0) {
-        curEl = 0;
+        curEl = imageArr.length-1;
         return;
     }
     else if (index >= imageArr.length) {
-        curEl = imageArr.length - 1;
+        curEl = 0;
         return;
     }
 
     clearCarousel();
     let imgUrl = imageArr[index];
-    storageImgUrl = imgUrl // creating variable needed for storage function 
+    storageImgUrl = imgUrl //  variable needed for storage function 
 
     let slide = $("<div>");
     slide.attr("class", "carousel-slide");
@@ -56,24 +72,28 @@ function renderCarousel(index) {
     // add div, 
     //
     slide.append(renderedImage);
-
+    console.log(miniArtResultsObj);
     
     carouselContainerEl.append(slide);
+    renderCard(index);
     setPreview("#rendered-image", imgUrl);
 }
 
 
-imageArr.push("https://media.sanctuarymentalhealth.org/wp-content/uploads/2021/03/04151535/The-Starry-Night.jpg");
+
+
+//imageArr.push("https://media.overstockart.com/optimized/cache/data/product_images/VG485-1000x1000.jpg");
 // imageArr.push("https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8eW9zZW1pdGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
 // imageArr.push("https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1600&h=800&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2019%2F11%2FAlaska-Northern-Lights-ALASKALTS1017.jpg");
 
 
 prevButton.on("click", function () {
     renderCarousel(--curEl);
+    $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 nextButton.on("click", function () {
     renderCarousel(++curEl);
-
+    $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 
 //render dropdown menu
@@ -84,11 +104,7 @@ function styleDropdown(instance) {
 
 
 
-function renderCard() {
 
-    //when new image is loaded call this method to generate new info
-
-}
 
 //render collapsible
 $(document).ready(function () {
@@ -213,9 +229,6 @@ var key = "?key=TnDINDEU";
 
 
 // initialized arrays used search fetch functions
-var searchUrlArray = [];
-var artResultsObj = [];
-var miniArtResultsObj = [];
 
 
 
@@ -442,6 +455,7 @@ function getResults() {
                 return;
             }
             progressBarEl.css("visibility", "hidden");
+            renderCarousel(0);
         });
 }
 
@@ -499,9 +513,11 @@ var emptyArray = [];
 //========================================================= Add favorite to storage function
 function addFavorite() {
     M.toast({html: 'Success!', classes: 'toasts'});
+    $("#favorite").attr('disabled', true); // prevnets double clicks by disabling the favorite button.
+
     //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
-    var tempFavRefId = $("#collectionRefId").val(); // get reference ID. or currentIdNum
+    var tempFavRefId = storeFetchUrl; // get reference ID. or currentIdNum
     var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
 
     sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
@@ -512,13 +528,13 @@ function addFavorite() {
 
 
     //====================================== Adding Title
-    var tempFavTitle = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavTitle = storeTitle; // get reference ID. or currentIdNum 
     sessionTitleArray.push(tempFavTitle);
     localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray));
     sessionTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray"));
 
     //====================================== Adding Artist
-    var tempFavArtist = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavArtist = storeArtist; // get reference ID. or currentIdNum 
     sessionArtistArray.push(tempFavArtist);
     localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray));
     sessionArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray"));
@@ -540,7 +556,6 @@ function clearFavorite() {
     //====================================== Clearing Fetch URL
     sessionUrlArray = emptyArray; // sets javascript session array to blank
     localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage
-
 
     //====================================== Clearing Title
     sessionTitleArray = emptyArray;
@@ -615,7 +630,7 @@ function checkFavorite() {
         sessionImageArray = localImageArray;
     }
 
-
+    console.log(sessionUrlArray);
 
 
 
@@ -627,4 +642,5 @@ checkFavorite(); //--- Syncing runs immediately upon loading the page
 
 //-------------------------------------------------------------- BUTTON EVENT LISTENERS
 $("#favorite").on('click', addFavorite);
+
 $("#clearButton").on('click', clearFavorite);

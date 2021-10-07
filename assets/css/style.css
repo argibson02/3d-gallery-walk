@@ -83,11 +83,10 @@
     border: solid black 2px;
     z-index: 4;
     position: absolute;
-    max-width: 300px;
-    min-height: 600px;
     top: 15%;
     left: 80%;
     filter: drop-shadow(16px 16px 10px black);
+    text-align: center;
      
 }
 
