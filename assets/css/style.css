@@ -131,6 +131,13 @@ footer{
     bottom:0;
 }
 
+
+.toasts {
+    background: palevioletred;
+    color: white;
+    font-weight: bold;
+}
+
 .collapsible-header, #time-tab .collection-item{
     border-bottom: dotted gray 1px;
 }
@@ -146,3 +153,4 @@ html, body {
     height: 100%;
     margin: 0;
 }
+
