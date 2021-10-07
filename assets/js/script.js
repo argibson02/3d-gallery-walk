@@ -102,10 +102,6 @@ function styleDropdown(instance) {
     instance.constrainWidth = false;
 }
 
-
-
-
-
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
@@ -127,11 +123,9 @@ $(document).ready(function () {
     $('.collapsible').collapsible();
 });
 
-
-
-  $(document).ready(function(){
-    $('.tap-target').tapTarget();
-  });
+$(document).ready(function(){
+$('.tap-target').tapTarget();
+});
 
 
 
@@ -142,61 +136,9 @@ styleDropdown(dropdownmenu);
 renderCarousel(curEl);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var userInputText = $("#user-input-search").val();
 
 //var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
-
-
-
-
-
 
 
 //========= Search API variables
@@ -231,8 +173,12 @@ var key = "?key=TnDINDEU";
 // initialized arrays used search fetch functions
 
 
+//================================================================================== Function for 
+function urlTop20() {
+    searchUrl = searchAPIRoot + topPieceMarker + hasImageMarker + typeMarker;
 
-
+    getResults();
+}
 
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
