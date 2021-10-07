@@ -173,7 +173,7 @@ $(document).ready(function () {
 
 var userInputText = $("#user-input-search").val();
 
-var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
+//var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
 
 
 
@@ -329,9 +329,7 @@ function urlDefault() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
     getResults();
 }
-urlDefault(); //--- runs immediately upon loading the page.
-
-
+setTimeout(urlDefault, 1000); //--- runs immediately upon loading the page.
 
 
 
@@ -437,6 +435,7 @@ function getResults() {
             }
             else {
                 //------ add 0 search results found function and actions here
+                M.toast({html: 'No search results on query found. Please try again.', classes: 'rounded'});
                 console.log("No search results on query found. Please try again.")
                 return;
             }
@@ -497,7 +496,7 @@ var emptyArray = [];
 
 //========================================================= Add favorite to storage function
 function addFavorite() {
-
+    M.toast({html: 'Success!', classes: 'toasts'});
     //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
     var tempFavRefId = $("#collectionRefId").val(); // get reference ID. or currentIdNum
@@ -625,5 +624,5 @@ checkFavorite(); //--- Syncing runs immediately upon loading the page
 
 
 //-------------------------------------------------------------- BUTTON EVENT LISTENERS
-$("#favoriteButton").on('click', addFavorite);
+$("#favorite").on('click', addFavorite);
 $("#clearButton").on('click', clearFavorite);
