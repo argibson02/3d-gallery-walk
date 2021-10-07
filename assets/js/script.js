@@ -260,12 +260,18 @@ function checkFavorite() {
 
     // Adding history list here
     for (i = 0; i < sessionLongTitleArray.length; i++) {
-        $("#collectionA").append("<a>" + sessionLongTitleArray[i] + "</a>");
+        /*$("#collectionA").append("<a>" + sessionLongTitleArray[i] + "</a>");
         $("#collectionA").children().attr("class", "collection-item a favorite-item");
         $("#collectionA").children().last().attr("id", sessionLongTitleArray[i]);
         $("#collectionA").children().last().attr("fetch-value", sessionUrlArray[i]);
         $("#collectionA").children().last().attr("img-value", sessionImageArray[i]);
-        $("#collectionA").children().last().attr("title-value", sessionTitleArray[i]);
+        $("#collectionA").children().last().attr("title-value", sessionTitleArray[i]);*/
+        $("#fav-collection").append("<a>" + sessionLongTitleArray[i] + "</a>");
+        $("#fav-collection").children().attr("class", "collection-item a favorite-item");
+        $("#fav-collection").children().last().attr("id", sessionLongTitleArray[i]);
+        $("#fav-collection").children().last().attr("fetch-value", sessionUrlArray[i]);
+        $("#fav-collection").children().last().attr("img-value", sessionImageArray[i]);
+        $("#fav-collection").children().last().attr("title-value", sessionTitleArray[i]);
     }
 
 
