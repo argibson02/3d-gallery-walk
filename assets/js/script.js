@@ -5,11 +5,29 @@ var carouselContainerEl = $("#carousel-container"); //container for the carousel
 var nextButton = $("#next-button"); //next button for carousel
 var prevButton = $("#prev-button"); //prev button for carousel
 var dropTriggerEl = $('.dropdown-trigger'); //dropdown on top search bar
-var progressBarEl = $(".progress");
+var progressBarEl = $(".progress"); //the loading bar
+
+
+//list of artists https://www.rijksmuseum.nl/en/rijksstudio/artists
+var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Avercamp, Hendrick", "Baburen, Dirck van", "Bakhuysen, Ludolf"
+, "Berchem, Nicolaes Pietersz", "Berckheyde, Gerrit Adriaensz", "Beuckelaer, Joachim","Bilders, Albert Gerard", "Bloemaert, Abraham", "Bol, Ferdinand",
+ "Borch, Gerard ter", "Both, Jan", "Breitner, George Hendrik", "Brugghen, Hendrick ter", "Buytewech, Willem Pietersz", "Claesz, Pieter", "Coorte, Adriaen",
+  "Cornelisz van Haarlem, Cornelis","Cornelisz. van Oostsanen, Jacob", "Cuyp, Aelbert", "Dou, Gerard", "Dujardin, Karel", "Dyck, Anthony van","Dürer, Albrecht",
+   "Eeckhout, Gerbrand van den", "Everdingen, Caesar Boëtius van", "Flinck, Govert", "Gabriël, Paul Joseph Constantin", "Gao Qipei", "Geertgen tot Sint Jans", 
+   "Gheyn, Jacob de", "Giambologna", "Gogh, Vincent van", "Goltzius, Hendrick", "Goya y Lucientes, Francisco José de", "Goyen, Jan van", "Hals, Dirck", "Hals, Frans",
+    "Heda, Willem Claesz", "Heem, Jan Davidsz de", "Heemskerck, Maarten van", "Helst, Bartholomeus van der", "Hiroshige", "Hokusai, Katsushika", "Hondecoeter, Melchior d'",
+     "Honthorst, Gerard van", "Hooch, Pieter de", "Israels, Isaac", "Israëls, Jozef", "Jordaens, Jacob", "Key, Adriaen Thomasz.", "Koninck, Philips", "Kooi, Willem Bartel van der",
+      "Kruseman, Jan Adam", "Lairesse, Gerard de","Lastman, Pieter", "Lelie, Adriaan de", "Leyden, Lucas van", "Lievens, Jan", "Liotard, Jean Etienne", "Maes, Nicolaes",
+       "Mander, Karel van", "Mauve, Anton", "Meester van Alkmaar", "Mesdag, Hendrik Willem", "Metsu, Gabriël", "Mierevelt, Michiel Jansz van", "Mignon, Abraham", "Ostade, Adriaen van",
+        "Pieneman, Jan Willem", "Pieneman, Nicolaas", "Post, Frans Jansz", "Potter, Paulus", "Rembrandt Harmensz van Rijn", "Rubens, Peter Paul", "Ruisdael, Jacob Isaacksz van", 
+        "Ruysdael, Salomon van", "Saenredam, Pieter Jansz", "Savery, Roelant", "Schouten, Gerrit", "Scorel, Jan van", "Segers, Hercules","Steen, Jan Havicksz", "Sweerts, Michael", "Troost, Cornelis",
+         "Vanmour, Jean Baptiste","Velde, Willem van de", "Velde, Willem van de (II)", "Venne, Adriaen Pietersz. van de", "Vermeer, Johannes", "Verspronck, Johannes Cornelisz", 
+         "Vianen, Paulus Willemsz van", "Visscher, Claes Jansz", "Voogd, Hendrik"];
 
 function clearCarousel() {
     $(".carousel-slide").remove();
 }
+
 function renderCarousel(index) {
 
     if (index < 0) {
@@ -25,15 +43,24 @@ function renderCarousel(index) {
     let imgUrl = imageArr[index];
     let slide = $("<div>");
     slide.attr("class", "carousel-slide");
-    let image = $("<img>");
-    image.attr("src", imgUrl);
-    slide.append(image);
+    // let image = $("<img>");
+    // image.attr("src", imgUrl);
+
+    let renderedImage = $("<div>");
+    renderedImage.attr("id", "rendered-image");
+    // add div, 
+    //
+    slide.append(renderedImage);
+
+    
     carouselContainerEl.append(slide);
+    setPreview("#rendered-image", imgUrl);
 }
 
-imageArr.push("https://cdn.vox-cdn.com/thumbor/1gWEHM0eUX_3Nv9TJ-bPdpFNTnk=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19397812/1048232144.jpg.jpg");
-imageArr.push("https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8eW9zZW1pdGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
-imageArr.push("https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1600&h=800&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2019%2F11%2FAlaska-Northern-Lights-ALASKALTS1017.jpg");
+
+// imageArr.push("https://cdn.vox-cdn.com/thumbor/1gWEHM0eUX_3Nv9TJ-bPdpFNTnk=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/19397812/1048232144.jpg.jpg");
+// imageArr.push("https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8eW9zZW1pdGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
+// imageArr.push("https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1600&h=800&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2019%2F11%2FAlaska-Northern-Lights-ALASKALTS1017.jpg");
 
 
 prevButton.on("click", function () {
@@ -70,7 +97,7 @@ $( function() {
 
 
 
-//when loading the api, we can change the visibility of .progress to visible using progressBarEl.css("visibility", "visible");
+
 
 
 dropTriggerEl.dropdown();
@@ -234,7 +261,7 @@ function userInputCleanse() {
 
 //================================================================================ Search results fetches for both Mini and Detailed Results
 function getResults() {
-
+    progressBarEl.css("visibility", "visible");
     fetch(searchUrl)
         .then(function (response) { // fetches objects from search API
             if (!response.ok) {
@@ -267,6 +294,8 @@ function getResults() {
                         var tempUrl = tempWebImage.url;
                         console.log(tempUrl);
 
+                        imageArr.push(tempUrl);
+
                         var tempMiniArtObj =
                         {
                             "objectNumber": miniData.artObjects[i].objectNumber, // "SK-A-1505" This is the collection reference ID number. Useful for backend data and used in detailed fetch below.
@@ -277,7 +306,7 @@ function getResults() {
                             //"productionPlaces": tempProduction, // Place where the art was produced
                         };
                         miniArtResultsObj.push(tempMiniArtObj); // Pushes the temporary object to our main Mini Search Results Object.
-                        console.log(miniArtResultsObj);
+                        //console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
                         var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
@@ -291,8 +320,8 @@ function getResults() {
                 
 
 
-                // detailed currently off until 500 errors are solved.
-/*
+             /*   // detailed currently off until 500 errors are solved.
+
                 //====================================== This area fetches a more detailed version of the call above.
                 for (i = 0; i < searchUrlArray.length; i++) { // AKA the "Detailed-Results" Fetch. 
                     fetch(searchUrlArray[i]) // <====================================================== failing here if this is a non-existent URL : var badUrlExample = "https://www.rijksmuseum.nl/api/nl/collection/SK-A-3467?key=TnDINDEU";
@@ -333,7 +362,7 @@ function getResults() {
                 console.log("No search results on query found. Please try again.")
                 return;
             }
-
+            progressBarEl.css("visibility", "hidden");
         });
 }
 
