@@ -44,4 +44,10 @@ function populateFeatured() {
     } );
 }
 
+// Curated event listener
+$(".curated").on("click", function () {
+    tempCuratedArtist = $(this).attr("id");
+    urlAppendArtist();
+});
+
 populateFeatured();

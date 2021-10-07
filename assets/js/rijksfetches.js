@@ -32,18 +32,14 @@ const key = "?key=TnDINDEU";
 
 //================================================================================== Function for 
 function urlTop20() {
-    searchUrl = searchAPIRoot + topPieceMarker + hasImageMarker + typeMarker;
-
-    getResults();
+    return searchAPIRoot + topPieceMarker + hasImageMarker + typeMarker;
 }
 
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendTitle() {
     //event.preventDefault();
-    searchUrl = searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
-    //console.log(searchUrl);
-    getResults();
+    return searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
 }
 //urlAppendTitle();
 
@@ -51,18 +47,14 @@ function urlAppendTitle() {
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
 function urlAppendArtist() {
     //event.preventDefault();
-    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
-    //console.log(searchUrl);
-    getResults();
+    return searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
 }
 //urlAppendArtist();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // Cleansed 
 function urlAppendCurated() {
-    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + curatedText + defaultSortMarkers;
-    //console.log(searchUrl);
-    getResults();
+    return searchAPIRoot + defaultFilterMarkers + artistMarker + curatedText + defaultSortMarkers;
 }
 
 
@@ -75,13 +67,14 @@ function urlAppendCurated() {
 
 //============================================================================= Default URL load
 function urlDefault() {
-    searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
-    getResults();
+    return searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
 }
 
 
 //==================================== 
 function getResults( searchUrl, helper ) {
+    console.log( searchUrl );
+    console.log( helper );
     progressBarEl.css("visibility", "visible");
     fetch( searchUrl )
         .then(function (response) { // fetches objects from search API

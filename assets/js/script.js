@@ -3,7 +3,7 @@ var searchUrlArray = [];
 var artResultsObj = [];
 var miniArtResultsObj = [];
 var imageArr = []; //array of images used to display in the carousel
-var curEl = 0; //the image that is initially displayed on the carousel, keeps track of which index in imagearr
+
 
 var carouselContainerEl = $("#carousel-container"); //container for the carousel, used to render carousel elements
 var nextButton = $("#next-button"); //next button for carousel
@@ -30,37 +30,16 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
          "Vanmour, Jean Baptiste","Velde, Willem van de", "Velde, Willem van de (II)", "Venne, Adriaen Pietersz. van de", "Vermeer, Johannes", "Verspronck, Johannes Cornelisz.", 
          "Vianen, Paulus Willemsz. van", "Visscher, Claes Jansz.", "Voogd, Hendrik"];
 
-    function renderCard(index) {
-        var txt = (miniArtResultsObj[index].longTitle).split(",");
-        year = txt[txt.length-1];
-        $("#artwork-card-title").text(miniArtResultsObj[index].title);
-        $("#artwork-card-artist").text("artist: " + miniArtResultsObj[index].principalOrFirstMaker);
-        $("#artwork-card-year").text("year: " + year);
-        $("#artwork-card-link").attr("href", "https://www.rijksmuseum.nl/en/collection/"+ miniArtResultsObj[index].objectNumber);
 
-        storeLongTitle = miniArtResultsObj[index].longTitle; //  variable needed for storage function 
-        storeTitle = miniArtResultsObj[index].title;  //  variable needed for storage function 
-        storeArtist = miniArtResultsObj[index].principalOrFirstMaker;  //  variable needed for storage function 
-        storeFetchUrl = miniArtResultsObj[index].objectNumber;  //  variable needed for storage function 
-
-    }
 
 
 
 //render dropdown menu
-function styleDropdown(instance) {
-    instance.constrainWidth = false;
-}
+// function styleDropdown(instance) {
+//     instance.constrainWidth = false;
+// }
 
-//render collapsible
-$(document).ready(function () {
-    $('.collapsible').collapsible();
 
-});
-
-$(function () {
-    $('.card').draggable();
-});
 
 
 //for browse
@@ -83,7 +62,7 @@ $('.tap-target').tapTarget();
 
 
 
-renderCarousel(curEl);
+
 
 
 
@@ -101,24 +80,7 @@ var userInputText = $("#user-input-search").val();
 
 
 /////=======================================================================================// Cleansing inputs and send to URL creation //============
-//===================================================================== Cleanse and ready user input
-function userInputCleanse(event) {
-    event.preventDefault(); 
-    userInputText = userInputText.trim();  //remove trailing white spaces
-    userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
-    userInputText = userInputText.replace("/", "+");  // replaces with +
-    //console.log(userInputText);
 
-    // need if statement here to check if we have title or artist selected.
-    //if (searchFilter = "Artist") {
-    //    urlAppendArtist();
-    //}
-    // else {    
-    //  urlAppendTitle();
-    //}
-    urlAppendTitle();
-    //urlAppendArtist();
-}
 //userInputCleanse();
 
 
@@ -163,30 +125,6 @@ function curatedCleanse() {
 }
 //curatedCleanse();
 
-
-//=================================================== Default landing images
-
-setTimeout(urlDefault, 250); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
-
-
-/// create inital call
-
-
-
-
-//=======================================================================================// Search results fetches for both Mini and Detailed Results //====
-
-
-
-//------ search button event listener
-$("#submit").on("click", function(){
-    userInputCleanse();
-});
-
-$(".curated").on("click", function () {
-    tempCuratedArtist = $(this).attr("id");
-    urlAppendArtist();
-});
 
 
 
