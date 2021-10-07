@@ -81,13 +81,6 @@ function renderCarousel(index) {
 }
 
 
-
-
-//imageArr.push("https://media.overstockart.com/optimized/cache/data/product_images/VG485-1000x1000.jpg");
-// imageArr.push("https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8eW9zZW1pdGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80");
-// imageArr.push("https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=1600&h=800&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F28%2F2019%2F11%2FAlaska-Northern-Lights-ALASKALTS1017.jpg");
-
-
 prevButton.on("click", function () {
     renderCarousel(--curEl);
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
@@ -135,6 +128,7 @@ $('.tap-target').tapTarget();
 
 
 renderCarousel(curEl);
+
 
 
 var userInputText = $("#user-input-search").val();
