@@ -345,7 +345,7 @@ function urlDefault() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
     getResults();
 }
-//setTimeout(urlDefault, 250); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
+setTimeout(urlDefault, 250); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
 
 
 
