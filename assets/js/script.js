@@ -38,7 +38,9 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
         $("#artwork-card-year").text("year: " + year);
         $("#artwork-card-link").attr("href", "https://www.rijksmuseum.nl/en/collection/"+ miniArtResultsObj[index].objectNumber);
 
-
+        storeTitle = miniArtResultsObj[index].title;  //  variable needed for storage function 
+        storeArtist = miniArtResultsObj[index].principalOrFirstMaker;  //  variable needed for storage function 
+        storeFetchUrl = miniArtResultsObj[index].objectNumber;  //  variable needed for storage function 
 
     }
 function clearCarousel() {
@@ -58,6 +60,8 @@ function renderCarousel(index) {
 
     clearCarousel();
     let imgUrl = imageArr[index];
+    storageImgUrl = imgUrl //  variable needed for storage function 
+
     let slide = $("<div>");
     slide.attr("class", "carousel-slide");
     // let image = $("<img>");
@@ -85,10 +89,11 @@ function renderCarousel(index) {
 
 prevButton.on("click", function () {
     renderCarousel(--curEl);
+    $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 nextButton.on("click", function () {
     renderCarousel(++curEl);
-
+    $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 
 //render dropdown menu
@@ -186,7 +191,7 @@ $(document).ready(function () {
 
 var userInputText = $("#user-input-search").val();
 
-var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
+//var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
 
 
 
@@ -339,9 +344,7 @@ function urlDefault() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
     getResults();
 }
-urlDefault(); //--- runs immediately upon loading the page.
-
-
+setTimeout(urlDefault, 1000); //--- runs immediately upon loading the page.
 
 
 
@@ -447,6 +450,7 @@ function getResults() {
             }
             else {
                 //------ add 0 search results found function and actions here
+                M.toast({html: 'No search results on query found. Please try again.', classes: 'rounded'});
                 console.log("No search results on query found. Please try again.")
                 return;
             }
@@ -508,10 +512,12 @@ var emptyArray = [];
 
 //========================================================= Add favorite to storage function
 function addFavorite() {
+    M.toast({html: 'Success!', classes: 'toasts'});
+    $("#favorite").attr('disabled', true); // prevnets double clicks by disabling the favorite button.
 
     //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
-    var tempFavRefId = $("#collectionRefId").val(); // get reference ID. or currentIdNum
+    var tempFavRefId = storeFetchUrl; // get reference ID. or currentIdNum
     var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
 
     sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
@@ -522,19 +528,19 @@ function addFavorite() {
 
 
     //====================================== Adding Title
-    var tempFavTitle = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavTitle = storeTitle; // get reference ID. or currentIdNum 
     sessionTitleArray.push(tempFavTitle);
     localStorage.setItem("favoritesTitleArray", JSON.stringify(sessionTitleArray));
     sessionTitleArray = JSON.parse(localStorage.getItem("favoritesTitleArray"));
 
     //====================================== Adding Artist
-    var tempFavArtist = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavArtist = storeArtist; // get reference ID. or currentIdNum 
     sessionArtistArray.push(tempFavArtist);
     localStorage.setItem("favoritesArtistArray", JSON.stringify(sessionArtistArray));
     sessionArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray"));
 
     //====================================== Adding Image URL
-    var tempFavImage = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavImage = storageImgUrl; // get reference ID. or currentIdNum 
     sessionImageArray.push(tempFavImage);
     localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray));
     sessionImageArray = JSON.parse(localStorage.getItem("favoritesImageArray"));
@@ -550,7 +556,6 @@ function clearFavorite() {
     //====================================== Clearing Fetch URL
     sessionUrlArray = emptyArray; // sets javascript session array to blank
     localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage
-
 
     //====================================== Clearing Title
     sessionTitleArray = emptyArray;
@@ -625,7 +630,7 @@ function checkFavorite() {
         sessionImageArray = localImageArray;
     }
 
-
+    console.log(sessionUrlArray);
 
 
 
@@ -636,5 +641,6 @@ checkFavorite(); //--- Syncing runs immediately upon loading the page
 
 
 //-------------------------------------------------------------- BUTTON EVENT LISTENERS
-$("#favoriteButton").on('click', addFavorite);
+$("#favorite").on('click', addFavorite);
+
 $("#clearButton").on('click', clearFavorite);
