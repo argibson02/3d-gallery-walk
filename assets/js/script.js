@@ -44,6 +44,8 @@ function renderCarousel(index) {
 
     clearCarousel();
     let imgUrl = imageArr[index];
+    storageImgUrl = imgUrl // creating variable needed for storage function 
+
     let slide = $("<div>");
     slide.attr("class", "carousel-slide");
     // let image = $("<img>");
@@ -522,7 +524,7 @@ function addFavorite() {
     sessionArtistArray = JSON.parse(localStorage.getItem("favoritesArtistArray"));
 
     //====================================== Adding Image URL
-    var tempFavImage = $("#collectionRefId").val(); // get reference ID. or currentIdNum 
+    var tempFavImage = storageImgUrl; // get reference ID. or currentIdNum 
     sessionImageArray.push(tempFavImage);
     localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray));
     sessionImageArray = JSON.parse(localStorage.getItem("favoritesImageArray"));
