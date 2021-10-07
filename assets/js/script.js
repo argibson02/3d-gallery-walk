@@ -456,7 +456,9 @@ function getResults() {
 
 
 //------ search button event listener
-$("#submit").on("click", userInputCleanse);
+$("#submit").on("click", function(){
+    userInputCleanse();
+});
 
 $(".curated").on("click", function () {
     tempCuratedArtist = $(this).attr("id");
