@@ -87,6 +87,7 @@
     left: 80%;
     filter: drop-shadow(16px 16px 10px black);
     text-align: center;
+    max-width: 400px;
      
 }
 
@@ -112,6 +113,12 @@
     position: absolute;
     align-self: right;
     margin: -20% 88%;
+}
+#menu{
+    float: right;
+}
+#menu-title{
+    text-align: center;
 }
 footer{
     border: 2px black solid;
@@ -146,3 +153,4 @@ html, body {
     height: 100%;
     margin: 0;
 }
+

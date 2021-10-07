@@ -105,7 +105,6 @@ function styleDropdown(instance) {
 
 
 
-
 //render collapsible
 $(document).ready(function () {
     $('.collapsible').collapsible();
@@ -115,17 +114,6 @@ $(document).ready(function () {
 $(function () {
     $('.card').draggable();
 });
-
-
-
-
-
-
-dropTriggerEl.dropdown();
-var dropdownmenu = M.Dropdown.getInstance(dropTriggerEl);
-styleDropdown(dropdownmenu);
-renderCarousel(curEl);
-
 
 
 //for browse
@@ -140,6 +128,17 @@ $(document).ready(function () {
 
 
 
+  $(document).ready(function(){
+    $('.tap-target').tapTarget();
+  });
+
+
+
+
+dropTriggerEl.dropdown();
+var dropdownmenu = M.Dropdown.getInstance(dropTriggerEl);
+styleDropdown(dropdownmenu);
+renderCarousel(curEl);
 
 
 
@@ -461,7 +460,9 @@ function getResults() {
 
 
 //------ search button event listener
-$("#submit").on("click", userInputCleanse);
+$("#submit").on("click", function(){
+    userInputCleanse();
+});
 
 $(".curated").on("click", function () {
     tempCuratedArtist = $(this).attr("id");
