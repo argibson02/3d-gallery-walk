@@ -43,7 +43,26 @@ var userInputText = $("#user-input-search").val();
 
 /////=======================================================================================// Cleansing inputs and send to URL creation //============
 
-//userInputCleanse();
+//===================================================================== Cleanse and ready user input
+function userInputValidation( userInputText ) { 
+    userInputText.trim();  //remove trailing white spaces
+    userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
+    userInputText = userInputText.replace("/", "+");  // replaces with +
+    //console.log(userInputText);
+
+    // need if statement here to check if we have title or artist selected.
+    //if (searchFilter = "Artist") {
+    //    urlAppendArtist();
+    //}
+    // else {    
+    //  urlAppendTitle();
+    //}
+    // let queryUrl = urlAppendTitle();
+    // getResults(queryUrl, )
+    //urlAppendArtist();
+    return userInputText;
+}
+
 
 //================================================================== Clean up curated artist links
 function curatedCleanse() {
@@ -311,12 +330,9 @@ $(".favorite-item").on("click", function () {  // set thumbnail preview and titl
 
 $(".favorite-item").dblclick(function() { // Jumps to 3d viewer page
     var passFavRefNum = $(this).attr("fetch-value");
-    console.log(passFavRefNum);
-    document.location.replace("./index.html");
 
-    let userInput = passFavRefNum;
-
-    setTimeout(getResults(urlAppendQuery(userInput), setImageAndCards), 500);
+    let parameters = passFavRefNum
+    getResults(urlAppendQuery(parameters.query), setImageAndCards);
 
 });
 
