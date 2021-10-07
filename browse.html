@@ -21,29 +21,40 @@
                 <h3><a href = "./index.html">3D Art Gallery</a></h3>
             </div>
             <div id = "header-menu">
-                <ul id = "header-menu-links" class="right hide-on-med-and-down">
-                    <li id = "search element">
-                        <form id = "search-form">
+              <nav>
+                  <div class="nav-wrapper">
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id = "header-menu-links" class="right hide-on-med-and-down sidenav-trigger">
+                          <li id = "search element">
+                              <form id = "search-form">
+                                  <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
+                                  <button type = "submit" id="submit">🔍</button>
+                              </form>
+                          </li>
+                          <li><a href = "./browse.html">Browse</a></li>
+                          <li><a href = "./history.html">History</a></li>
+                          <li><a href = "./history.html">Favorites</a></li>
+      
 
-                             <!-- Dropdown Trigger -->
-                            <a class='dropdown-trigger btn waves-effect waves-light' id = "dropdown-button" href='#' data-target='dropdown-menu'>Search Categories</a>
+                    </ul>
+                  </div>
+                </nav>
+              
+                <ul class="sidenav" id="mobile-demo">
+                  <li id = "search element">
+                      <form id = "search-form">
 
-                            <!-- Dropdown Structure -->
-                            <ul id='dropdown-menu' class='dropdown-content'>
-                                <li class = "dropdown-el"><a href="#!" value = "artist">Artist Name</a></li>
-                                <li class = "dropdown-el"><a href="#!" value = "painting">Artwork Title</a></li>
-                            </ul>
-                            <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
+                          <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
+                          <button type = "submit" id="submit">🔍</button>
+                      </form>
+                  </li>
+                  <li><a href = "./browse.html">Browse</a></li>
 
-                            <button type = "submit" id="submit">🔍</button>
-                        </form>
-                    </li>
-                    <li><a href = "#">Browse</a></li>
-                    <li><a href = "./history.html">History</a></li>
-                    <li><a href = "./history.html">Favorites</a></li>
-
+                  <li><a href = "./history.html">History</a></li>
+                  <li><a href = "./history.html">Favorites</a></li>
                 </ul>
-            </div>
+              
+          </div>
         </nav>
         <div class="progress">
             <div class="indeterminate"></div>

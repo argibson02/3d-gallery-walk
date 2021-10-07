@@ -96,14 +96,6 @@ nextButton.on("click", function () {
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 
-//render dropdown menu
-function styleDropdown(instance) {
-    instance.constrainWidth = false;
-}
-
-
-
-
 
 //render collapsible
 $(document).ready(function () {
@@ -132,12 +124,12 @@ $(document).ready(function () {
     $('.tap-target').tapTarget();
   });
 
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
 
 
 
-dropTriggerEl.dropdown();
-var dropdownmenu = M.Dropdown.getInstance(dropTriggerEl);
-styleDropdown(dropdownmenu);
 renderCarousel(curEl);
 
 
