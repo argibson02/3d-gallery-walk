@@ -1,5 +1,3 @@
-
-
 // Const preview variables
 const fov = 75;
 const near = 0.1;
@@ -9,6 +7,8 @@ const ambientIntensity = 0.6; // out of 1
 const directionalIntensity = 1.0;
 const zoomSpeed = 0.1;
 const normalStrength = 1.5;
+const displacementScale = 0.002;
+const normalScale = 0.3;
 
 // Global Variables
 var moving = false;
@@ -84,7 +84,7 @@ function renderFrame( sceneCameraRenderer ) {
 function addPainting( imageURL, scene ) {
     // Loads the encoded data from the image url as an rgb array
     jimp.read( imageURL ).then( function( data ) {
-        console.log( data );
+        //console.log( data );
         let normal = generateNormal( data );
         let displacement = generateDisplacement( data );
         let texture = generateColorTexture( data );
@@ -274,13 +274,13 @@ function converPixelToGrayscale( pixel ) {
  * @param {Array} normal 
  */
 function applyTexture( plane, texture, normal, displacement ) {
-    console.log(texture);
+    //console.log(texture);
     plane.material.map = texture;
     plane.material.normalMap = normal;
-    plane.material.normalScale.x = .3;
-    plane.material.normalScale.y = .3;
+    plane.material.normalScale.x = normalScale;
+    plane.material.normalScale.y = normalScale;
     plane.material.displacementMap = displacement;
-    plane.material.displacementScale = 0.005;
+    plane.material.displacementScale = displacementScale;
     plane.material.color = new THREE.Color( 0xffffff );
     plane.material.needsUpdate = true;
 }
@@ -407,7 +407,7 @@ function setPreview( elementId, imageURL ) {
         let height = $(window.renderElement).parent().height();
         let aspectRatio = width/height;
 
-        console.log("window resized: " + width + ", " + height);
+        //console.log("window resized: " + width + ", " + height);
 
         window.renderer.setSize(width, height);
         window.camera.aspect = aspectRatio;
