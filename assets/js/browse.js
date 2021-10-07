@@ -43,7 +43,7 @@ function populateArtists() {
         let curName = artistList[i];
         let artName = $("<a>");
         artName.attr("class", "collection-item");
-        artName.attr("href", "#"); //add link
+        artName.attr("href", "./index.html?artistName=" + userInputValidation(curName));
         artName.text(curName);
         let ch = curName.charCodeAt(0);
         let ind = ch-65;
