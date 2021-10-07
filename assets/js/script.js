@@ -134,7 +134,7 @@ var emptyArray = [];
 //========================================================= Add favorite to storage function
 function addFavorite() {
     M.toast({html: 'Success!', classes: 'toasts'});
-    $("#favorite").attr('disabled', true); // prevnets double clicks by disabling the favorite button.
+    $("#favorite").attr('disabled', true); // prevents double clicks by disabling the favorite button.
 
     //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
@@ -303,11 +303,15 @@ $(".favorite-item").on("click", function () {  // set thumbnail preview and titl
     $('#titleThumbnail').text(titleThumbnail);
 });
 
-$(".favorite-item").dblclick(function() { // Jumps to 3d vviewer page
-    var fetchThumbnail = $(this).attr("fetch-value");
-    userInputText = fetchThumbnail;
-    document.location.replace('./index.html');
-    urlAppendTitle();
+$(".favorite-item").dblclick(function() { // Jumps to 3d viewer page
+    var passFavRefNum = $(this).attr("fetch-value");
+    console.log(passFavRefNum);
+    document.location.replace("./index.html");
+
+    let userInput = passFavRefNum;
+
+    setTimeout(getResults(urlAppendQuery(userInput), setImageAndCards), 500);
+
 });
 
 //========================================= Helper function for loading carousel data

@@ -25,7 +25,7 @@ function userInputValidation( userInputText ) {
     return userInputText;
 }
 
-//------ search button event listener
+//------ Search button event listener
 $("#submit").on("click", function(event){
     event.preventDefault();
 
@@ -126,3 +126,8 @@ nextButton.on("click", function () {
 });
 
 setTimeout(getResults, 250, urlDefault(), setImageAndCards); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
+
+
+
+
+
