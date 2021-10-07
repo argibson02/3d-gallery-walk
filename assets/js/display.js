@@ -6,9 +6,8 @@ var miniArtResultsObj = [];
 //=======================================================================================// Search results fetches for both Mini and Detailed Results //====
 
 //===================================================================== Cleanse and ready user input
-function userInputCleanse(event) {
-    event.preventDefault(); 
-    userInputText = userInputText.trim();  //remove trailing white spaces
+function userInputValidation( userInputText ) { 
+    userInputText.trim();  //remove trailing white spaces
     userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
     userInputText = userInputText.replace("/", "+");  // replaces with +
     //console.log(userInputText);
@@ -20,14 +19,19 @@ function userInputCleanse(event) {
     // else {    
     //  urlAppendTitle();
     //}
-    let queryUrl = urlAppendTitle();
-    getResults(queryUrl, )
+    // let queryUrl = urlAppendTitle();
+    // getResults(queryUrl, )
     //urlAppendArtist();
+    return userInputText;
 }
 
 //------ search button event listener
-$("#submit").on("click", function(){
-    userInputCleanse();
+$("#submit").on("click", function(event){
+    event.preventDefault();
+
+    let userInput = $(this).parent().children("input").val()
+    userInput = userInputValidation( userInput );
+    getResults(urlAppendQuery(userInput), setImageAndCards);
 });
 
 
@@ -71,7 +75,7 @@ function setArtObjectList( rijksResponse ) {
 }
 
 function setImageAndCards( rijksResponse ) {
-    console.log("setting variables");
+    //console.log("setting variables");
     setImageArr( rijksResponse );
     setArtObjectList( rijksResponse );
 
@@ -104,7 +108,7 @@ function renderCarouselSlide(index) {
     // add div, 
     //
     slide.append(renderedImage);
-    console.log(miniArtResultsObj);
+    //console.log(miniArtResultsObj);
     
     carouselContainerEl.append(slide);
     renderCard(index);
