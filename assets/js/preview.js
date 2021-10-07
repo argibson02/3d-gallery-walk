@@ -330,6 +330,11 @@ function generateColorTexture( imageData ) {
     return texture;
 }
 
+/**
+ * @description fills the paintings width to the camera (approximately)
+ * @param {Camera} camera 
+ * @param {Number} aspectRatio 
+ */
 function fillPaintingToCamera( camera, aspectRatio ) {
     // fov = tan( width of painting/aspectRatio / distanceToCamera*2 ) in radians;
     // Sets width of the painting to the whole camera
@@ -337,6 +342,11 @@ function fillPaintingToCamera( camera, aspectRatio ) {
     camera.updateProjectionMatrix();
 }
 
+/**
+ * @description creates a 3d preview contained by the selected element. 
+ * @param {String} elementId 
+ * @param {String} imageURL 
+ */
 function setPreview( elementId, imageURL ) {
     let sceneCameraRenderer = initPreview(elementId);
     addPainting(imageURL, sceneCameraRenderer[0]);
@@ -385,6 +395,24 @@ function setPreview( elementId, imageURL ) {
         event.target.camera.zoom += zoomSpeed * -1 * Math.sign(event.deltaY);
         event.target.camera.updateProjectionMatrix(); // Must be called after changing camera parameters
         renderFrame(event.target.sceneCameraRenderer);
+    } );
+
+    window.renderer = renderer;
+    window.camera = sceneCameraRenderer[1];
+    window.sceneCameraRenderer = sceneCameraRenderer;
+    window.renderElement = renderer.domElement;
+
+    window.addEventListener( "resize", function(event) {
+        let width = $(window.renderElement).parent().width();
+        let height = $(window.renderElement).parent().height();
+        let aspectRatio = width/height;
+
+        console.log("window resized: " + width + ", " + height);
+
+        window.renderer.setSize(width, height);
+        window.camera.aspect = aspectRatio;
+        window.camera.updateProjectionMatrix();
+        renderFrame(window.sceneCameraRenderer);
     } );
 }
 
