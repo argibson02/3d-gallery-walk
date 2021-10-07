@@ -38,6 +38,7 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
         $("#artwork-card-year").text("year: " + year);
         $("#artwork-card-link").attr("href", "https://www.rijksmuseum.nl/en/collection/"+ miniArtResultsObj[index].objectNumber);
 
+        storeLongTitle = miniArtResultsObj[index].longTitle; //  variable needed for storage function 
         storeTitle = miniArtResultsObj[index].title;  //  variable needed for storage function 
         storeArtist = miniArtResultsObj[index].principalOrFirstMaker;  //  variable needed for storage function 
         storeFetchUrl = miniArtResultsObj[index].objectNumber;  //  variable needed for storage function 
@@ -237,8 +238,8 @@ function urlAppendTitle() {
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
-function urlAppendArtist(event) {
-    event.preventDefault();
+function urlAppendArtist() {
+    //event.preventDefault();
     searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
     //console.log(searchUrl);
     getResults();
@@ -335,7 +336,7 @@ function urlDefault() {
     searchUrl = searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
     getResults();
 }
-setTimeout(urlDefault, 1000); //--- runs immediately upon loading the page.
+setTimeout(urlDefault, 250); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
 
 
 
@@ -458,7 +459,6 @@ $("#submit").on("click", function(){
 
 $(".curated").on("click", function () {
     tempCuratedArtist = $(this).attr("id");
-
     urlAppendArtist();
 });
 
@@ -499,6 +499,9 @@ var localArtistArray = [];
 var sessionImageArray = [];
 var localImageArray = [];
 
+var sessionLongTitleArray = [];
+var localLongTitleArray = [];
+
 var emptyArray = [];
 
 
@@ -511,14 +514,12 @@ function addFavorite() {
     //====================================== Adding Fetch URL
     // Get the var currentIdNum, set equal to  
     var tempFavRefId = storeFetchUrl; // get reference ID. or currentIdNum
-    var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
+    //var tempFavUrl = searchAPIRoot + cultureMarker + queryMarker + tempFavRefId; // creates a mini-request URL from which we can send though our mini-fetch again if they click on the favorite.
+    //sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
 
-    sessionUrlArray.push(tempFavUrl); // pushes that URL to local storage array.
+    sessionUrlArray.push(tempFavRefId); // pushes that URL to local storage array
     localStorage.setItem("favoritesUrlArray", JSON.stringify(sessionUrlArray)); // syncing javascript array and local storage, add to local storage.
     sessionUrlArray = JSON.parse(localStorage.getItem("favoritesUrlArray")); //Array is stored as string in local storage. Grabbing it as an array and re-syncing the javascript array with local.
-
-    // will need to add or manipulate the page in this function based off the need favorite
-
 
     //====================================== Adding Title
     var tempFavTitle = storeTitle; // get reference ID. or currentIdNum 
@@ -538,10 +539,13 @@ function addFavorite() {
     localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray));
     sessionImageArray = JSON.parse(localStorage.getItem("favoritesImageArray"));
 
+    //====================================== Adding Long Title
+    var tempFavTitle = storeLongTitle; // get reference ID. or currentIdNum 
+    sessionLongTitleArray.push(tempFavTitle);
+    localStorage.setItem("favoritesLongTitleArray", JSON.stringify(sessionLongTitleArray));
+    sessionLongTitleArray = JSON.parse(localStorage.getItem("favoritesLongTitleArray"));
 
 
-
-    //location.reload(); // option if we need to reload the page....
 }
 
 //========================================================= Add favorite to storage function
@@ -562,6 +566,9 @@ function clearFavorite() {
     sessionImageArray = emptyArray;
     localStorage.setItem("favoritesImageArray", JSON.stringify(sessionImageArray));
 
+    //====================================== Clearing Long Title
+    sessionLongTitleArray = emptyArray;
+    localStorage.setItem("favoritesLongTitleArray", JSON.stringify(sessionLongTitleArray));
 
     // may need to clear out other things
 
@@ -580,14 +587,6 @@ function checkFavorite() {
     }
     if (localUrlArray.length > sessionUrlArray.length) { // if local storage is not empty, we sync our javascript session array to local one.
         sessionUrlArray = localUrlArray;
-
-        //do stuff here if needed
-
-        //for (i = 0; i < cityArray.length; i++) {
-        //    $("#newCityBtn").append("<button>" + cityArray[i] + "</button>");
-        //    $("#newCityBtn").children().attr("class", "row btn btn-light m-1 mb-2 w-100 cityBtn");
-        //    $("#newCityBtn").children().last().attr("id", cityArray[i]);
-        //}
     }
 
     //====================================== Syncing Title
@@ -623,6 +622,29 @@ function checkFavorite() {
         sessionImageArray = localImageArray;
     }
 
+    //====================================== Syncing Long Title
+    if (localStorage.getItem("favoritesLongTitleArray") === null) {
+        return;
+    }
+    else {
+        localLongTitleArray = JSON.parse(localStorage.getItem("favoritesLongTitleArray"));
+    }
+    if (localLongTitleArray.length > sessionLongTitleArray.length) {
+        sessionLongTitleArray = localLongTitleArray;
+    }
+
+    // Adding history list here
+    for (i = 0; i < sessionLongTitleArray.length; i++) {
+        $("#collectionA").append("<a>" + sessionLongTitleArray[i] + "</a>");
+        $("#collectionA").children().attr("class", "collection-item a favorite-item");
+        $("#collectionA").children().last().attr("id", sessionLongTitleArray[i]);
+        $("#collectionA").children().last().attr("fetch-value", sessionUrlArray[i]);
+        $("#collectionA").children().last().attr("img-value", sessionImageArray[i]);
+        $("#collectionA").children().last().attr("title-value", sessionTitleArray[i]);
+    }
+
+
+
     console.log(sessionUrlArray);
 
 
@@ -631,9 +653,34 @@ function checkFavorite() {
 checkFavorite(); //--- Syncing runs immediately upon loading the page
 
 
-
-
-//-------------------------------------------------------------- BUTTON EVENT LISTENERS
+//-------------------------------------------------------------- STORE FAVORITES BUTTON EVENT LISTENERS
 $("#favorite").on('click', addFavorite);
-
 $("#clearButton").on('click', clearFavorite);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------- FAVORITES BUTTON EVENT LISTENERS
+$(".favorite-item").on("click", function () {  // set thumbnail preview and title
+    var imgThumbnail = $(this).attr("img-value");
+    var titleThumbnail = $(this).attr("title-value");
+    $('#imgThumbnail').attr('src', imgThumbnail);
+    $('#titleThumbnail').text(titleThumbnail);
+});
+
+$(".favorite-item").dblclick(function() { // Jumps to 3d vviewer page
+    var fetchThumbnail = $(this).attr("fetch-value");
+    userInputText = fetchThumbnail;
+    document.location.replace('./index.html');
+    urlAppendTitle();
+});
