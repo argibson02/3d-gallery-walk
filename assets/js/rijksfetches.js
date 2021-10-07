@@ -57,6 +57,11 @@ function urlAppendCurated() {
     return searchAPIRoot + defaultFilterMarkers + artistMarker + curatedText + defaultSortMarkers;
 }
 
+//============================================================================ Get the top 20 featured results
+function top20Url() {
+    return searchAPIRoot + topPieceMarker + hasImageMarker + "&ps=20"
+}
+
 
 //================================================================================ Function for appending user input on CENTURY +  TITLE OR GENERAL QUERY search 
 //function urlAppendCentury() {

@@ -1,47 +1,31 @@
-// Filter variables
-var cultureMarker = "&culture=en"; // The language to search in (and of the results) (en or nl). I haven't a difference with or with out this, but keeping on.
-var resultsPerPageMarker = "&ps=50"; // 1-100, defaults 10. Good performance with 50.
-var queryMarker = "&q="; // "The search terms that need to occur in one of the fields of the object data." Painting Title or anything other search parameter.
-var artistMarker = "&involvedMaker="; // "Object needs to be made by this agent." AKA, the artist for our purposes.
-var hasImageMarker = "&imgonly=true"; // "Only give results for which an image is available or not." Forcing to true.
-//var centuryMarker = "&f.dating.period="; // "The century in which the object is made." 0-21 are valid options.
-var topPieceMarker = "&toppieces=true"; // "Only give works that are top pieces." This gives us some more famous and recognizable pieces in the collection.
-var typeMarker = "&type=schilderij"; // "schilderij" means paintings. This narrows our results down to paints. Filters out pencil sketches, sculptures, pottery, etc.
-
-// Sort variables
-var sortRelevanceMarker = "&s=relevance"; // Sorts by relevance for results
-//var sortArtistMarker = "s=artist"; // Sorts by artist for results. oof for now.
-
-
-// Defaulted search filters to retrieve good search results for the purposes of our app
-var defaultFilterMarkers = cultureMarker + hasImageMarker + typeMarker + topPieceMarker;
-var defaultSortMarkers = resultsPerPageMarker + sortRelevanceMarker;
+// List of all artists on Rijks
+var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Avercamp, Hendrick", "Baburen, Dirck van", "Bakhuysen, Ludolf"
+, "Berchem, Nicolaes Pietersz.", "Berckheyde, Gerrit Adriaensz.", "Beuckelaer, Joachim","Bilders, Albert Gerard", "Bloemaert, Abraham", "Bol, Ferdinand",
+ "Borch, Gerard ter", "Both, Jan", "Breitner, George Hendrik", "Brugghen, Hendrick ter", "Buytewech, Willem Pietersz.", "Claesz., Pieter", "Coorte, Adriaen",
+  "Cornelisz van Haarlem, Cornelis","Cornelisz. van Oostsanen, Jacob", "Cuyp, Aelbert", "Dou, Gerard", "Dujardin, Karel", "Dyck, Anthony van","Dürer, Albrecht",
+   "Eeckhout, Gerbrand van den", "Everdingen, Caesar Boëtius van", "Flinck, Govert", "Gabriël, Paul Joseph Constantin", "Gao Qipei", "Geertgen tot Sint Jans", 
+   "Gheyn, Jacob de", "Giambologna", "Gogh, Vincent van", "Goltzius, Hendrick", "Goya y Lucientes, Francisco José de", "Goyen, Jan van", "Hals, Dirck", "Hals, Frans",
+    "Heda, Willem Claesz.", "Heem, Jan Davidsz. de", "Heemskerck, Maarten van", "Helst, Bartholomeus van der", "Hiroshige", "Hokusai, Katsushika", "Hondecoeter, Melchior d'",
+     "Honthorst, Gerard van", "Hooch, Pieter de", "Israels, Isaac", "Israëls, Jozef", "Jordaens, Jacob", "Key, Adriaen Thomasz.", "Koninck, Philips", "Kooi, Willem Bartel van der",
+      "Kruseman, Jan Adam", "Lairesse, Gerard de","Lastman, Pieter", "Lelie, Adriaan de", "Leyden, Lucas van", "Lievens, Jan", "Liotard, Jean Etienne", "Maes, Nicolaes",
+       "Mander, Karel van", "Mauve, Anton", "Meester van Alkmaar", "Mesdag, Hendrik Willem", "Metsu, Gabriël", "Mierevelt, Michiel Jansz. van", "Mignon, Abraham", "Ostade, Adriaen van",
+        "Pieneman, Jan Willem", "Pieneman, Nicolaas", "Post, Frans Jansz.", "Potter, Paulus", "Rembrandt Harmensz. van Rijn", "Rubens, Peter Paul", "Ruisdael, Jacob Isaacksz. van", 
+        "Ruysdael, Salomon van", "Saenredam, Pieter Jansz.", "Savery, Roelant", "Schouten, Gerrit", "Scorel, Jan van", "Segers, Hercules","Steen, Jan Havicksz.", "Sweerts, Michael", "Troost, Cornelis",
+         "Vanmour, Jean Baptiste","Velde, Willem van de", "Velde, Willem van de (II)", "Venne, Adriaen Pietersz. van de", "Vermeer, Johannes", "Verspronck, Johannes Cornelisz.", 
+         "Vianen, Paulus Willemsz. van", "Visscher, Claes Jansz.", "Voogd, Hendrik"];
 
 
-// API root URLs and key
-var searchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection?key=TnDINDEU";
-var collectionAPIRoot = "https://www.rijksmuseum.nl/api/nl/collection/";
-//var collectionDutchAPIRoot = "https://www.rijksmuseum.nl/api/nl/collectie/";
-var key = "?key=TnDINDEU";
 
-function top20Url() {
-    return searchAPIRoot + topPieceMarker + hasImageMarker + "&ps=20"
-}
-
-function populateFeatured() {
-    fetch( top20Url() ).then( response => response.json() ).then( function(data) {
-        console.log(data);
-
-        for(let i=0; i<data.artObjects.length; i++) {
-            let li = $("<li>");
-            li.addClass(); // TODO: add css classes
-            let link = $("<a>");
-            link.attr("href", data.artObjects[i].links.web);
-            link.text(data.artObjects[i].title);
-            li.append(link);
-            $("#featured-tab").children(".collapsible").append(li);
-        }
-    } );
+function populateFeatured( data ) {
+    for(let i=0; i<data.artObjects.length; i++) {
+        let li = $("<li>");
+        li.addClass(); // TODO: add css classes
+        let link = $("<a>");
+        link.attr("href", data.artObjects[i].links.web);
+        link.text(data.artObjects[i].title);
+        li.append(link);
+        $("#featured-tab").children(".collapsible").append(li);
+    }
 }
 
 // Curated event listener
@@ -50,4 +34,9 @@ $(".curated").on("click", function () {
     urlAppendArtist();
 });
 
-populateFeatured();
+// Populates the artists tab
+function populateArtists() {
+    // TODO
+}
+
+getResults(top20Url(), populateFeatured);
