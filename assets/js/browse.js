@@ -26,6 +26,7 @@ function populateFeatured( data ) {
         li.append(link);
         $("#featured-tab").children(".collapsible").append(li);
     }
+    progressBarEl.css("visibility", "hidden");
 }
 
 // Curated event listener

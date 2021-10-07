@@ -76,6 +76,7 @@ function setImageAndCards( rijksResponse ) {
     setArtObjectList( rijksResponse );
 
     renderCarouselSlide(curEl);
+    progressBarEl.css("visibility", "hidden");
 }
 
 function renderCarouselSlide(index) {
