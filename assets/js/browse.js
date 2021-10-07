@@ -21,7 +21,7 @@ function populateFeatured( data ) {
         let li = $("<li>");
         li.addClass(); // TODO: add css classes
         let link = $("<a>");
-        link.attr("href", data.artObjects[i].links.web);
+        link.attr("href", "./index.html?title=" + userInputValidation( data.artObjects[i].title ) );
         link.text(data.artObjects[i].title);
         li.append(link);
         $("#featured-tab").children(".collapsible").append(li);

@@ -6,25 +6,6 @@ var parametersGiven = false;
 // ==================================== Search
 //=======================================================================================// Search results fetches for both Mini and Detailed Results //====
 
-//===================================================================== Cleanse and ready user input
-function userInputValidation( userInputText ) { 
-    userInputText.trim();  //remove trailing white spaces
-    userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
-    userInputText = userInputText.replace("/", "+");  // replaces with +
-    //console.log(userInputText);
-
-    // need if statement here to check if we have title or artist selected.
-    //if (searchFilter = "Artist") {
-    //    urlAppendArtist();
-    //}
-    // else {    
-    //  urlAppendTitle();
-    //}
-    // let queryUrl = urlAppendTitle();
-    // getResults(queryUrl, )
-    //urlAppendArtist();
-    return userInputText;
-}
 
 //------ search button event listener
 $("#submit").on("click", function(event){

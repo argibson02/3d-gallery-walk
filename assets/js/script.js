@@ -43,7 +43,26 @@ var userInputText = $("#user-input-search").val();
 
 /////=======================================================================================// Cleansing inputs and send to URL creation //============
 
-//userInputCleanse();
+//===================================================================== Cleanse and ready user input
+function userInputValidation( userInputText ) { 
+    userInputText.trim();  //remove trailing white spaces
+    userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
+    userInputText = userInputText.replace("/", "+");  // replaces with +
+    //console.log(userInputText);
+
+    // need if statement here to check if we have title or artist selected.
+    //if (searchFilter = "Artist") {
+    //    urlAppendArtist();
+    //}
+    // else {    
+    //  urlAppendTitle();
+    //}
+    // let queryUrl = urlAppendTitle();
+    // getResults(queryUrl, )
+    //urlAppendArtist();
+    return userInputText;
+}
+
 
 //================================================================== Clean up curated artist links
 function curatedCleanse() {
