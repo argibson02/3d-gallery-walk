@@ -18,9 +18,10 @@ var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Av
 
 function populateFeatured( data ) {
     for(let i=0; i<data.artObjects.length; i++) {
-        let li = $("<li>");
-        li.addClass(); // TODO: add css classes
-        let link = $("<a>");
+        let li = $("<li></li>");
+        let link = $("<a></a>");
+        li.attr("class", "collection-item a"); // TODO: Fix CSS
+        link.attr("class", "collection-item a"); // TODO: Fix CSS
         link.attr("href", "./index.html?title=" + userInputValidation( data.artObjects[i].title ) );
         link.text(data.artObjects[i].title);
         li.append(link);
@@ -43,7 +44,7 @@ function populateArtists() {
         let curName = artistList[i];
         let artName = $("<a>");
         artName.attr("class", "collection-item");
-        artName.attr("href", "#"); //add link
+        artName.attr("href", "./index.html?artistName=" + userInputValidation(curName));
         artName.text(curName);
         let ch = curName.charCodeAt(0);
         let ind = ch-65;
