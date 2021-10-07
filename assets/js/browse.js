@@ -1,4 +1,4 @@
-// List of all artists on Rijks
+//list of artists https://www.rijksmuseum.nl/en/rijksstudio/artists
 var artistList = ["Aertsen, Pieter", "Alma Tadema, Lawrence","Appel, Karel", "Avercamp, Hendrick", "Baburen, Dirck van", "Bakhuysen, Ludolf"
 , "Berchem, Nicolaes Pietersz.", "Berckheyde, Gerrit Adriaensz.", "Beuckelaer, Joachim","Bilders, Albert Gerard", "Bloemaert, Abraham", "Bol, Ferdinand",
  "Borch, Gerard ter", "Both, Jan", "Breitner, George Hendrik", "Brugghen, Hendrick ter", "Buytewech, Willem Pietersz.", "Claesz., Pieter", "Coorte, Adriaen",
@@ -40,4 +40,4 @@ function populateArtists() {
     // TODO
 }
 
-getResults(top20Url(), populateFeatured);
+getResults(urlTop20(), populateFeatured);

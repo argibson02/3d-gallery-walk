@@ -32,12 +32,12 @@ const key = "?key=TnDINDEU";
 
 //================================================================================== Function for 
 function urlTop20() {
-    return searchAPIRoot + topPieceMarker + hasImageMarker + typeMarker;
+    return searchAPIRoot + topPieceMarker + hasImageMarker + typeMarker + "&ps=20";
 }
 
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
-function urlAppendTitle() {
+function urlAppendQuery( userInputText ) {
     //event.preventDefault();
     return searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
 }
@@ -45,7 +45,7 @@ function urlAppendTitle() {
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
-function urlAppendArtist() {
+function urlAppendArtist( userInputText ) {
     //event.preventDefault();
     return searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
 }
@@ -53,13 +53,8 @@ function urlAppendArtist() {
 
 //================================================================================ Function for appending user input on ARTIST search 
 // Cleansed 
-function urlAppendCurated() {
+function urlAppendCurated( curatedText ) {
     return searchAPIRoot + defaultFilterMarkers + artistMarker + curatedText + defaultSortMarkers;
-}
-
-//============================================================================ Get the top 20 featured results
-function top20Url() {
-    return searchAPIRoot + topPieceMarker + hasImageMarker + "&ps=20"
 }
 
 

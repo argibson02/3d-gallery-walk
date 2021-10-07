@@ -13,21 +13,10 @@ var progressBarEl = $(".progress"); //the loading bar
 var artwordCardEl = $("#artwork-card");
 
 
-
-//list of artists https://www.rijksmuseum.nl/en/rijksstudio/artists
-
-
-
-
-
-
 //render dropdown menu
 // function styleDropdown(instance) {
 //     instance.constrainWidth = false;
 // }
-
-
-
 
 //for browse
 
@@ -43,33 +32,18 @@ $(document).ready(function(){
 $('.tap-target').tapTarget();
 });
 
-  $(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
-
-
-
-
-
-
+// Used for mobile, TODO: make mobile responsive
+//   $(document).ready(function(){
+//     $('.sidenav').sidenav();
+//   });
 
 var userInputText = $("#user-input-search").val();
 
 //var curatedText = " Berchem, Nicolaes Pietersz. "; //tester
 
-
-
-
-
-
-
-
-
-
 /////=======================================================================================// Cleansing inputs and send to URL creation //============
 
 //userInputCleanse();
-
 
 //================================================================== Clean up curated artist links
 function curatedCleanse() {
