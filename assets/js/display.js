@@ -2,6 +2,7 @@
 var curEl = 0; //the image that is initially displayed on the carousel, keeps track of which index in imagearr
 var imageArr = [];
 var miniArtResultsObj = [];
+var parametersGiven = false;
 // ==================================== Search
 //=======================================================================================// Search results fetches for both Mini and Detailed Results //====
 
@@ -115,7 +116,6 @@ function renderCarouselSlide(index) {
     setPreview("#rendered-image", imgUrl);
 }
 
-
 prevButton.on("click", function () {
     renderCarouselSlide(--curEl);
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
@@ -125,4 +125,46 @@ nextButton.on("click", function () {
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
 });
 
-setTimeout(getResults, 250, urlDefault(), setImageAndCards); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
+// Gets initial search parameters through the URL. returns object containing parameters
+function getSearchParameters() {
+    let parameterString = window.location.search.substring(1); // Gets the query string and removes the starting "?"
+    let out = { 
+        title: parseParameter( parameterString, "title" ),
+        artistName: parseParameter( parameterString, "artistName"),
+        timePeriod: parseParameter( parameterString, "timePeriod"),
+        query: parseParameter( parameterString, "q" )
+     }
+
+     return out;
+
+    function parseParameter( parameterString, parameterName) {
+        let allParameters = parameterString.split("&");
+        for(i=0; i<allParameters.length; i++) {
+            parameterValue = allParameters[i].split("=");
+            if(parameterValue[0] === parameterName) {
+                return parameterValue[1];
+            }
+        }
+
+        return null;
+    }
+}
+
+function loadPageContentFromURL() {
+    let parameters = getSearchParameters();
+    if(parameters.query) {
+        getResults(urlAppendQuery(parameters.query), setImageAndCards);
+    }
+
+    else if( parameters.title ) {
+        getResults(urlAppendQuery(parameters.title), setImageAndCards);
+    }
+
+    else if( parameters.artistName ) {
+        getResults(urlAppendArtist( parameters.artistName), setImageAndCards);
+    }
+}
+
+//--- runs immediately upon loading the page.
+if(window.location.search) loadPageContentFromURL();
+else getResults( urlDefault(), setImageAndCards ); 
