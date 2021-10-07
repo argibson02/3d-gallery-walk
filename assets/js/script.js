@@ -279,7 +279,8 @@ function urlAppendCurated() {
 
 /////=======================================================================================// Cleansing inputs and send to URL creation //============
 //===================================================================== Cleanse and ready user input
-function userInputCleanse() {
+function userInputCleanse(event) {
+    event.preventDefault(); 
     userInputText = userInputText.trim();  //remove trailing white spaces
     userInputText = userInputText.replace(" ", "+");  // replaces inner white spaces with +
     userInputText = userInputText.replace("/", "+");  // replaces with +
@@ -348,6 +349,7 @@ function urlDefault() {
 setTimeout(urlDefault, 250); //--- runs immediately upon loading the page. (added slight delay to allow time for three.js assest to load.)
 
 
+/// create inital call
 
 
 
@@ -402,9 +404,9 @@ function getResults() {
                         //console.log(miniArtResultsObj);
 
                         //Retrieves IDs and pushes array on for further processing in Detailed fetch  
-                        var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
-                        var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
-                        searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
+                        //var tempArtObjectsNumber = miniData.artObjects[i].objectNumber; // This is the RijksMuseum collection ID number that we use to call on the Detailed-Results API. Also stored in the mini-object above.
+                        //var tempArtObjectsUrl = collectionAPIRoot + tempArtObjectsNumber + key; // For each, inject the collection ID number into the collection API root and key.
+                        //searchUrlArray.push(tempArtObjectsUrl); // pushes each to an array to hold the urls
                         //console.log(tempArtObjectsUrl);
 
                     }
