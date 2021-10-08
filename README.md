@@ -127,6 +127,10 @@ Any modern internet browser will do!
 
 ![code for normal map generation](./assets/images/normalMapGeneration.png)
 
+* Adding a stylish collapsible tutorial
+![HTML for a stylish collapsible button](./assets/images/tutorialButton.png)
+![example of button](./assets/images/tutorialExample.png)
+
 ## Wireframes
 ![wireframe of the display page](./assets/images/wireframeDisplay.png)
 ![wireframe of the browse page](./assets/images/wireframeBrowse.png)
