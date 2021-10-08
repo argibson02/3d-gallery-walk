@@ -166,3 +166,21 @@ html, body {
 #qrCodeContainer > img {
     padding: 10px;
 }
+
+
+@media screen and (max-width: 530px){ 
+    #header-title h3 {
+        font-size: 20px;
+    }
+
+    #artwork-card{
+        display: block;
+        top: 0%;
+        left: 0%;
+        position: static;
+    }
+
+    .tap-target, #menu {
+        display: none;
+    }
+}
