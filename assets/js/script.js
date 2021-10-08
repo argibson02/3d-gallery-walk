@@ -448,17 +448,17 @@ function loadCarousel (miniData) { // AKA the "Mini-Results" Fetch.
 //  This is the work done to call the IBM Watson translate service. Was intended to translate painting titles into English. Deprecated due to CORS issues
 
 /*
-curl -X POST --user "apikey:WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs" \
+curl -X POST --user "" \
 --header "Content-Type: application/json" \
 --data '{"text": ["De opwekking van Lazarus"], "model_id":"nl-en"}' \
-"https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01"
+"https://api.au-syd.language-translator.watson.cloud.ibm.com/instances//v3/translate?version=2018-05-01"
 
 */
 
 /*
 $.ajax({
     type: "POST",
-    user: "apikey:WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs",
+    user: "apikey:",
     header: {
         'Content-Type': 'application/json',
     },
@@ -466,7 +466,7 @@ $.ajax({
         "text": "De opwekking van Lazarus",
         "model_id": "nl-en",
     },
-    url: "https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01",
+    url: "https://api.au-syd.language-translator.watson.cloud.ibm.com/instances//v3/translate?version=2018-05-01",
   }).then(function (response) {
     console.log('Ajax Reponse \n-------------');
     console.log(response);
@@ -479,7 +479,7 @@ console.log(window.location.hostname);
 var translateTitle = {
     origin: window.location.hostname,
     type: "POST",
-    user: {"apikey": "WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs",
+    user: {"apikey": ",
     },
     header: {
         "Content-Type": "application/json"
@@ -491,7 +491,7 @@ var translateTitle = {
 }
 */
 /*
-fetch('https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01', translateTitle)  
+fetch('https://api.au-syd.language-translator.watson.cloud.ibm.com/instances//v3/translate?version=2018-05-01', translateTitle)  
   .then(function(res) {
     return res.json();
    })
