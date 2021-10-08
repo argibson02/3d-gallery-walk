@@ -112,7 +112,18 @@ Any modern internet browser will do!
 - [Link to Adam's Github](https://github.com/AdamKruschwitz)
 - [Link to Adam's LinkedIn](https://www.linkedin.com/in/adamkruschwitz/)
 
-## Important Code
+## Important Code Snippits
+* Collecting parameters through the URL:
+
+![code for a "collect parameters" function](./assets/images/getSearchParameters.png)
+
+* Populating the artist tab with links directing to the mane page with search parameters:
+
+![code for generating artist links](./assets/images/populateArtists.PNG)
+
+* Generating a normal map based on a given jpg image
+
+![code for normal map generation](./assets/images/normalMapGeneration.png)
 
 
 ## Acknowledgments 😊
