@@ -1,5 +1,25 @@
 # 3D Gallery Walk
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+---
+
+## Table of Contents
+
+- [3D Gallery Walk](#3d-gallery-walk)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Prerequisites](#prerequisites)
+  - [Built With](#built-with)
+  - [Technologies Used](#technologies-used)
+  - [Practices Used](#practices-used)
+  - [Deployed Link](#deployed-link)
+  - [Authors](#authors)
+  - [Acknowledgments 😊](#acknowledgments-)
+  - [License](#license)
+  - [Questions](#questions)
+  
+
 ## Description
 
 Welcome to this 3D virtual museum experience! With the use of 3D rendering technology, we invite the viewer to get in a close and examine art with even greater detail. 
@@ -10,7 +30,7 @@ Welcome to this 3D virtual museum experience! With the use of 3D rendering techn
 
 **See this unique experience in action!**
 
-![See this unique experience in action](imgURL)
+![See this unique experience in action](./assets/images/sitedemo.gif)
 
 
 
@@ -24,7 +44,10 @@ Any modern internet browser will do!
 * [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 * [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 * [jQuery](https://api.jquery.com/)
-* [Web APIs]()
+* [Materialize CSS](https://materializecss.com/)
+* [Rijksmuseum API](https://data.rijksmuseum.nl/object-metadata/api/)
+* [three.js](https://threejs.org/)
+* [jimp](https://www.npmjs.com/package/jimp)
 
 
 ## Technologies Used
@@ -68,3 +91,11 @@ Any modern internet browser will do!
 
 - Thanks to Jerome, Manuel, Cheng, and Daniel for instructing the UCB Coding Bootcamp.
 - Thanks to Eric Meyer for the [CSS reset file](https://meyerweb.com/eric/tools/css/reset/).
+
+## License
+
+This application is covered under the MIT license
+
+## Questions
+
+For any questions, please reach out by creating an issue.
