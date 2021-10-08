@@ -1,10 +1,10 @@
-const bastCleavelandURL = "https://openaccess-api.clevelandart.org/api/artworks/?";
-const queryMarkerC = "&q=";
+const bastCleavelandURL = "https://risdmuseum.org/api/v1/collection?";
+const queryMarkerC = "&search_api_fulltext=";
 const typeMarkerC = "&type=Painting";
-const hasImageMarkerC = "&hasImage=1";
-const limitMarkerC = "limit=10";
+const hasImageMarkerC = "&has_image=1";
+const limitMarkerC = "page=1&items_per_page=10&field_public_domain=1";
 
-function getUrlByQuery( queryText ) {
+function cleavelandGetUrlWithQuery( queryText ) {
     return bastCleavelandURL + limitMarkerC + hasImageMarkerC + typeMarkerC + queryMarkerC + queryText;
 }
 
@@ -17,7 +17,8 @@ function cleavelandToCustom( cleavelandResponse ) {
             imageURL: cleavelandResponse.data[i].images.web.url,
             artist: cleavelandResponse.data[i].creators[0].description,
             year: cleavelandResponse.data[i].creation_date,
-            originAPI: "cleaveland"
+            originAPI: "cleaveland",
+            objectNumber: cleavelandResponse.data[i].accession_number
         }
         out.push(artObject);
     }

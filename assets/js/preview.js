@@ -82,6 +82,7 @@ function renderFrame( sceneCameraRenderer ) {
  * @param {Object3D} scene
  */
 function addPainting( imageURL, scene ) {
+    console.log(window.location.hostname);
     // Loads the encoded data from the image url as an rgb array
     jimp.read( imageURL ).then( function( data ) {
         //console.log( data );

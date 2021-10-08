@@ -19,11 +19,10 @@ $("#submit").on("click", function(event){
 
 // ===================================== Card
 function renderCard(index) {
-    var txt = (miniArtResultsObj[index].longTitle).split(",");
-    year = txt[txt.length-1];
+    console.log(miniArtResultsObj);
     $("#artwork-card-title").text(miniArtResultsObj[index].title);
-    $("#artwork-card-artist").text("artist: " + miniArtResultsObj[index].principalOrFirstMaker);
-    $("#artwork-card-year").text("year: " + year);
+    $("#artwork-card-artist").text("artist: " + miniArtResultsObj[index].artist);
+    $("#artwork-card-year").text("year: " + miniArtResultsObj[index].year);
     $("#artwork-card-link").attr("href", "https://www.rijksmuseum.nl/en/collection/"+ miniArtResultsObj[index].objectNumber);
 
     storeLongTitle = miniArtResultsObj[index].longTitle; //  variable needed for storage function 
@@ -31,6 +30,11 @@ function renderCard(index) {
     storeArtist = miniArtResultsObj[index].principalOrFirstMaker;  //  variable needed for storage function 
     storeFetchUrl = miniArtResultsObj[index].objectNumber;  //  variable needed for storage function 
 
+}
+
+function renderCardAndCarouselSlide() {
+    renderCard( curEl );
+    renderCarouselSlide( curEl );
 }
 
 $(function () {
@@ -54,6 +58,31 @@ function setImageArr( rijksResponse ) {
 
 function setArtObjectList( rijksResponse ) {
     miniArtResultsObj = rijksResponse.artObjects;
+}
+
+function addRijksResults( rijksResponse ) {
+    console.log("addedRijksResults");
+    let results = rijksToCustom( rijksResponse );
+    addResults( results );
+}
+
+function addCaiResults( caiResponse ) {
+    console.log("addedCleavelandResults")
+    console.log( caiResponse );
+    let results = caiToCustom( caiResponse );
+    addResults( results );
+}
+
+function addResults( results ) {
+    miniArtResultsObj = miniArtResultsObj.concat(results);
+    for(let i=0; i<results.length; i++) {
+        imageArr.push(results[i].imageURL);
+    }
+}
+
+function clearResults() {
+    miniArtResultsObj = [];
+    imageArr = [];
 }
 
 function setImageAndCards( rijksResponse ) {
@@ -93,7 +122,7 @@ function renderCarouselSlide(index) {
     //console.log(miniArtResultsObj);
     
     carouselContainerEl.append(slide);
-    renderCard(index);
+    //renderCard(index);
     setPreview("#rendered-image", imgUrl);
 }
 
@@ -133,17 +162,20 @@ function getSearchParameters() {
 
 function loadPageContentFromURL() {
     let parameters = getSearchParameters();
+    let promises = []
     if(parameters.query) {
-        getResults(urlAppendQuery(parameters.query), setImageAndCards);
+        promises.push( getResults( urlAppendQuery( parameters.query ), addRijksResults ) );
+        promises.push( getResults( caiGetUrl( parameters.query ), addCaiResults ) );
     }
 
     else if( parameters.title ) {
-        getResults(urlAppendQuery(parameters.title), setImageAndCards);
+        promises.push( getResults( urlAppendQuery( parameters.title ), addRijksResults ) );
+        promises.push( getResults( caiGetUrl( parameters.title ), addCaiResults ) );
     }
 
     else if( parameters.artistName ) {
-        console.log(parameters.artistName);
-        getResults( urlAppendArtist( swapLastNameFirstName( parameters.artistName ) ), setImageAndCards );
+        getResults( urlAppendArtist( swapLastNameFirstName( parameters.artistName ) ), addRijksResults );
+        promises.push( getResults( caiGetUrl( parameters.artistName ), addCaiResults ) );
     } 
 
     function swapLastNameFirstName( name ) {
@@ -153,6 +185,8 @@ function loadPageContentFromURL() {
 
         return firstName + " " + lastName;
     }
+
+    Promise.all(promises).then( renderCardAndCarouselSlide );
 }
 
 function loadPageContentFromCleaveland( query ) {

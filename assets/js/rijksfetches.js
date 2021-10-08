@@ -2,7 +2,7 @@
 // Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
 // Filter variables
 const cultureMarker = "&culture=en"; // The language to search in (and of the results) (en or nl). I haven't a difference with or with out this, but keeping on.
-const resultsPerPageMarker = "&ps=50"; // 1-100, defaults 10. Good performance with 50.
+const resultsPerPageMarker = "&ps=1"; // 1-100, defaults 10. Good performance with 50.
 const queryMarker = "&q="; // "The search terms that need to occur in one of the fields of the object data." Painting Title or anything other search parameter.
 const artistMarker = "&involvedMaker="; // "Object needs to be made by this agent." AKA, the artist for our purposes.
 const hasImageMarker = "&imgonly=true"; // "Only give results for which an image is available or not." Forcing to true.
@@ -72,13 +72,15 @@ function urlDefault() {
 
 function rijksToCustom( rijksResponse ) {
     let out = [];
+    //console.log(rijksResponse);
     for(let i=0; i<rijksResponse.artObjects.length; i++) {
         let artObject = {
-            title: rijksResponse.artObject[i].title,
-            imageURL: rijksResponse.artObject[i].webImage.url,
-            artist: rijksResponse.artObject[i].principalOrFirstMaker,
-            year: rijksResponse.artObject[i].longTitle.split(", ")[1], // return the year, which is at the end of the long title, separated by a comma and a space
-            originAPI: "rijks"
+            title: rijksResponse.artObjects[i].title,
+            imageURL: rijksResponse.artObjects[i].webImage.url,
+            artist: rijksResponse.artObjects[i].principalOrFirstMaker,
+            year: rijksResponse.artObjects[i].longTitle.split(", ")[1], // return the year, which is at the end of the long title, separated by a comma and a space
+            originAPI: "rijks",
+            objectNumber: rijksResponse.artObjects[i].objectNumber
         }
 
         out.push(artObject);
@@ -93,7 +95,7 @@ function getResults( searchUrl, helper ) {
     console.log( searchUrl );
     console.log( helper );
     progressBarEl.css("visibility", "visible");
-    fetch( searchUrl )
+    return fetch( searchUrl )
         .then(function (response) { // fetches objects from search API
             if (!response.ok) {
                 console.log("One search result could not be obtained");
