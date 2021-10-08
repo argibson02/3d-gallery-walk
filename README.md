@@ -141,6 +141,9 @@ Any modern internet browser will do!
 
 ![code for qr code generation](./assets/images/qr-generation.png)
 
+* Logic for the carousel to determine which image we are looking at.
+
+![code for carousel rendering](./assets/images/carousel-rendering.png)
 
 
 ## Wireframes
