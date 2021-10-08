@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,50 +9,52 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <link rel = "stylesheet" href = "./assets/css/style.css">
-    <link rel = "stylesheet" href = "./assets/css/noscroll.css">
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/noscroll.css">
     <title>3D Gallery Walk</title>
 </head>
+
 <body>
     <header>
-        <nav class = "nav-wrapper">
-            <div class = "brand-logo" id = "header-title">
-                <h3><a href = "./index.html">3D Art Gallery</a></h3>
+        <nav class="nav-wrapper">
+            <div class="brand-logo" id="header-title">
+                <h3><a href="./index.html">3D Art Gallery</a></h3>
             </div>
-            <div id = "header-menu">
+            <div id="header-menu">
                 <nav>
                     <div class="nav-wrapper">
-                      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                      <ul id = "header-menu-links" class="right hide-on-med-and-down sidenav-trigger">
-                            <li id = "search element">
-                                <form id = "search-form">
-                                    <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
-                                    <button type = "submit" id="submit">🔍</button>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                class="material-icons">menu</i></a>
+                        <ul id="header-menu-links" class="right hide-on-med-and-down sidenav-trigger">
+                            <li id="search element">
+                                <form id="search-form">
+                                    <input type="text" id="user-input-search" placeholder="search" name="search">
+                                    <button type="submit" id="submit">🔍</button>
                                 </form>
                             </li>
-                            <li><a href = "./browse.html">Browse</a></li>
-                    
-        
+                            <li><a href="./browse.html">Browse</a></li>
 
-                      </ul>
+
+
+                        </ul>
                     </div>
-                  </nav>
-                
-                  <ul class="sidenav" id="mobile-demo">
-                    <li id = "search element">
-                        <form id = "search-form">
+                </nav>
 
-                            <input type = "text" id = "user-input-search" placeholder = "search" name = "search">
-                            <button type = "submit" id="submit">🔍</button>
+                <ul class="sidenav" id="mobile-demo">
+                    <li id="search element">
+                        <form id="search-form">
+
+                            <input type="text" id="user-input-search" placeholder="search" name="search">
+                            <button type="submit" id="submit">🔍</button>
                         </form>
                     </li>
-                    <li><a href = "./browse.html">Browse</a></li>
+                    <li><a href="./browse.html">Browse</a></li>
 
                     <!-- <li><a href = "./history.html">History</a></li> -->
                     <!-- <li><a href = "./browse.html">Favorites</a></li> -->
-                  </ul>
-                
+                </ul>
+
             </div>
         </nav>
         <div class="progress">
@@ -59,50 +62,58 @@
         </div>
     </header>
     <main>
-        <div id = "carousel-container">    
+        <div id="carousel-container">
         </div>
-  
-            <button id = "prev-button" class="waves-effect waves-light btn-small">&#10094;</button>
-            <button id = "next-button" class="waves-effect waves-light btn-small">&#10095;</button>
-              <div class="card" id = "artwork-card">
-                <div class="card-content">
-                  <h5 id = "artwork-card-title"></h5>
-                  <h6 id = "artwork-card-artist"></h6>
-                  <h6 id = "artwork-card-year"></h6>
-                  <a id = "artwork-card-link" href = "" target = "_blank">learn more</a>
-                  <br />
-                  <a class="waves-effect waves-light btn" id="favorite">Favorite Me!</a>
-                  <a class="waves-effect waves-light btn" id="qrcode">Get QR code</a>
-                  <div id="qrCodeContainer"></div>
-                </div>
-              </div>
-          <!-- Element Showed -->
-        <a id="menu" class="waves-effect waves-light btn btn-floating" onclick="$('.tap-target').tapTarget('open')">?</a>
+
+        <button id="prev-button" class="waves-effect waves-light btn-small">&#10094;</button>
+        <button id="next-button" class="waves-effect waves-light btn-small">&#10095;</button>
+        <div class="card" id="artwork-card">
+            <div class="card-content">
+                <h5 id="artwork-card-title"></h5>
+                <h6 id="artwork-card-artist"></h6>
+                <h6 id="artwork-card-year"></h6>
+                <a id="artwork-card-link" href="" target="_blank">learn more</a>
+                <br />
+                <a class="waves-effect waves-light btn" id="favorite">Favorite Me!</a>
+                <a class="waves-effect waves-light btn" id="qrcode">Get QR code</a>
+                <div id="qrCodeContainer"></div>
+            </div>
+        </div>
+        <!-- Element Showed -->
+        <a id="menu" class="waves-effect waves-light btn btn-floating"
+            onclick="$('.tap-target').tapTarget('open')">?</a>
 
         <!-- Tap Target Structure -->
         <div class="tap-target" data-target="menu">
-            <div class="tap-target-content" >
-            <h5 id = "menu-title">Tutorial:</h5>
-            <p>Welcome to the 3D Art Gallery! Hold down and drag your mouse around to view the image in different angles. Scroll to zoom in to see the 3D rendered paint strokes
-                Double click to reset. Move the info card around as well. Have fun!
-            </p>
+            <div class="tap-target-content">
+                <h5 id="menu-title">Tutorial:</h5>
+                <p>Welcome to the 3D Art Gallery! Hold down and drag your mouse around to view the image in different
+                    angles. Scroll to zoom in to see the 3D rendered paint strokes
+                    Double click to reset. Move the info card around as well. Have fun!
+                </p>
             </div>
         </div>
     </main>
-    <footer id = "main-footer">
-        <h6>Made by Adam, Alex, and Henry. Github repo <span><a href = "https://github.com/argibson02/3d-gallery-walk" target = "_blank">here</a></span></h6>
+    <footer id="main-footer">
+        <h6>Made by Adam, Alex, and Henry. Github repo <span><a href="https://github.com/argibson02/3d-gallery-walk"
+                    target="_blank">here</a></span></h6>
     </footer>
 
-        <!-- Compiled and minified JavaScript -->
+    <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jimp/0.16.2-canary.1045.1221.0/jimp.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js" integrity="sha512-NLtnLBS9Q2w7GKK9rKxdtgL7rA7CAS85uC/0xd9im4J/yOL4F9ZVlv634NAM7run8hz3wI2GabaA6vv8vJtHiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js"
+        integrity="sha512-NLtnLBS9Q2w7GKK9rKxdtgL7rA7CAS85uC/0xd9im4J/yOL4F9ZVlv634NAM7run8hz3wI2GabaA6vv8vJtHiQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src = "assets/js/preview.js"></script>
+    <script src="assets/js/preview.js"></script>
     <script src="assets/js/rijksfetches.js"></script>
-    <script src = "./assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
     <script src="assets/js/display.js"></script>
 </body>
+
 </html>
