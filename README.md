@@ -35,6 +35,10 @@ Welcome to this 3D virtual museum experience! With the use of 3D rendering techn
 
 
 ## Features
+**Viewing 3D Paintings**
+Zoom in and manipulate paintings! See how light reflects off the oil! Feel each individual brush stroke! Experience time in the depths of each individual crack!
+[Demo of image viewing]()
+
 
 **Save Favorites**
 Found a piece you like? Save it so you can view it again later!
@@ -51,6 +55,9 @@ Use our site on any size screen.
 [Demo of responsive design]()
 
 
+**View curated artists and paintings**
+Not sure where to start? To try checking out the Artists and Featured tabs until Browse.
+[Demo of curated artists and paintings]()
 
 
 ## Prerequisites
@@ -66,6 +73,7 @@ Any modern internet browser will do!
 * [Rijksmuseum API](https://data.rijksmuseum.nl/object-metadata/api/)
 * [three.js](https://threejs.org/)
 * [jimp](https://www.npmjs.com/package/jimp)
+* [QR Code Generator API](https://goqr.me/api/)
 
 
 ## Technologies Used
