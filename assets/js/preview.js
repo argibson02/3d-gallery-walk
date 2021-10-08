@@ -162,7 +162,7 @@ function generateNormal( imageData ) {
             // Convert the image to greyscale to be used as a crude height map
             converPixelToGrayscale( imageDataPixelArray[row][column] );
 
-            // Calculate the partial derivatives of the color change by checking against left/top adjacent pixel
+            // Calculate the partial derivatives of the color change by checking against adjacent pixels
             // Uses the Sobel operator, read more at: https://en.wikipedia.org/wiki/Sobel_operator
             let topLeft =       imageDataPixelArray[row-1][column-1][0] / 255;
             let top =           imageDataPixelArray[row-1][column][0] / 255;
@@ -397,6 +397,7 @@ function setPreview( elementId, imageURL ) {
         renderFrame(event.target.sceneCameraRenderer);
     } );
 
+    // Make preview respond to window resizing.
     window.renderer = renderer;
     window.camera = sceneCameraRenderer[1];
     window.sceneCameraRenderer = sceneCameraRenderer;

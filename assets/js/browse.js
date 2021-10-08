@@ -38,7 +38,7 @@ $(".curated").on("click", function () {
 
 // Populates the artists tab
 function populateArtists() {
-    let collaps = $(".collapsible")
+    let collapse = $(".collapsible")
 
     for (i = 0; i < artistList.length; i++) {
         let curName = artistList[i];
@@ -48,7 +48,7 @@ function populateArtists() {
         artName.text(curName);
         let ch = curName.charCodeAt(0);
         let ind = ch-65;
-        collaps.children().eq(ind).children().eq(1).children().append(artName);
+        collapse.children().eq(ind).children().eq(1).children().append(artName);
     }
 }
 populateArtists();

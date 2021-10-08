@@ -104,6 +104,8 @@ Any modern internet browser will do!
 - [Link to Adam's Github](https://github.com/AdamKruschwitz)
 - [Link to Adam's LinkedIn](https://www.linkedin.com/in/adamkruschwitz/)
 
+## Important Code
+
 
 ## Acknowledgments 😊
 
