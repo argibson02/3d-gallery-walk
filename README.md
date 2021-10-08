@@ -137,6 +137,10 @@ Any modern internet browser will do!
 ![code for storage syncing](./assets/images/storage-syncing.png)
 
 
+* QR code generation: Gives the exact URL for the intended image.
+
+![code for qr code generation](./assets/images/qr-generation.png)
+
 
 
 ## Wireframes
