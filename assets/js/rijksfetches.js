@@ -1,3 +1,7 @@
+//===========================================//// SERVER-SIDE MET ART DATABASE API //====
+//  This is the work done to call and process info from the MET API. Was intended to be be our primary art database. Deprecated due to CORS issues
+
+/*
 //========= Search API variables
 // Complete documentation of API can be found here: https://data.rijksmuseum.nl/object-metadata/api/
 // Filter variables
@@ -69,8 +73,8 @@ function urlDefault() {
 
 //==================================== 
 function getResults( searchUrl, helper ) {
-    console.log( searchUrl );
-    console.log( helper );
+    //console.log( searchUrl );
+    //console.log( helper );
     progressBarEl.css("visibility", "visible");
     fetch( searchUrl )
         .then(function (response) { // fetches objects from search API
@@ -84,3 +88,4 @@ function getResults( searchUrl, helper ) {
         })
         .then( helper );
 }
+*/

@@ -100,10 +100,14 @@ function renderCarouselSlide(index) {
 prevButton.on("click", function () {
     renderCarouselSlide(--curEl);
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
+    $("#qrCodeContainer").empty();
+    $("#qrcode").attr('disabled', false);
 });
 nextButton.on("click", function () {
     renderCarouselSlide(++curEl);
     $("#favorite").attr('disabled', false); // reactives favorite button if disabled
+    $("#qrCodeContainer").empty();
+    $("#qrcode").attr('disabled', false);
 });
 
 // Gets initial search parameters through the URL. returns object containing parameters
@@ -158,3 +162,16 @@ function loadPageContentFromURL() {
 //--- runs immediately upon loading the page.
 if(window.location.search) loadPageContentFromURL();
 else getResults( urlDefault(), setImageAndCards ); 
+
+
+
+
+///=======================================================================//   THIRD PARTY SERVER-SIDE QR CODE API ///
+function getQrCode(){
+    var qrImage = $("<img>");
+    qrImage.attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.protocol + window.location.hostname + window.location.pathname + "?q=" +  miniArtResultsObj[curEl].title);
+    $("#qrCodeContainer").append(qrImage);
+    $("#qrcode").attr('disabled', true);
+    M.toast({html: 'One moment, please.', classes: 'toasts'});
+}
+$("#qrcode").on('click', getQrCode);
