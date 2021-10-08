@@ -34,6 +34,24 @@ Welcome to this 3D virtual museum experience! With the use of 3D rendering techn
 
 
 
+## Features
+
+**Save Favorites**
+Found a piece you like? Save it so you can view it again later!
+[Demo of saving images]()
+
+
+**Share Favorites**
+Share your favorite images by creating QR code and sending it to you friends.
+[Demo of QR code]()
+
+
+**Responsive Design**
+Use our site on any size screen.
+[Demo of responsive design]()
+
+
+
 
 ## Prerequisites
 Any modern internet browser will do!
