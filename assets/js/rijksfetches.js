@@ -70,6 +70,23 @@ function urlDefault() {
     return searchAPIRoot + defaultFilterMarkers + artistMarker + "Rembrandt+van+Rijn" + defaultSortMarkers;  // Defaults our landing art to Rembrandt
 }
 
+function rijksToCustom( rijksResponse ) {
+    let out = [];
+    for(let i=0; i<rijksResponse.artObjects.length; i++) {
+        let artObject = {
+            title: rijksResponse.artObject[i].title,
+            imageURL: rijksResponse.artObject[i].webImage.url,
+            artist: rijksResponse.artObject[i].principalOrFirstMaker,
+            year: rijksResponse.artObject[i].longTitle.split(", ")[1], // return the year, which is at the end of the long title, separated by a comma and a space
+            originAPI: "rijks"
+        }
+
+        out.push(artObject);
+    }
+
+    return out;
+}
+
 
 //==================================== 
 function getResults( searchUrl, helper ) {
