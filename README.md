@@ -132,6 +132,13 @@ Any modern internet browser will do!
 
 ![code for normal map generation](./assets/images/normalMapGeneration.png)
 
+* Storage Syncing: Checks our local storage for any existing favorites data and updates our session data with the local data.
+
+![code for storage syncing](./assets/images/storage-syncing.png)
+
+
+
+
 ## Wireframes
 ![wireframe of the display page](./assets/images/wireframeDisplay.png)
 ![wireframe of the browse page](./assets/images/wireframeBrowse.png)
