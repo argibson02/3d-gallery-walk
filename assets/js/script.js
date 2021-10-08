@@ -33,6 +33,7 @@ $('.tap-target').tapTarget();
 });
 
 // Used for mobile responsive
+
    $(document).ready(function(){
      $('.sidenav').sidenav();
    });
@@ -214,7 +215,13 @@ function clearFavorite() {
     sessionLongTitleArray = emptyArray;
     localStorage.setItem("favoritesLongTitleArray", JSON.stringify(sessionLongTitleArray));
 
-    // may need to clear out other things
+    // may need to clear out other things, reload the page, make the favorites tab active
+    $("#featured-tab-el").attr("class", "");
+    $("#artist-tab-el").attr("class", "");
+    $("#favorites-tab-el").attr("class", "active");
+    window.location.reload();
+    
+
 
 }
 
@@ -306,7 +313,7 @@ checkFavorite(); //--- Syncing runs immediately upon loading the page
 
 //-------------------------------------------------------------- STORE FAVORITES BUTTON EVENT LISTENERS
 $("#favorite").on('click', addFavorite);
-$("#clearButton").on('click', clearFavorite);
+$("#clear-fav-button").on('click', clearFavorite);
 
 
 
