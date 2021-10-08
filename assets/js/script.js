@@ -116,12 +116,6 @@ function curatedCleanse() {
 
 
 
-
-
-
-
-
-
 //==============================================================================================================//  STORAGE //================//
 //========== Storage variables
 
@@ -314,10 +308,6 @@ checkFavorite(); //--- Syncing runs immediately upon loading the page
 //-------------------------------------------------------------- STORE FAVORITES BUTTON EVENT LISTENERS
 $("#favorite").on('click', addFavorite);
 $("#clear-fav-button").on('click', clearFavorite);
-
-
-
-
 
 
 
