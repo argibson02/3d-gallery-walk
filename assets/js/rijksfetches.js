@@ -38,18 +38,14 @@ function urlTop20() {
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendQuery( userInputText ) {
-    //event.preventDefault();
     return searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
 }
-//urlAppendTitle();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // WARNING, THIS IS CASE SENSITIVE AND REQUIRES FULL NAME. "Vincent van Gogh" is good; "Vincent Van Gogh", "vincent van gogh", and "van Gogh" are all bad.
 function urlAppendArtist( userInputText ) {
-    //event.preventDefault();
     return searchAPIRoot + defaultFilterMarkers + artistMarker + userInputText + defaultSortMarkers;
 }
-//urlAppendArtist();
 
 //================================================================================ Function for appending user input on ARTIST search 
 // Cleansed 

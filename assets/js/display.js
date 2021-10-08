@@ -7,7 +7,7 @@ var parametersGiven = false;
 //=======================================================================================// Search results fetches for both Mini and Detailed Results //====
 
 
-//------ search button event listener
+//------ Search button event listener
 $("#submit").on("click", function(event){
     event.preventDefault();
 
