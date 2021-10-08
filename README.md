@@ -14,6 +14,8 @@
   - [Technologies Used](#technologies-used)
   - [Practices Used](#practices-used)
   - [Deployed Link](#deployed-link)
+  - [Important Code Snippets](#important-code-snippets)
+  - [Wireframes](#wireframes)
   - [Authors](#authors)
   - [Acknowledgments 😊](#acknowledgments-)
   - [License](#license)
@@ -112,7 +114,7 @@ Any modern internet browser will do!
 - [Link to Adam's Github](https://github.com/AdamKruschwitz)
 - [Link to Adam's LinkedIn](https://www.linkedin.com/in/adamkruschwitz/)
 
-## Important Code Snippits
+## Important Code Snippets
 * Collecting parameters through the URL:
 
 ![code for a "collect parameters" function](./assets/images/getSearchParameters.png)
@@ -125,6 +127,9 @@ Any modern internet browser will do!
 
 ![code for normal map generation](./assets/images/normalMapGeneration.png)
 
+## Wireframes
+![wireframe of the display page](./assets/images/wireframeDisplay.png)
+![wireframe of the browse page](./assets/images/wireframeBrowse.png)
 
 ## Acknowledgments 😊
 
