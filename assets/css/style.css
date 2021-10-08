@@ -159,3 +159,10 @@ html, body {
     cursor: pointer;
 }
 
+#qrcode {
+    background: rgb(79, 138, 177);
+}
+
+#qrCodeContainer > img {
+    padding: 10px;
+}

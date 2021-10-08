@@ -32,10 +32,10 @@ $(document).ready(function(){
 $('.tap-target').tapTarget();
 });
 
-// Used for mobile, TODO: make mobile responsive
-//   $(document).ready(function(){
-//     $('.sidenav').sidenav();
-//   });
+// Used for mobile responsive
+   $(document).ready(function(){
+     $('.sidenav').sidenav();
+   });
 
 var userInputText = $("#user-input-search").val();
 
@@ -296,7 +296,7 @@ function checkFavorite() {
 
 
 
-    console.log(sessionUrlArray);
+    //console.log(sessionUrlArray);
 
 
 
@@ -317,12 +317,17 @@ $("#clearButton").on('click', clearFavorite);
 
 
 
+/*
 
-
-
+var imgThumbnail = document.getElementById('imgThumbnail');
+var titleThumbnail = document.getElementById('titleThumbnail');
+var favoriteLink = document.getElementsByClassName("favorite-item");
+favoriteLink.addEventListener("mouseenter", function () {
+    var imgThumbnailValue = document.
+}*/
 
 //-------------------------------------------------------------- FAVORITES BUTTON EVENT LISTENERS
-$(".favorite-item").on("click", function () {  // set thumbnail preview and title
+$(".favorite-item").on("mouseenter", function () {  // set thumbnail preview and title
     var imgThumbnail = $(this).attr("img-value");
     var titleThumbnail = $(this).attr("title-value");
     $('#imgThumbnail').attr('src', imgThumbnail);
@@ -431,3 +436,68 @@ function loadCarousel (miniData) { // AKA the "Mini-Results" Fetch.
     progressBarEl.css("visibility", "hidden");
     renderCarousel(0);
 }
+
+
+
+
+
+
+
+
+//===========================================//// SERVER-SIDE IBM WATSON TRANSLATE API //====
+//  This is the work done to call the IBM Watson translate service. Was intended to translate painting titles into English. Deprecated due to CORS issues
+
+/*
+curl -X POST --user "apikey:WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs" \
+--header "Content-Type: application/json" \
+--data '{"text": ["De opwekking van Lazarus"], "model_id":"nl-en"}' \
+"https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01"
+
+*/
+
+/*
+$.ajax({
+    type: "POST",
+    user: "apikey:WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs",
+    header: {
+        'Content-Type': 'application/json',
+    },
+    data: {
+        "text": "De opwekking van Lazarus",
+        "model_id": "nl-en",
+    },
+    url: "https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01",
+  }).then(function (response) {
+    console.log('Ajax Reponse \n-------------');
+    console.log(response);
+  });
+  */
+/*
+console.log(window.location.hostname);
+
+
+var translateTitle = {
+    origin: window.location.hostname,
+    type: "POST",
+    user: {"apikey": "WykAyq9QMV9j10Sac8Frg2aBR-zcmDeQFvrG62CN7vQs",
+    },
+    header: {
+        "Content-Type": "application/json"
+    },
+    data: {
+        "text": "[De opwekking van Lazarus]",
+        "model_id": "nl-en"
+    }
+}
+*/
+/*
+fetch('https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9ff8fb04-ed26-4386-99ef-9aa8062472a2/v3/translate?version=2018-05-01', translateTitle)  
+  .then(function(res) {
+    return res.json();
+   })
+  .then(function(resJson) {
+      console.log(resJson)
+    return resJson;
+   })
+
+*/

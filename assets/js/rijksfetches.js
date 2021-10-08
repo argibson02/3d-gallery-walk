@@ -69,8 +69,8 @@ function urlDefault() {
 
 //==================================== 
 function getResults( searchUrl, helper ) {
-    console.log( searchUrl );
-    console.log( helper );
+    //console.log( searchUrl );
+    //console.log( helper );
     progressBarEl.css("visibility", "visible");
     fetch( searchUrl )
         .then(function (response) { // fetches objects from search API

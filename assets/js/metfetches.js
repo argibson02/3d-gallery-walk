@@ -1,5 +1,8 @@
+//===========================================//// SERVER-SIDE MET ART DATABASE API //====
+//  This is the work done to call the MET museum database. Was intended to the primary database for this project. Deprecated due to CORS issues
 
 
+/*
 var queryMarker = "&q="; // painting title or key word search term 
 var artistOrCultureMarker = "artistOrCulture=true"; // artist name or culture search term
 var dateBeginMarker = "dateBegin="; //
@@ -202,3 +205,4 @@ getObjectNum();
 //Geolocation Request
 // https://collectionapi.metmuseum.org/public/collection/v1/search?geoLocation=France&q=flowers
 //  
+*/
