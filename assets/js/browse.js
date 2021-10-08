@@ -20,7 +20,7 @@ function populateFeatured( data ) {
     for(let i=0; i<data.artObjects.length; i++) {
         let li = $("<li></li>");
         let link = $("<a></a>");
-        li.attr("class", "collection-item a"); // TODO: Fix CSS
+        //li.attr("class", "collection-item a"); // TODO: Fix CSS
         link.attr("class", "collection-item a"); // TODO: Fix CSS
         link.attr("href", "./index.html?title=" + userInputValidation( data.artObjects[i].title ) );
         link.text(data.artObjects[i].title);

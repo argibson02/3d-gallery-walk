@@ -155,6 +155,25 @@ function loadPageContentFromURL() {
     }
 }
 
+function loadPageContentFromCleaveland( query ) {
+    console.log(getUrlByQuery( query ));
+    getResults( getUrlByQuery( query ), setImageAndCardsCleaveland);
+}
+
+function setImageAndCardsCleaveland( cleavelandData ) {
+    // convert cleaveland data to rijk's format
+    console.log(cleavelandData);
+    let rijksFormatObject = {};
+    rijksFormatObject.artObjects = cleavelandData.data;
+    for(let i=0; i<rijksFormatObject.artObjects.length; i++) {
+        rijksFormatObject.artObjects[i].webImage = {};
+        rijksFormatObject.artObjects[i].webImage.url = cleavelandData.data[i].images.web.url;
+    }
+    setImageAndCards( rijksFormatObject );
+    renderCarouselSlide(curEl);
+    progressBarEl.css("visibility", "hidden");
+}
+
 //--- runs immediately upon loading the page.
 if(window.location.search) loadPageContentFromURL();
 else getResults( urlDefault(), setImageAndCards ); 
