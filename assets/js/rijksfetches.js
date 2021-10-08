@@ -38,7 +38,6 @@ function urlTop20() {
 
 //================================================================================ Function for appending user input on TITLE OR GENERAL QUERY search 
 function urlAppendQuery( userInputText ) {
-    console.log("hello from append query");
     return searchAPIRoot + defaultFilterMarkers + queryMarker + userInputText + defaultSortMarkers;
 }
 
