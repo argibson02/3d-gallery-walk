@@ -39,32 +39,32 @@ Welcome to this 3D virtual museum experience! With the use of 3D rendering techn
 ## Features
 **Viewing 3D Paintings**
 Zoom in and manipulate paintings! See how light reflects off the oil! Feel each individual brush stroke! Experience time in the depths of each individual crack!
-[Demo of image viewing](./assets/images/image-demo.gif)
+![Demo of image viewing](./assets/images/image-demo.gif)
 
 
 **Save Favorites**
 Found a piece you like? Save it so you can view it again later!
-[Demo of saving images](./assets/images/favoite-demo.gif)
+![Demo of saving images](./assets/images/favoite-demo.gif)
 
 
 **Share Favorites**
 Share your favorite images by creating QR code and sending it to you friends.
-[Demo of QR code](./assets/images/qr-demo.gif)
+![Demo of QR code](./assets/images/qr-demo.gif)
 
 
 **Responsive Design**
 Use our site on any size screen.
-[Demo of responsive design](./assets/images/responsive-demo.gif)
+![Demo of responsive design](./assets/images/responsive-demo.gif)
 
 
 **View curated artists and paintings**
 Not sure where to start? To try checking out the Artists and Featured tabs until Browse.
-[Demo of curated artists and paintings](./assets/images/curated-demo.gif)
+![Demo of curated artists and paintings](./assets/images/curated-demo.gif)
 
 
 **Tutorial Pop-out**
 Unsure how to use the viewer? Click on the helper pop-out on the button right corner.
-[Demo of tutorial pop-out](./assets/images/tutorial-demo.gif)
+![Demo of tutorial pop-out](./assets/images/tutorial-demo.gif)
 
 
 ## Prerequisites
@@ -122,7 +122,7 @@ Any modern internet browser will do!
 ## Important Code Snippets
 * Collecting parameters through the URL:
 
-![code for a "collect parameters" function](./assets/images/getSearchParameters.png)
+![code for a "collect parameters" function](./assets/images/getSearchParameters.PNG)
 
 * Populating the artist tab with links directing to the mane page with search parameters:
 
@@ -130,11 +130,11 @@ Any modern internet browser will do!
 
 * Generating a normal map based on a given jpg image
 
-![code for normal map generation](./assets/images/normalMapGeneration.png)
+![code for normal map generation](./assets/images/normalMapGeneration.PNG)
 
 * Adding a stylish collapsible tutorial
-![HTML for a stylish collapsible button](./assets/images/tutorialButton.png)
-![example of button](./assets/images/tutorialExample.png)
+![HTML for a stylish collapsible button](./assets/images/tutorialButton.PNG)
+![example of button](./assets/images/tutorialExample.PNG)
 * Storage Syncing: Checks our local storage for any existing favorites data and updates our session data with the local data.
 
 ![code for storage syncing](./assets/images/storage-syncing.png)
