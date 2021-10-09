@@ -44,7 +44,7 @@ Zoom in and manipulate paintings! See how light reflects off the oil! Feel each 
 
 **Save Favorites**
 Found a piece you like? Save it so you can view it again later!
-![Demo of saving images](./assets/images/favoite-demo.gif)
+![Demo of saving images](./assets/images/favorite-demo.gif)
 
 
 **Share Favorites**
